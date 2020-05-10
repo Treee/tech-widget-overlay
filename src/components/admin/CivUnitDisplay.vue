@@ -1,5 +1,5 @@
 <template>
-  <div class="civ-tech-icon faded" :style="getIconStyle">
+  <div v-on:click="civClicked" class="civ-tech-icon faded" :style="getIconStyle">
     <div class="civ-text">{{civName}}</div>
   </div>
 </template>
@@ -17,6 +17,11 @@ export default {
         "background-size": "cover",
         "background-repeat": "no-repeat"
       };
+    }
+  },
+  methods: {
+    civClicked() {
+      console.log("click event", this.civName);
     }
   }
 };
@@ -37,6 +42,10 @@ export default {
 
   color: black;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+.civ-tech-icon:hover {
+  opacity: 1;
 }
 
 .civ-text {

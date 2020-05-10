@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        civ1: "",
+        civ1: "test",
         civ2: "",
         upgradeGroups: [],
         ageNames: {},
@@ -16,13 +16,25 @@ export default new Vuex.Store({
             ClientRegister: 0,
             AdminShow: 2,
             AdminHideAll: 6
+        },
+        techUpgradeOverlayControlOptions: {
+            sound: false,
+            tech: false,
+            blacksmith: false,
+            university: false,
+            monastary: false,
+            dock: false,
+            barracks: false,
+            archeryRange: false,
+            stable: false,
+            siegeWorkshop: false
         }
     },
     getters: {
         getCivDescription: (state) => (civName) => {
             return state.dataString[state.civHelpTexts[civName]] || "";
         },
-        getGetCivNames: (state) => {
+        getCivNames: (state) => {
             return Object.keys(state.civNames);
         }
         // Compute derived state based on the current state. More like computed property.
