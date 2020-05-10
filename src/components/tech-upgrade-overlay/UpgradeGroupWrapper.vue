@@ -4,7 +4,7 @@
       v-for="upgradeGroup in upgrades"
       :group-name="upgradeGroup"
       :civ-name="civName"
-      v-bind:key="civName + '-'+ upgradeGroup"
+      :key="civName + '-'+ upgradeGroup"
     />
   </div>
 </template>

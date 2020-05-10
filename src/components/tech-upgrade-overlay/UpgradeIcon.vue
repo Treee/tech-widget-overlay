@@ -18,7 +18,7 @@ export default {
       }
 
       return {
-        background: `url("./images/${iconFolder}/${formattedUpgradeName}.png")`,
+        background: `url("/assets/images/${iconFolder}/${formattedUpgradeName}.png")`,
         "background-size": "contain",
         "background-repeat": "no-repeat"
       };

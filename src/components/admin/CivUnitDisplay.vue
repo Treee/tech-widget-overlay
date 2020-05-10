@@ -1,5 +1,5 @@
 <template>
-  <div class="civ-tech-icon faded" :style="getIconStyle()">
+  <div class="civ-tech-icon faded" :style="getIconStyle">
     <div class="civ-text">{{civName}}</div>
   </div>
 </template>

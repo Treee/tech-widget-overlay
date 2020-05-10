@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div>test</div>
-    <CivListDisplay :civ-list="this.$store.state.civNames" />
+    <CivListDisplay :civ-list="this.$store.getters.getGetCivNames" />
   </div>
 </template>
 
@@ -10,9 +9,7 @@ import CivListDisplay from "./CivListDisplay.vue";
 
 export default {
   name: "Admin",
-  props: {
-    clientId: String
-  },
+  props: {},
   components: {
     CivListDisplay
   }

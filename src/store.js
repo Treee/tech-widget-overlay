@@ -21,6 +21,9 @@ export default new Vuex.Store({
     getters: {
         getCivDescription: (state) => (civName) => {
             return state.dataString[state.civHelpTexts[civName]] || "";
+        },
+        getGetCivNames: (state) => {
+            return Object.keys(state.civNames);
         }
         // Compute derived state based on the current state. More like computed property.
     },
