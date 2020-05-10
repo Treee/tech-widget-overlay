@@ -3,6 +3,7 @@
     <TechUpgradeOverlayControls />
     <CivListDisplay :civ-list="this.$store.getters.getCivNames" />
     <PlayerCivOverlayControls />
+    <MapPickBanOverlayControls />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import CivListDisplay from "./CivListDisplay.vue";
 import TechUpgradeOverlayControls from "./TechUpgradeOverlayControls.vue";
 import PlayerCivOverlayControls from "./PlayerCivOverlayControls.vue";
+import MapPickBanOverlayControls from "./MapPickBanOverlayControls.vue";
 
 export default {
   name: "Admin",
@@ -17,7 +19,8 @@ export default {
   components: {
     CivListDisplay,
     TechUpgradeOverlayControls,
-    PlayerCivOverlayControls
+    PlayerCivOverlayControls,
+    MapPickBanOverlayControls
   }
 };
 </script>

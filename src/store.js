@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        civ1: "test",
+        civ1: "",
         civ2: "",
         upgradeGroups: [],
         ageNames: {},
@@ -28,6 +28,15 @@ export default new Vuex.Store({
             archeryRange: false,
             stable: false,
             siegeWorkshop: false
+        },
+        mapPickAndBanOverlayControlOptions: {
+            mapOverlayVisible: false,
+            showMapBrandingImage: false,
+            brandingImageUrl: "",
+            numPicks: 1,
+            numBans: 1,
+            team1Name: "",
+            team2Name: ""
         }
     },
     getters: {
