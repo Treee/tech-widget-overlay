@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <CivBonusOverlay
       v-if="isVisible()"
       :civ1="this.$store.state.civ1"
@@ -20,6 +20,9 @@ import CivBonusOverlay from "./components/CivBonusOverlay.vue";
 
 export default {
   name: "App",
+  props: {
+    clientId: String
+  },
   data: function() {
     return {
       client: null,
