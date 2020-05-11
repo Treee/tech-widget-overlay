@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="civ-list-select">
     <md-switch v-model="civDisplay">Civ Display</md-switch>
     <md-field>
       <label for="civ-names">Civilizations</label>
@@ -27,4 +27,8 @@ export default {
 </script>
 
 <style language="scss">
+.civ-list-select {
+  width: 20rem;
+  display: inline-flex;
+}
 </style>

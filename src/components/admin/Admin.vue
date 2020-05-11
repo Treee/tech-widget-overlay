@@ -2,6 +2,7 @@
   <div>
     <AdminTechUpgradeOverlay />
     <PlayerCivOverlayControls />
+    <br />
     <MapPickBanOverlayControls />
   </div>
 </template>

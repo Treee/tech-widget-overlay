@@ -5,7 +5,7 @@
       v-for="(controlValue, key, index) in controlOptions"
       :key="index"
       v-model="controlOptions[key]"
-    >{{key}}</md-switch>
+    >{{toCamelCase(key)}}</md-switch>
   </div>
 </template>
 
@@ -18,6 +18,18 @@ export default {
     ...mapState({
       controlOptions: state => state.techUpgradeOverlayControlOptions
     })
+  },
+  methods: {
+    toCamelCase(text) {
+      let camelCase = "";
+      text.split("-").forEach(word => {
+        camelCase = camelCase
+          .concat(word.charAt(0).toUpperCase())
+          .concat(word.substring(1))
+          .concat(" ");
+      });
+      return camelCase;
+    }
   }
 };
 </script>

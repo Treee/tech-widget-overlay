@@ -139,4 +139,7 @@ export default {
 </script>
 
 <style language="scss">
+.md-menu-content-container {
+  height: 35rem;
+}
 </style>

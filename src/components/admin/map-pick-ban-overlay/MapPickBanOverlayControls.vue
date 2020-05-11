@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <md-switch v-model="controlOptions.mapOverlayVisible">Civ Display</md-switch>
+  <div class="map-list-controls">
+    <md-switch v-model="controlOptions.mapOverlayVisible">Map Display</md-switch>
     <md-button class="md-raised">Update</md-button>
     <MapListDisplay />
     <md-button class="md-raised">Add Selected Maps</md-button>
@@ -61,4 +61,9 @@ export default {
 </script>
 
 <style language="scss">
+.map-list-controls {
+  width: 25%;
+  display: inline-flex;
+  flex-direction: column;
+}
 </style>
