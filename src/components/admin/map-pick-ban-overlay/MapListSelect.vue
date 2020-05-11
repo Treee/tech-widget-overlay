@@ -5,7 +5,7 @@
       <md-select v-model="controlOptions.selectedMaps" multiple name="map-names" id="map-names">
         <md-option value></md-option>
         <md-option
-          v-for="(value, index) in this.defaultMaps.concat(customMaps)"
+          v-for="(value, index) in this.$store.getters.getAllMaps"
           :key="index"
           :value="value"
         >{{getFormattedMapName(value)}}</md-option>
@@ -21,85 +21,9 @@ export default {
   name: "MapListSelect",
   computed: {
     ...mapState({
-      controlOptions: state => state.mapPickAndBanOverlayControlOptions
-    }),
-    defaultMaps: () => [
-      "acropolis",
-      "alpine-lakes",
-      "arabia",
-      "archipelago",
-      "arena",
-      "baltic",
-      "black-forest",
-      "cenotes",
-      "coastal",
-      "continental",
-      "fortress",
-      "front-line",
-      "ghost-lake",
-      "golden-pit",
-      "gold-rush",
-      "hideout",
-      "highland",
-      "hill-fort",
-      "islands",
-      "lombardia",
-      "mediterranean",
-      "mega-random",
-      "migration",
-      "mongolia",
-      "nomad",
-      "oasis",
-      "scandinavia",
-      "serengeti",
-      "socotra",
-      "steppe",
-      "team-islands",
-      "valley",
-      "yucatan"
-    ],
-    customMaps: () => [
-      "boa2-african-waters",
-      "boa2-arabia",
-      "boa2-beachfight",
-      "boa2-canyon-lake",
-      "boa2-colloseum",
-      "boa2-desert-slope",
-      "boa2-donut",
-      "boa2-grand-bara",
-      "boa2-not-socotra",
-      "rbw-acropolis",
-      "rbw-arabia",
-      "rbw-atacama",
-      "rbw-aztlan",
-      "rbw-cross",
-      "rbw-el-dorado",
-      "rbw-golden-pit",
-      "rbw-golden-swamp",
-      "rbw-kawasan",
-      "rbw-land-madness",
-      "rbw-sinkhole",
-      "rbw-wings",
-      "hc3-arabia",
-      "hc3-bay",
-      "hc3-cross",
-      "hc3-cup",
-      "hc3-el-dorado",
-      "hc3-goldrush",
-      "hc3-hideout",
-      "hc3-high-tide",
-      "hc3-islands",
-      "hc3-ravines",
-      "hc3-slopes",
-      "msm-acclivity",
-      "msm-alpine",
-      "msm-arabia",
-      "msm-big-freeze",
-      "msm-haboob",
-      "msm-kawasan",
-      "msm-lowland"
-    ],
-    customMapPrefixes: () => ["boa2", "rbw", "hc3", "msm"]
+      controlOptions: state => state.mapPickAndBanOverlayControlOptions,
+      customMapPrefixes: state => state.customMapPrefixes
+    })
   },
   methods: {
     getFormattedMapName(rawMapName) {

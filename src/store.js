@@ -3,6 +3,87 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const defaultMaps = [
+    "acropolis",
+    "alpine-lakes",
+    "arabia",
+    "archipelago",
+    "arena",
+    "baltic",
+    "black-forest",
+    "cenotes",
+    "coastal",
+    "continental",
+    "fortress",
+    "front-line",
+    "ghost-lake",
+    "golden-pit",
+    "gold-rush",
+    "hideout",
+    "highland",
+    "hill-fort",
+    "islands",
+    "lombardia",
+    "mediterranean",
+    "mega-random",
+    "migration",
+    "mongolia",
+    "nomad",
+    "oasis",
+    "scandinavia",
+    "serengeti",
+    "socotra",
+    "steppe",
+    "team-islands",
+    "valley",
+    "yucatan"
+];
+
+const customMaps = [
+    "boa2-african-waters",
+    "boa2-arabia",
+    "boa2-beachfight",
+    "boa2-canyon-lake",
+    "boa2-colloseum",
+    "boa2-desert-slope",
+    "boa2-donut",
+    "boa2-grand-bara",
+    "boa2-not-socotra",
+    "rbw-acropolis",
+    "rbw-arabia",
+    "rbw-atacama",
+    "rbw-aztlan",
+    "rbw-cross",
+    "rbw-el-dorado",
+    "rbw-golden-pit",
+    "rbw-golden-swamp",
+    "rbw-kawasan",
+    "rbw-land-madness",
+    "rbw-sinkhole",
+    "rbw-wings",
+    "hc3-arabia",
+    "hc3-bay",
+    "hc3-cross",
+    "hc3-cup",
+    "hc3-el-dorado",
+    "hc3-goldrush",
+    "hc3-hideout",
+    "hc3-high-tide",
+    "hc3-islands",
+    "hc3-ravines",
+    "hc3-slopes",
+    "msm-acclivity",
+    "msm-alpine",
+    "msm-arabia",
+    "msm-big-freeze",
+    "msm-haboob",
+    "msm-kawasan",
+    "msm-lowland"
+];
+
+const customMapPrefixes = ["boa2", "rbw", "hc3", "msm"];
+
+
 export default new Vuex.Store({
     state: {
         civ1: "",
@@ -38,7 +119,10 @@ export default new Vuex.Store({
             team1Name: "",
             team2Name: "",
             selectedMaps: []
-        }
+        },
+        defaultMaps: defaultMaps,
+        customMaps: customMaps,
+        customMapPrefixes: customMapPrefixes
     },
     getters: {
         getCivDescription: (state) => (civName) => {
@@ -46,6 +130,12 @@ export default new Vuex.Store({
         },
         getCivNames: (state) => {
             return Object.keys(state.civNames);
+        },
+        getAllMaps: (state) => {
+            return state.customMaps.concat(state.defaultMaps);
+        },
+        getCustomPrefixes: (state) => {
+            return state.customMapPrefixes;
         }
         // Compute derived state based on the current state. More like computed property.
     },

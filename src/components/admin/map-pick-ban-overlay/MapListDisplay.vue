@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <MapDisplay v-for="(value, index) in selectedMaps" :key="index" :map-name="value" />
+  <div class="md-layout md-gutter md-alignment-top-center">
+    <MapDisplay
+      class="md-layout-item"
+      v-for="(value, index) in selectedMaps"
+      :key="index"
+      :map-name="value"
+    />
   </div>
 </template>
 
