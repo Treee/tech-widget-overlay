@@ -18,8 +18,8 @@ export default new Vuex.Store({
             AdminHideAll: 6
         },
         techUpgradeOverlayControlOptions: {
-            sound: false,
-            tech: false,
+            sound: true,
+            tech: true,
             blacksmith: false,
             university: false,
             monastary: false,
@@ -36,7 +36,8 @@ export default new Vuex.Store({
             numPicks: 1,
             numBans: 1,
             team1Name: "",
-            team2Name: ""
+            team2Name: "",
+            selectedMaps: []
         }
     },
     getters: {

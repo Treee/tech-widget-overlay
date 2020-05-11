@@ -6,7 +6,7 @@
         class="md-primary large-font"
       >Map Display</md-switch>
       <md-button class="md-raised">Update</md-button>
-      <MapListDisplay />
+      <MapListSelect />
       <md-button class="md-raised">Add Selected Maps</md-button>
     </div>
     <div class="md-layout-item">
@@ -56,7 +56,7 @@
 
 <script>
 import { mapState } from "vuex";
-import MapListDisplay from "./MapListDisplay.vue";
+import MapListSelect from "./MapListSelect.vue";
 
 export default {
   name: "MapPickBanOverlayControls",
@@ -67,7 +67,7 @@ export default {
     })
   },
   components: {
-    MapListDisplay
+    MapListSelect
   }
 };
 </script>

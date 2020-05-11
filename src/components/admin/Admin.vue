@@ -9,6 +9,7 @@
         <MapPickBanOverlayControls />
       </div>
     </div>
+    <MapListDisplay />
   </div>
 </template>
 
@@ -16,6 +17,7 @@
 import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
 import PlayerCivOverlayControls from "./PlayerCivOverlayControls.vue";
 import MapPickBanOverlayControls from "./map-pick-ban-overlay/MapPickBanOverlayControls.vue";
+import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 
 export default {
   name: "Admin",
@@ -23,7 +25,8 @@ export default {
   components: {
     AdminTechUpgradeOverlay,
     PlayerCivOverlayControls,
-    MapPickBanOverlayControls
+    MapPickBanOverlayControls,
+    MapListDisplay
   }
 };
 </script>
