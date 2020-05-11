@@ -5,6 +5,7 @@
       v-for="(controlValue, key, index) in controlOptions"
       :key="index"
       v-model="controlOptions[key]"
+      class="md-primary large-font"
     >{{toCamelCase(key)}}</md-switch>
   </div>
 </template>

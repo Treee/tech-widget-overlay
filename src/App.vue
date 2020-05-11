@@ -42,4 +42,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
+
+.large-font {
+  font-size: large;
+}
 </style>

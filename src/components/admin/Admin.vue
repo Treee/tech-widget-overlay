@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <div class="admin-page">
     <AdminTechUpgradeOverlay />
-    <PlayerCivOverlayControls />
-    <br />
-    <MapPickBanOverlayControls />
+    <div class="md-layout md-gutter md-alignment-top-center">
+      <div class="md-layout-item md-size-10">
+        <PlayerCivOverlayControls />
+      </div>
+      <div class="md-layout-item md-size-50">
+        <MapPickBanOverlayControls />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,4 +29,10 @@ export default {
 </script>
 
 <style language="scss">
+.admin-page {
+  user-select: none;
+  background-color: burlywood;
+  height: 100vh;
+  overflow: hidden;
+}
 </style>

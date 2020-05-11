@@ -1,6 +1,6 @@
 <template>
-  <div class="civ-list-select">
-    <md-switch v-model="civDisplay">Civ Display</md-switch>
+  <div class="player-civ-overlay">
+    <md-switch v-model="civDisplay" class="md-primary large-font">Civ Display</md-switch>
     <md-field>
       <label for="civ-names">Civilizations</label>
       <md-select v-model="selectedCivs" multiple name="civ-names" id="civ-names">
@@ -27,8 +27,7 @@ export default {
 </script>
 
 <style language="scss">
-.civ-list-select {
-  width: 20rem;
-  display: inline-flex;
+.player-civ-overlay {
+  border: 1px solid black;
 }
 </style>
