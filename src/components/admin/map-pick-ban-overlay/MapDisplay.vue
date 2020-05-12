@@ -16,7 +16,7 @@
         </md-select>
       </md-menu-item>
       <md-menu-item>
-        <div>
+        <div class="md-layout">
           <md-radio v-model="mapState" class="md-primary" value="current">Current</md-radio>
           <md-radio v-model="mapState" class="md-primary" value="played">Played</md-radio>
           <md-radio v-model="mapState" class="md-primary" value="banned">Banned</md-radio>
@@ -41,10 +41,10 @@ export default {
   name: "MapDisplay",
   data() {
     return {
-      name: this.mapName || "",
-      mapState: this.currentMapState || "",
-      homeMapPlayer: this.homeMapPlayerName || "",
-      winner: this.mapWinner || ""
+      name: this.mapName,
+      mapState: this.currentMapState,
+      homeMapPlayer: this.homeMapPlayerName,
+      winner: this.mapWinner
     };
   },
   props: {
