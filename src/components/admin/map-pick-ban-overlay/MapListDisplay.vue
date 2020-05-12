@@ -1,10 +1,11 @@
 <template>
-  <div class="overlay-container md-layout md-gutter md-alignment-top-center">
+  <div class="overlay-container md-layout md-alignment-top-center">
     <MapDisplay
+      v-on:mapStateChanged="childMapStateChanges"
       class="md-layout-item"
-      v-for="(value, index) in selectedMaps"
+      v-for="(mapName, index) in selectedMaps"
       :key="index"
-      :map-name="value"
+      :map-name="mapName"
     />
   </div>
 </template>
@@ -26,6 +27,11 @@ export default {
   },
   components: {
     MapDisplay
+  },
+  methods: {
+    childMapStateChanges(dataObj) {
+      this.$store.commit("updateMapState", dataObj);
+    }
   }
 };
 </script>

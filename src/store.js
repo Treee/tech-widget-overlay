@@ -95,6 +95,7 @@ const toCamelCase = (text) => {
 }
 
 export default new Vuex.Store({
+    strict: true,
     state: {
         civ1: "",
         civ2: "",
@@ -202,6 +203,24 @@ export default new Vuex.Store({
         },
         clearUpgradeGroups(state) {
             state.upgradeGroups = [];
+        },
+        updateMapState(state, mapStateChanges) {
+            console.log('test', state);
+            const mapToUpdate = state.mapPickAndBanOverlayControlOptions.selectedMaps.find((map) => {
+                return map.mapName === mapStateChanges.mapName;
+            });
+            if (mapToUpdate !== undefined || mapToUpdate !== null) {
+                mapToUpdate.mapName = mapStateChanges.mapName;
+                mapToUpdate.currentMapState = mapStateChanges.currentMapState;
+                mapToUpdate.homeMapPlayerName = mapStateChanges.homeMapPlayerName;
+                mapToUpdate.mapWinner = mapStateChanges.mapWinner;
+            }
+        },
+        clearSelectedMaps(state) {
+            state.mapPickAndBanOverlayControlOptions.selectedMaps = [];
+        },
+        updateSelectedMaps(state, newMaps) {
+            state.mapPickAndBanOverlayControlOptions.selectedMaps = newMaps;
         }
     },
     actions: {

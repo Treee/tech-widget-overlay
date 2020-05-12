@@ -1,11 +1,37 @@
 <template>
-  <div class="map-display">
-    <div class="image-container">
-      <div class="map-frame" :style="getMapFrame"></div>
-      <div class="map-image" :style="getMapImage"></div>
-      <div class="map-name">{{this.$store.getters.getFormattedMapName(mapName)}}</div>
+  <md-menu md-direction="bottom-start">
+    <md-menu-content>
+      <md-menu-item v-if="playerNames.length > 0">
+        <label :for="name+'-home'">Player Home Map</label>
+        <md-select v-model="homeMapPlayer" :name="name+'-home'" :id="name+'-home'">
+          <md-option value></md-option>
+          <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
+        </md-select>
+      </md-menu-item>
+      <md-menu-item v-if="playerNames.length > 0">
+        <label :for="name+'-winner'">Winner!!</label>
+        <md-select v-model="winner" :name="name+'-winner'" :id="name+'-winner'">
+          <md-option value></md-option>
+          <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
+        </md-select>
+      </md-menu-item>
+      <md-menu-item>
+        <div>
+          <md-radio v-model="mapState" class="md-primary" value="current">Current</md-radio>
+          <md-radio v-model="mapState" class="md-primary" value="played">Played</md-radio>
+          <md-radio v-model="mapState" class="md-primary" value="banned">Banned</md-radio>
+          <md-radio v-model="mapState" class="md-primary" value="open">Open</md-radio>
+        </div>
+      </md-menu-item>
+    </md-menu-content>
+    <div class="map-display" md-menu-trigger>
+      <div class="image-container">
+        <div class="map-frame" :style="getMapFrame"></div>
+        <div class="map-image" :style="getMapImage"></div>
+        <div class="map-name">{{this.$store.getters.getFormattedMapName(name)}}</div>
+      </div>
     </div>
-  </div>
+  </md-menu>
 </template>
 
 <script>
@@ -13,16 +39,36 @@ import { mapState } from "vuex";
 
 export default {
   name: "MapDisplay",
+  data() {
+    return {
+      name: this.mapName || "",
+      mapState: this.currentMapState || "",
+      homeMapPlayer: this.homeMapPlayerName || "",
+      winner: this.mapWinner || ""
+    };
+  },
   props: {
     mapName: String,
-    mapState: String
+    currentMapState: String,
+    homeMapPlayerName: String,
+    mapWinner: String
   },
   computed: {
     ...mapState({
-      allMaps: state => state.customMaps.concat(state.defaultMaps)
+      allMaps: state => state.customMaps.concat(state.defaultMaps),
+      playerNames: state => {
+        const players = [];
+        if (state.mapPickAndBanOverlayControlOptions.team1Name !== "") {
+          players.push(state.mapPickAndBanOverlayControlOptions.team1Name);
+        }
+        if (state.mapPickAndBanOverlayControlOptions.team2Name) {
+          players.push(state.mapPickAndBanOverlayControlOptions.team2Name);
+        }
+        return players;
+      }
     }),
     getMapImage() {
-      const map = this.toKabobCase(this.mapName);
+      const map = this.toKabobCase(this.name);
       const mapFolder = this.isCustomMap(map) ? "custom" : "default";
       return {
         background: `url("/assets/images/maps/${mapFolder}/${map}.png")`
@@ -35,6 +81,9 @@ export default {
     }
   },
   methods: {
+    mapStateChanged() {
+      this.$emit("mapStateChanged", { ...this.$data });
+    },
     getMapFrameImagePath() {
       let mapFrame = "frame.png";
       if (this.mapState === "current") {
@@ -59,7 +108,7 @@ export default {
     }
   }
 };
-</script>
+</script> 
 
 <style language="scss">
 .map-display {
