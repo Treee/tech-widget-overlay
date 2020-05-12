@@ -55,7 +55,6 @@ export default {
   },
   computed: {
     ...mapState({
-      allMaps: state => state.customMaps.concat(state.defaultMaps),
       playerNames: state => {
         const players = [];
         if (state.mapPickAndBanOverlayControlOptions.team1Name !== "") {
@@ -69,7 +68,9 @@ export default {
     }),
     getMapImage() {
       const map = this.toKabobCase(this.name);
-      const mapFolder = this.isCustomMap(map) ? "custom" : "default";
+      const mapFolder = this.$store.getters.isCustomMap(map)
+        ? "custom"
+        : "default";
       return {
         background: `url("/assets/images/maps/${mapFolder}/${map}.png")`
       };
@@ -94,11 +95,6 @@ export default {
         mapFrame = "frame-previously-played.png";
       }
       return mapFrame;
-    },
-    isCustomMap(map) {
-      return this.allMaps.some(customMap => {
-        return map === customMap;
-      });
     },
     toKabobCase(text) {
       return text

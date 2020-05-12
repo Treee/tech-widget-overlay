@@ -129,7 +129,8 @@ export default new Vuex.Store({
             numBans: 1,
             team1Name: "",
             team2Name: "",
-            selectedMaps: []
+            selectedMaps: [],
+            mapStates: []
         },
         defaultMaps: defaultMaps,
         customMaps: customMaps,
@@ -171,6 +172,11 @@ export default new Vuex.Store({
             }
             // toCamelCase
             return mapName.trim();
+        },
+        isCustomMap: (state) => (map) => {
+            return state.customMaps.concat(state.defaultMaps).some(customMap => {
+                return map === customMap;
+            });
         }
         // Compute derived state based on the current state. More like computed property.
     },
