@@ -3,13 +3,12 @@
     <md-field>
       <label for="map-names">Map List</label>
       <md-select
-        v-model="selectedMaps"
+        :value="storeSelectedMaps"
         v-on:md-selected="mapSelected($event)"
         multiple
         name="map-names"
         id="map-names"
       >
-        <!-- <md-option value></md-option> -->
         <md-button class="md-raised md-accent" v-on:click="clearSelectedMaps">Clear Selection</md-button>
         <md-option
           v-for="(value, index) in this.$store.getters.getAllMaps"
@@ -26,11 +25,6 @@ import { mapState } from "vuex";
 
 export default {
   name: "MapListSelect",
-  data() {
-    return {
-      selectedMaps: this.storeSelectedMaps || []
-    };
-  },
   computed: {
     ...mapState({
       storeSelectedMaps: state =>

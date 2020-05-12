@@ -174,7 +174,7 @@ export default new Vuex.Store({
             return mapName.trim();
         },
         isCustomMap: (state) => (map) => {
-            return state.customMaps.concat(state.defaultMaps).some(customMap => {
+            return state.customMaps.some(customMap => {
                 return map === customMap;
             });
         }
