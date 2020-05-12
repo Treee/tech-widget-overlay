@@ -16,7 +16,7 @@
         </md-select>
       </md-menu-item>
       <md-menu-item>
-        <div class="md-layout">
+        <div class="md-layout" v-on:click.prevent="preventEventPropagation">
           <md-radio v-model="mapState" class="md-primary" value="current">Current</md-radio>
           <md-radio v-model="mapState" class="md-primary" value="played">Played</md-radio>
           <md-radio v-model="mapState" class="md-primary" value="banned">Banned</md-radio>
@@ -82,6 +82,9 @@ export default {
     }
   },
   methods: {
+    preventEventPropagation(event) {
+      event.stopPropagation();
+    },
     mapStateChanged() {
       this.$emit("mapStateChanged", { ...this.$data });
     },
