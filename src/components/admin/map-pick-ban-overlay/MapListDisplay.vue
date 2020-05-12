@@ -1,5 +1,5 @@
 <template>
-  <div class="md-layout md-gutter md-alignment-top-center">
+  <div class="overlay-container md-layout md-gutter md-alignment-top-center">
     <MapDisplay
       class="md-layout-item"
       v-for="(value, index) in selectedMaps"

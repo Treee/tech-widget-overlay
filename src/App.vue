@@ -46,4 +46,9 @@ export default {
 .large-font {
   font-size: large;
 }
+
+.overlay-container {
+  width: 99vw;
+  display: inline-flex;
+}
 </style>

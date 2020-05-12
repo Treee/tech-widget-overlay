@@ -84,7 +84,6 @@ const customMaps = [
 const customMapPrefixes = ["boa2", "rbw", "hc3", "msm"];
 
 const toCamelCase = (text) => {
-    console.log('split text', text);
     let camelCase = "";
     text.split("-").forEach(word => {
         camelCase = camelCase

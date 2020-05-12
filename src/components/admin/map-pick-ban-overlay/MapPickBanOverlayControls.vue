@@ -7,9 +7,8 @@
       >Map Display</md-switch>
       <md-button class="md-raised">Update</md-button>
       <MapListSelect />
-      <md-button class="md-raised">Add Selected Maps</md-button>
     </div>
-    <div class="md-layout-item">
+    <div class="md-layout-item md-size-40">
       <md-switch
         v-model="controlOptions.showMapBrandingImage"
         class="md-primary large-font"
@@ -42,6 +41,8 @@
           v-model="controlOptions.numBans"
         />
       </md-field>
+    </div>
+    <div class="md-layout-item">
       <md-field>
         <label>Team 1</label>
         <md-input v-model="controlOptions.team1Name"></md-input>
