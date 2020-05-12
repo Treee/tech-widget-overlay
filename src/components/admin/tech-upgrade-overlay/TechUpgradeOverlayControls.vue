@@ -1,12 +1,36 @@
 <template>
   <div>
-    <md-button class="md-raised">Clear All</md-button>
+    <md-button class="md-raised" v-on:click="clearAllClick">Clear All</md-button>
+    <md-switch v-model="sound" v-on:change="valueChanged" class="md-primary large-font">Sound</md-switch>
+    <md-switch v-model="tech" v-on:change="valueChanged" class="md-primary large-font">Tech</md-switch>
     <md-switch
-      v-for="(controlValue, key, index) in controlOptions"
-      :key="index"
-      v-model="controlOptions[key]"
+      v-model="blacksmith"
+      v-on:change="valueChanged"
       class="md-primary large-font"
-    >{{toCamelCase(key)}}</md-switch>
+    >Blacksmith</md-switch>
+    <md-switch
+      v-model="university"
+      v-on:change="valueChanged"
+      class="md-primary large-font"
+    >University</md-switch>
+    <md-switch
+      v-model="monastary"
+      v-on:change="valueChanged"
+      class="md-primary large-font"
+    >Monastary</md-switch>
+    <md-switch v-model="dock" v-on:change="valueChanged" class="md-primary large-font">Dock</md-switch>
+    <md-switch v-model="barracks" v-on:change="valueChanged" class="md-primary large-font">Barracks</md-switch>
+    <md-switch
+      v-model="archeryRange"
+      v-on:change="valueChanged"
+      class="md-primary large-font"
+    >Archery Range</md-switch>
+    <md-switch v-model="stable" v-on:change="valueChanged" class="md-primary large-font">Stable</md-switch>
+    <md-switch
+      v-model="siegeWorkshop"
+      v-on:change="valueChanged"
+      class="md-primary large-font"
+    >Siege Workshop</md-switch>
   </div>
 </template>
 
@@ -14,13 +38,31 @@
 import { mapState } from "vuex";
 export default {
   name: "TechUpgradeOverlayControls",
-  props: {},
   computed: {
     ...mapState({
       controlOptions: state => state.techUpgradeOverlayControlOptions
     })
   },
+  data() {
+    return {
+      sound: this.controlOptions?.sound,
+      tech: this.controlOptions?.tech,
+      blacksmith: this.controlOptions?.blacksmith,
+      university: this.controlOptions?.university,
+      monastary: this.controlOptions?.monastary,
+      dock: this.controlOptions?.dock,
+      barracks: this.controlOptions?.barracks,
+      archeryRange: this.controlOptions?.archeryRange,
+      stable: this.controlOptions?.stable,
+      siegeWorkshop: this.controlOptions?.siegeWorkshop
+    };
+  },
   methods: {
+    clearAllClick() {
+      this.sound = this.tech = true;
+      this.blacksmith = this.university = this.monastary = this.dock = false;
+      this.barracks = this.archeryRange = this.stable = this.siegeWorkshop = false;
+    },
     toCamelCase(text) {
       let camelCase = "";
       text.split("-").forEach(word => {
@@ -30,6 +72,12 @@ export default {
           .concat(" ");
       });
       return camelCase;
+    },
+    valueChanged() {
+      console.log("changed");
+      this.$store.commit("updateTechUpgradeOverlayControlOptions", {
+        ...this.$data
+      });
     }
   }
 };

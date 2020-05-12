@@ -229,7 +229,6 @@ export default new Vuex.Store({
             state.mapPickAndBanOverlayControlOptions.selectedMaps = newMaps;
         },
         updateMapPickAndBanOverlayControls(state, data) {
-            console.log('update', data);
             state.mapPickAndBanOverlayControlOptions.mapOverlayVisible = data.mapOverlayVisible;
             state.mapPickAndBanOverlayControlOptions.showMapBrandingImage = data.showMapBrandingImage;
             state.mapPickAndBanOverlayControlOptions.brandingImageUrl = data.brandingImageUrl;
@@ -237,6 +236,18 @@ export default new Vuex.Store({
             state.mapPickAndBanOverlayControlOptions.numBan = data.numBan;
             state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
             state.mapPickAndBanOverlayControlOptions.team2Name = data.team2Name;
+        },
+        updateTechUpgradeOverlayControlOptions(state, data) {
+            state.techUpgradeOverlayControlOptions.sound = data.sound;
+            state.techUpgradeOverlayControlOptions.tech = data.tech;
+            state.techUpgradeOverlayControlOptions.blacksmith = data.blacksmith;
+            state.techUpgradeOverlayControlOptions.university = data.university;
+            state.techUpgradeOverlayControlOptions.monastary = data.monastary;
+            state.techUpgradeOverlayControlOptions.dock = data.dock;
+            state.techUpgradeOverlayControlOptions.barracks = data.barracks;
+            state.techUpgradeOverlayControlOptions.archeryRange = data.archeryRange;
+            state.techUpgradeOverlayControlOptions.stable = data.stable;
+            state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
         }
     },
     actions: {
