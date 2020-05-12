@@ -1,8 +1,10 @@
 <template>
   <div class="map-display">
-    <div class="map-frame" :style="getMapFrame"></div>
-    <div class="map-image" :style="getMapImage"></div>
-    <div>{{mapName}}</div>
+    <div class="image-container">
+      <div class="map-frame" :style="getMapFrame"></div>
+      <div class="map-image" :style="getMapImage"></div>
+      <div>{{this.$store.getters.getFormattedMapName(mapName)}}</div>
+    </div>
   </div>
 </template>
 
@@ -61,8 +63,14 @@ export default {
 
 <style language="scss">
 .map-display {
-  width: 6rem;
-  height: 6rem;
+  width: 10rem;
+  height: 10rem;
+}
+
+.image-container {
+  width: inherit;
+  height: inherit;
+  display: inline-flex;
 }
 
 .map-frame {

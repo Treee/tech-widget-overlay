@@ -83,6 +83,17 @@ const customMaps = [
 
 const customMapPrefixes = ["boa2", "rbw", "hc3", "msm"];
 
+const toCamelCase = (text) => {
+    console.log('split text', text);
+    let camelCase = "";
+    text.split("-").forEach(word => {
+        camelCase = camelCase
+            .concat(word.charAt(0).toUpperCase())
+            .concat(word.substring(1))
+            .concat(" ");
+    });
+    return camelCase;
+}
 
 export default new Vuex.Store({
     state: {
@@ -136,6 +147,30 @@ export default new Vuex.Store({
         },
         getCustomPrefixes: (state) => {
             return state.customMapPrefixes;
+        },
+        getFormattedMapName: (state) => (rawMapName) => {
+            let mapName = "";
+            const mapNameParts = rawMapName.split("-");
+            if (mapNameParts.length === 1) {
+                // single word map name, not custom
+                mapName = toCamelCase(rawMapName);
+            } else {
+                const customMapPrefix =
+                    state.customMapPrefixes.find(prefix => {
+                        return prefix === mapNameParts[0];
+                    }) || "";
+                if (customMapPrefix === "") {
+                    // multi word map name, not custom
+                    mapName = toCamelCase(rawMapName);
+                } else {
+                    // multi word map name, is custom
+                    mapName = `${mapNameParts[0].toUpperCase()} ${toCamelCase(
+                        rawMapName.substring(mapNameParts[0].length + 1)
+                    )}`;
+                }
+            }
+            // toCamelCase
+            return mapName.trim();
         }
         // Compute derived state based on the current state. More like computed property.
     },
