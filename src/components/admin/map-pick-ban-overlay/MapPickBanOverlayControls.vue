@@ -17,7 +17,7 @@
       >Show Branding Image</md-switch>
       <md-field>
         <label>Branding (https://www.myspecialImage.com)</label>
-        <md-input v-model="brandingImageUrl" @change="valueChanged"></md-input>
+        <md-input v-model="brandingImageUrl" v-on:change="valueChanged"></md-input>
       </md-field>
     </div>
     <div class="md-layout-item">
@@ -42,18 +42,18 @@
           min="0"
           max="10"
           v-model="numBans"
-          @change="valueChanged"
+          v-on:change="valueChanged"
         />
       </md-field>
     </div>
     <div class="md-layout-item">
       <md-field>
         <label>Team 1</label>
-        <md-input v-model="team1Name" @change="valueChanged"></md-input>
+        <md-input v-model="team1Name" v-on:change="valueChanged"></md-input>
       </md-field>
       <md-field>
         <label>Team 2</label>
-        <md-input v-model="team2Name" @change="valueChanged"></md-input>
+        <md-input v-model="team2Name" v-on:change="valueChanged"></md-input>
       </md-field>
     </div>
   </div>

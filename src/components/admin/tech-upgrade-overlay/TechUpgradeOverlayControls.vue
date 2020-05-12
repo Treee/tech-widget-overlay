@@ -74,7 +74,6 @@ export default {
       return camelCase;
     },
     valueChanged() {
-      console.log("changed");
       this.$store.commit("updateTechUpgradeOverlayControlOptions", {
         ...this.$data
       });
