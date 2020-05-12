@@ -1,19 +1,28 @@
 <template>
-  <md-menu md-direction="bottom-start">
+  <md-menu md-direction="bottom-start" v-on:md-closed="menuClosed">
     <md-menu-content>
       <md-menu-item v-if="playerNames.length > 0">
-        <label :for="name+'-home'">Player Home Map</label>
-        <md-select v-model="homeMapPlayer" :name="name+'-home'" :id="name+'-home'">
-          <md-option value></md-option>
-          <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
-        </md-select>
+        <md-field>
+          <label :for="name+'-home'">Player Home Map</label>
+          <md-select
+            v-model="homeMapPlayer"
+            :name="name+'-home'"
+            :id="name+'-home'"
+            v-on:click.prevent="preventEventPropagation"
+          >
+            <md-option value></md-option>
+            <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
+          </md-select>
+        </md-field>
       </md-menu-item>
       <md-menu-item v-if="playerNames.length > 0">
-        <label :for="name+'-winner'">Winner!!</label>
-        <md-select v-model="winner" :name="name+'-winner'" :id="name+'-winner'">
-          <md-option value></md-option>
-          <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
-        </md-select>
+        <md-field>
+          <label :for="name+'-winner'">Winner!!</label>
+          <md-select v-model="winner" :name="name+'-winner'" :id="name+'-winner'">
+            <md-option value></md-option>
+            <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
+          </md-select>
+        </md-field>
       </md-menu-item>
       <md-menu-item>
         <div class="md-layout" v-on:click.prevent="preventEventPropagation">
@@ -83,9 +92,15 @@ export default {
   },
   methods: {
     preventEventPropagation(event) {
+      // event.preventDefault();
       event.stopPropagation();
     },
+    menuClosed() {
+      // push map state
+      console.log("menu closed", this.mapName);
+    },
     mapStateChanged() {
+      console.log("map state change");
       this.$emit("mapStateChanged", { ...this.$data });
     },
     getMapFrameImagePath() {

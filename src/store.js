@@ -127,8 +127,8 @@ export default new Vuex.Store({
             brandingImageUrl: "",
             numPicks: 1,
             numBans: 1,
-            team1Name: "",
-            team2Name: "",
+            team1Name: "test",
+            team2Name: "test1",
             selectedMaps: [],
             mapStates: []
         },
@@ -227,6 +227,16 @@ export default new Vuex.Store({
         },
         updateSelectedMaps(state, newMaps) {
             state.mapPickAndBanOverlayControlOptions.selectedMaps = newMaps;
+        },
+        updateMapPickAndBanOverlayControls(state, data) {
+            console.log('update', data);
+            state.mapPickAndBanOverlayControlOptions.mapOverlayVisible = data.mapOverlayVisible;
+            state.mapPickAndBanOverlayControlOptions.showMapBrandingImage = data.showMapBrandingImage;
+            state.mapPickAndBanOverlayControlOptions.brandingImageUrl = data.brandingImageUrl;
+            state.mapPickAndBanOverlayControlOptions.numPick = data.numPick;
+            state.mapPickAndBanOverlayControlOptions.numBan = data.numBan;
+            state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
+            state.mapPickAndBanOverlayControlOptions.team2Name = data.team2Name;
         }
     },
     actions: {
