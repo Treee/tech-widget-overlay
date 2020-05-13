@@ -21,6 +21,9 @@ import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 
 export default {
   name: "Admin",
+  props: {
+    clientId: String
+  },
   components: {
     AdminTechUpgradeOverlay,
     PlayerCivOverlayControls,

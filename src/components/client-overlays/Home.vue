@@ -1,7 +1,6 @@
 <template>
   <div>
     <ClientOverlays />
-    <div>{{clientId}}</div>
   </div>
 </template>
 
@@ -17,7 +16,7 @@ export default {
     ClientOverlays
   },
   created: function() {
-    console.log("App created", this.clientId);
+    // console.log("App created", this.clientId);
   }
 };
 </script>
