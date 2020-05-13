@@ -1,6 +1,6 @@
 <template>
   <div class="admin-tech-upgrade-overlay">
-    <TechUpgradeOverlayControls />
+    <TechUpgradeOverlayControls v-on:bubble-up-child="bubbleUp" />
     <CivListDisplay class="admin-civ-list-display" :civ-list="this.$store.getters.getCivNames" />
   </div>
 </template>
@@ -21,6 +21,11 @@ export default {
   components: {
     CivListDisplay,
     TechUpgradeOverlayControls
+  },
+  methods: {
+    bubbleUp(data) {
+      this.$emit("techOverlayShow", data);
+    }
   }
 };
 </script>

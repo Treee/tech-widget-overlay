@@ -1,6 +1,6 @@
 <template>
   <div class="admin-page">
-    <AdminTechUpgradeOverlay />
+    <AdminTechUpgradeOverlay v-on:techOverlayShow="techOverlayHandler" />
     <div class="md-layout md-gutter md-alignment-top-center">
       <div class="md-layout-item md-size-10">
         <PlayerCivOverlayControls />
@@ -33,6 +33,9 @@ export default {
     MapListDisplay
   },
   methods: {
+    techOverlayHandler(data) {
+      console.log("data", data);
+    },
     handleSocketMessage(event) {
       console.log("admin handling message", event);
     }

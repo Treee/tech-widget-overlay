@@ -66,7 +66,7 @@ export default {
       this.$store.commit("clearCivs");
     },
     showOverlayClick() {
-      console.log("showOverlayClick");
+      this.$emit("bubble-up-child", { ...this.$data });
     },
     toCamelCase(text) {
       let camelCase = "";
