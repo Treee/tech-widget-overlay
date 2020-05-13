@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     valueChanged() {
-      console.log("changed");
       this.$store.commit("updatePlayerCiveOverlayControlOptions", {
         ...this.$data
       });
