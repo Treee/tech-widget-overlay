@@ -1,22 +1,23 @@
 <template>
   <div>
     <ClientOverlays />
+    <div>{{clientId}}</div>
   </div>
 </template>
 
 <script>
-import ClientOverlays from "./components/client-overlays/ClientOverlays.vue";
+import ClientOverlays from "./ClientOverlays.vue";
 
 export default {
-  name: "App",
-  props: {},
+  name: "Home",
+  props: {
+    clientId: String
+  },
   components: {
     ClientOverlays
   },
-  methods: {
-    isVisible() {
-      return !(this.civ1 === "" || this.civ2 === "");
-    }
+  created: function() {
+    console.log("App created", this.clientId);
   }
 };
 </script>

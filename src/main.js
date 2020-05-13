@@ -4,7 +4,7 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-import App from './App.vue';
+import Home from './components/client-overlays/Home.vue';
 import Admin from './components/admin/Admin.vue';
 
 import websocketClientOverlay from "./client";
@@ -17,10 +17,9 @@ Vue.use(VueMaterial);
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/admin', component: Admin },
-  { path: '/', component: App }
+  { path: '/:clientId/admin', component: Admin, props: true },
+  { path: '/:clientId', component: Home, props: true }
 ];
-
 
 const router = new VueRouter({
   mode: 'history',
@@ -32,7 +31,7 @@ new Vue({
   router: router,
   store: store,
   components: {
-    App,
+    Home,
     Admin
   },
   created: function () {
