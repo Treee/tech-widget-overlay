@@ -1,6 +1,7 @@
 <template>
   <div>
     <md-button class="md-raised" v-on:click="clearAllClick">Clear All</md-button>
+    <md-button class="md-raised">Show Overlay</md-button>
     <md-switch v-model="sound" v-on:change="valueChanged" class="md-primary large-font">Sound</md-switch>
     <md-switch v-model="tech" v-on:change="valueChanged" class="md-primary large-font">Tech</md-switch>
     <md-switch
@@ -45,8 +46,8 @@ export default {
   },
   data() {
     return {
-      sound: this.controlOptions?.sound,
-      tech: this.controlOptions?.tech,
+      sound: this.controlOptions?.sound || true,
+      tech: this.controlOptions?.tech || true,
       blacksmith: this.controlOptions?.blacksmith,
       university: this.controlOptions?.university,
       monastary: this.controlOptions?.monastary,
@@ -62,6 +63,7 @@ export default {
       this.sound = this.tech = true;
       this.blacksmith = this.university = this.monastary = this.dock = false;
       this.barracks = this.archeryRange = this.stable = this.siegeWorkshop = false;
+      this.$store.commit("clearCivs");
     },
     toCamelCase(text) {
       let camelCase = "";

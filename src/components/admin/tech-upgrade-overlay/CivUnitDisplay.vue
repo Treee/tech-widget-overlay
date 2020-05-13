@@ -1,5 +1,10 @@
 <template>
-  <div v-on:click="civClicked" class="civ-tech-icon faded" :style="getIconStyle">
+  <div
+    v-on:click="civClicked"
+    class="civ-tech-icon faded"
+    :style="getIconStyle"
+    :class="{'player-one': this.$store.getters.isPlayerOne(civName), 'player-two': this.$store.getters.isPlayerTwo(civName)}"
+  >
     <div class="civ-text">{{civName}}</div>
   </div>
 </template>
@@ -8,7 +13,8 @@
 export default {
   name: "CivUnitDisplay",
   props: {
-    civName: String
+    civName: String,
+    clickCounter: Number
   },
   computed: {
     getIconStyle() {
@@ -21,7 +27,8 @@ export default {
   },
   methods: {
     civClicked() {
-      console.log("click event", this.civName);
+      // console.log(`civselected ${this.clickedCounter}`, this.civName);
+      this.$emit("civselected", this.civName);
     }
   }
 };
@@ -58,7 +65,11 @@ export default {
   opacity: 0.5;
 }
 
-.not-faded {
-  opacity: 1;
+.player-one {
+  background-color: blue !important;
+}
+
+.player-two {
+  background-color: red !important;
 }
 </style>

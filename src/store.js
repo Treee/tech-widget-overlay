@@ -92,7 +92,7 @@ const toCamelCase = (text) => {
             .concat(" ");
     });
     return camelCase;
-}
+};
 
 export default new Vuex.Store({
     strict: true,
@@ -113,6 +113,8 @@ export default new Vuex.Store({
             selectedMapsAndState: []
         },
         techUpgradeOverlayControlOptions: {
+            civ1: "",
+            civ2: "",
             sound: true,
             tech: true,
             blacksmith: false,
@@ -194,6 +196,12 @@ export default new Vuex.Store({
             return state.customMaps.some(customMap => {
                 return map === customMap;
             });
+        },
+        isPlayerOne: (state) => (playerName) => {
+            return state.techUpgradeOverlayControlOptions.civ1 === playerName;
+        },
+        isPlayerTwo: (state) => (playerName) => {
+            return state.techUpgradeOverlayControlOptions.civ2 === playerName;
         }
         // Compute derived state based on the current state. More like computed property.
     },
@@ -210,19 +218,20 @@ export default new Vuex.Store({
         setDataStrings(state, dataStrings) {
             state.dataString = dataStrings;
         },
-        updateCiv(state, civ) {
-            if (state.civ1 === "") {
-                state.civ1 = civ;
-            } else {
-                state.civ2 = civ;
+        updateCivs(state, { civ1, civ2 }) {
+            if (civ1 !== "") {
+                state.techUpgradeOverlayControlOptions.civ1 = civ1;
+            }
+            if (civ2 !== "") {
+                state.techUpgradeOverlayControlOptions.civ2 = civ2;
             }
         },
         updateUpgradeGroups(state, upgrades) {
             state.upgradeGroups = upgrades;
         },
         clearCivs(state) {
-            state.civ1 = "";
-            state.civ2 = "";
+            state.techUpgradeOverlayControlOptions.civ1 = "";
+            state.techUpgradeOverlayControlOptions.civ2 = "";
         },
         clearUpgradeGroups(state) {
             state.upgradeGroups = [];
@@ -254,7 +263,7 @@ export default new Vuex.Store({
             state.techUpgradeOverlayControlOptions.stable = data.stable;
             state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
         },
-        updatePlayerCiveOverlayControlOptions(state, data) {
+        updatePlayerCivOverlayControlOptions(state, data) {
             state.playerCiveOverlayControlOptions.selectedCivs = data.selectedCivs;
             state.playerCiveOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
         }

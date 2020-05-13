@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     valueChanged() {
-      this.$store.commit("updatePlayerCiveOverlayControlOptions", {
+      this.$store.commit("updatePlayerCivOverlayControlOptions", {
         ...this.$data
       });
     }
