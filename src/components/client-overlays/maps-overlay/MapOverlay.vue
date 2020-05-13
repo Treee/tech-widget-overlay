@@ -1,6 +1,6 @@
 <template>
   <div class="overlay-container md-layout md-alignment-top-center">
-    <MapDisplay
+    <ClientMapDisplay
       class="md-layout-item"
       v-for="({mapName, mapState, homeMapPlayer, winner}, index) in selectedMapsAndState"
       :key="index"
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import MapDisplay from "./MapDisplay.vue";
+import ClientMapDisplay from "./ClientMapDisplay.vue";
 
 export default {
   name: "MapListDisplay",
@@ -21,7 +21,7 @@ export default {
     selectedMapsAndState: Array
   },
   components: {
-    MapDisplay
+    ClientMapDisplay
   }
 };
 </script>

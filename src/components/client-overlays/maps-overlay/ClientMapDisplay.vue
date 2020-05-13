@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "MapDisplay",
+  name: "ClientMapDisplay",
   props: {
     name: String,
     mapState: String,
