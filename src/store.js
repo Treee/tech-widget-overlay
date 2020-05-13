@@ -127,8 +127,8 @@ export default new Vuex.Store({
             brandingImageUrl: "",
             numPicks: 1,
             numBans: 1,
-            team1Name: "test",
-            team2Name: "test1",
+            team1Name: "",
+            team2Name: "",
             selectedMaps: [],
             mapStates: []
         },

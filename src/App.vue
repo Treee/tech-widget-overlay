@@ -1,25 +1,17 @@
 <template>
   <div>
-    <CivBonusOverlay
-      v-if="isVisible()"
-      :civ1="this.$store.state.civ1"
-      :civ1-description="this.$store.getters.getCivDescription(this.$store.state.civ1)"
-      :upgrade-groups="this.$store.state.upgradeGroups"
-      :civ2="this.$store.state.civ2"
-      :civ2-description="this.$store.getters.getCivDescription(this.$store.state.civ2)"
-      :playSound="false"
-    />
+    <ClientOverlays />
   </div>
 </template>
 
 <script>
-import CivBonusOverlay from "./components/tech-upgrade-overlay/CivBonusOverlay.vue";
+import ClientOverlays from "./components/client-overlays/ClientOverlays.vue";
 
 export default {
   name: "App",
   props: {},
   components: {
-    CivBonusOverlay
+    ClientOverlays
   },
   methods: {
     isVisible() {
