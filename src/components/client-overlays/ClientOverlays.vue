@@ -1,7 +1,7 @@
 <template>
   <div>
     <CivBonusOverlay
-      v-if="isVisible()"
+      v-if="isCivBonusOverlayVisible()"
       :civ1="this.$store.state.civ1"
       :civ1-description="this.$store.getters.getCivDescription(this.$store.state.civ1)"
       :upgrade-groups="this.$store.state.upgradeGroups"
@@ -9,7 +9,10 @@
       :civ2-description="this.$store.getters.getCivDescription(this.$store.state.civ2)"
       :playSound="false"
     />
-    <MapOverlay />
+    <MapOverlay
+      v-if="isMapOverlayVisible()"
+      :selected-maps-and-state="this.$store.state.clientControlOptions.selectedMapsAndState"
+    />
   </div>
 </template>
 
@@ -24,8 +27,13 @@ export default {
     MapOverlay
   },
   methods: {
-    isVisible() {
-      return !(this.civ1 === "" || this.civ2 === "");
+    isCivBonusOverlayVisible() {
+      return !(this.$store.state.civ1 === "" || this.$store.state.civ2 === "");
+    },
+    isMapOverlayVisible() {
+      return (
+        this.$store.state.clientControlOptions.selectedMapsAndState.length > 0
+      );
     }
   }
 };

@@ -109,6 +109,9 @@ export default new Vuex.Store({
             AdminShow: 2,
             AdminHideAll: 6
         },
+        clientControlOptions: {
+            selectedMapsAndState: []
+        },
         techUpgradeOverlayControlOptions: {
             sound: true,
             tech: true,
