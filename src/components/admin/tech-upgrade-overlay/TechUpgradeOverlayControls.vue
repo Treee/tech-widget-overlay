@@ -1,7 +1,7 @@
 <template>
   <div>
     <md-button class="md-raised" v-on:click="clearAllClick">Clear All</md-button>
-    <md-button class="md-raised">Show Overlay</md-button>
+    <md-button class="md-raised" v-on:click="showOverlayClick">Show Overlay</md-button>
     <md-switch v-model="sound" v-on:change="valueChanged" class="md-primary large-font">Sound</md-switch>
     <md-switch v-model="tech" v-on:change="valueChanged" class="md-primary large-font">Tech</md-switch>
     <md-switch
@@ -64,6 +64,9 @@ export default {
       this.blacksmith = this.university = this.monastary = this.dock = false;
       this.barracks = this.archeryRange = this.stable = this.siegeWorkshop = false;
       this.$store.commit("clearCivs");
+    },
+    showOverlayClick() {
+      console.log("showOverlayClick");
     },
     toCamelCase(text) {
       let camelCase = "";

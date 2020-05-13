@@ -35,6 +35,9 @@ export default {
         this.$store.state.clientControlOptions.selectedMapsAndState.length > 0
       );
     }
+  },
+  created: () => {
+    console.log("client overlay created");
   }
 };
 </script>

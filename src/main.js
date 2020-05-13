@@ -7,7 +7,7 @@ import 'vue-material/dist/theme/default.css'
 import App from './App.vue';
 import Admin from './components/admin/Admin.vue';
 
-import websocketClient from "./client";
+import websocketClientOverlay from "./client";
 import aoe2Api from "./api";
 import store from './store';
 
@@ -36,7 +36,7 @@ new Vue({
     Admin
   },
   created: function () {
-    this.client = websocketClient.startClient(
+    this.client = websocketClientOverlay.startClient(
       "treee",
       this.handleSocketMessage
     );

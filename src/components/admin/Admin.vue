@@ -21,12 +21,14 @@ import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 
 export default {
   name: "Admin",
-  props: {},
   components: {
     AdminTechUpgradeOverlay,
     PlayerCivOverlayControls,
     MapPickBanOverlayControls,
     MapListDisplay
+  },
+  created: function() {
+    console.log("created admin");
   }
 };
 </script>
