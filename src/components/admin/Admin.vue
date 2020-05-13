@@ -19,6 +19,8 @@ import PlayerCivOverlayControls from "./PlayerCivOverlayControls.vue";
 import MapPickBanOverlayControls from "./map-pick-ban-overlay/MapPickBanOverlayControls.vue";
 import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 
+import adminOverlayWebSocket from "../../client";
+
 export default {
   name: "Admin",
   props: {
@@ -30,8 +32,17 @@ export default {
     MapPickBanOverlayControls,
     MapListDisplay
   },
+  methods: {
+    handleSocketMessage(event) {
+      console.log("admin handling message", event);
+    }
+  },
   created: function() {
-    console.log("created admin");
+    this.client = adminOverlayWebSocket.startClient(
+      this.clientId,
+      this.handleSocketMessage
+    );
+    // console.log("created admin");
   }
 };
 </script>

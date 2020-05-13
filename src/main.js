@@ -7,7 +7,6 @@ import 'vue-material/dist/theme/default.css'
 import Home from './components/client-overlays/Home.vue';
 import Admin from './components/admin/Admin.vue';
 
-import websocketClientOverlay from "./client";
 import aoe2Api from "./api";
 import store from './store';
 
@@ -35,10 +34,6 @@ new Vue({
     Admin
   },
   created: function () {
-    this.client = websocketClientOverlay.startClient(
-      "treee",
-      this.handleSocketMessage
-    );
     aoe2Api.getAoEData().then(aoeData => {
       // console.log("aoeData", aoeData);
       // console.log("data", aoeData.data);
@@ -54,27 +49,5 @@ new Vue({
       // console.log("strings", aoeData.strings);
       this.$store.commit("setDataStrings", aoeData.strings);
     });
-  },
-  methods: {
-    handleSocketMessage(event) {
-      const message = JSON.parse(event.data);
-      console.log("json", message);
-      if (message.type === this.$store.state.SocketEnums.AdminShow) {
-        this.$store.commit("updateCiv", message.data.civ);
-        const upgradeItems = [];
-        Object.keys(message.data.overlays).forEach(key => {
-          if (key !== "all" && key !== "tech") {
-            if (message.data.overlays[key]) {
-              upgradeItems.push(key);
-            }
-          }
-        });
-        this.$store.commit("updateUpgradeGroups", upgradeItems);
-      }
-      if (message.type === this.$store.state.SocketEnums.AdminHideAll) {
-        this.$store.commit("clearCivs");
-        this.$store.commit("clearUpgradeGroups");
-      }
-    }
   }
 });

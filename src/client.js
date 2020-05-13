@@ -5,10 +5,6 @@ export default {
     clientProperties: {
         clientId: ''
     },
-    // message: { type: SocketEnums, data: any }
-    handleMessage(message) {
-        console.log(`DataType: ${message.type} / RawData: ${JSON.stringify(message.data)}`);
-    },
     // dataType: SocketEnums, rawData: any
     formatDataForWebsocket(dataType, rawData) {
         console.log('Formatting Data for websocket');
@@ -29,7 +25,7 @@ export default {
         this.socket.send(this.formatDataForWebsocket(SocketEnums.ClientRegister, this.clientProperties.clientId));
     },
     onMessage(event) {
-        this.handleMessage(JSON.parse(event.data));
+        console.log(`DataType: ${event.type} / RawData: ${JSON.stringify(event.data)}`);
     },
     onClose(event) {
         if (event.wasClean) {

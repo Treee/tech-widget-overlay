@@ -6,6 +6,7 @@
 
 <script>
 import ClientOverlays from "./ClientOverlays.vue";
+import clientOverlayWebSocket from "../../client";
 
 export default {
   name: "Home",
@@ -15,7 +16,16 @@ export default {
   components: {
     ClientOverlays
   },
+  methods: {
+    handleSocketMessage(event) {
+      console.log("client handling message", event);
+    }
+  },
   created: function() {
+    this.client = clientOverlayWebSocket.startClient(
+      this.clientId,
+      this.handleSocketMessage
+    );
     // console.log("App created", this.clientId);
   }
 };
