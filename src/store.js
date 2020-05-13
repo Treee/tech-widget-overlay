@@ -147,6 +147,16 @@ export default new Vuex.Store({
         getCivNames: (state) => {
             return Object.keys(state.civNames);
         },
+        getPlayerNames: (state) => {
+            const players = [];
+            if (state.mapPickAndBanOverlayControlOptions.team1Name !== "") {
+                players.push(state.mapPickAndBanOverlayControlOptions.team1Name);
+            }
+            if (state.mapPickAndBanOverlayControlOptions.team2Name) {
+                players.push(state.mapPickAndBanOverlayControlOptions.team2Name);
+            }
+            return players;
+        },
         getAllMaps: (state) => {
             return state.customMaps.concat(state.defaultMaps);
         },
@@ -213,18 +223,6 @@ export default new Vuex.Store({
         },
         clearUpgradeGroups(state) {
             state.upgradeGroups = [];
-        },
-        updateMapState(state, mapStateChanges) {
-            console.log('test', state);
-            const mapToUpdate = state.mapPickAndBanOverlayControlOptions.selectedMaps.find((map) => {
-                return map.mapName === mapStateChanges.mapName;
-            });
-            if (mapToUpdate !== undefined || mapToUpdate !== null) {
-                mapToUpdate.mapName = mapStateChanges.mapName;
-                mapToUpdate.currentMapState = mapStateChanges.currentMapState;
-                mapToUpdate.homeMapPlayerName = mapStateChanges.homeMapPlayerName;
-                mapToUpdate.mapWinner = mapStateChanges.mapWinner;
-            }
         },
         clearSelectedMaps(state) {
             state.mapPickAndBanOverlayControlOptions.selectedMaps = [];

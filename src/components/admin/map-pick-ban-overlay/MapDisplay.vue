@@ -1,7 +1,7 @@
 <template>
   <md-menu md-direction="bottom-start" v-on:md-closed="menuClosed">
     <md-menu-content>
-      <md-menu-item v-if="playerNames.length > 0">
+      <md-menu-item v-if="getPlayers().length > 0">
         <md-field>
           <label :for="name+'-home'">Player Home Map</label>
           <md-select
@@ -11,16 +11,16 @@
             v-on:click.prevent="preventEventPropagation"
           >
             <md-option value></md-option>
-            <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
+            <md-option v-for="(value, index) in getPlayers()" :key="index" :value="value">{{value}}</md-option>
           </md-select>
         </md-field>
       </md-menu-item>
-      <md-menu-item v-if="playerNames.length > 0">
+      <md-menu-item v-if="getPlayers().length > 0">
         <md-field>
           <label :for="name+'-winner'">Winner!!</label>
           <md-select v-model="winner" :name="name+'-winner'" :id="name+'-winner'">
             <md-option value></md-option>
-            <md-option v-for="(value, index) in playerNames" :key="index" :value="value">{{value}}</md-option>
+            <md-option v-for="(value, index) in getPlayers()" :key="index" :value="value">{{value}}</md-option>
           </md-select>
         </md-field>
       </md-menu-item>
@@ -44,14 +44,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "MapDisplay",
   data() {
     return {
       name: this.mapName,
-      mapState: this.currentMapState,
+      mapState: this.currentMapState || "open",
       homeMapPlayer: this.homeMapPlayerName,
       winner: this.mapWinner
     };
@@ -63,18 +61,6 @@ export default {
     mapWinner: String
   },
   computed: {
-    ...mapState({
-      playerNames: state => {
-        const players = [];
-        if (state.mapPickAndBanOverlayControlOptions.team1Name !== "") {
-          players.push(state.mapPickAndBanOverlayControlOptions.team1Name);
-        }
-        if (state.mapPickAndBanOverlayControlOptions.team2Name) {
-          players.push(state.mapPickAndBanOverlayControlOptions.team2Name);
-        }
-        return players;
-      }
-    }),
     getMapImage() {
       const map = this.toKabobCase(this.name);
       const mapFolder = this.$store.getters.isCustomMap(map)
@@ -102,6 +88,9 @@ export default {
     mapStateChanged() {
       console.log("map state change");
       this.$emit("mapStateChanged", { ...this.$data });
+    },
+    getPlayers() {
+      return this.$store.getters.getPlayerNames;
     },
     getMapFrameImagePath() {
       let mapFrame = "frame.png";
