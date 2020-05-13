@@ -132,6 +132,10 @@ export default new Vuex.Store({
             selectedMaps: [],
             mapStates: []
         },
+        playerCiveOverlayControlOptions: {
+            selectedCivs: [],
+            isCivDisplayVisible: false
+        },
         defaultMaps: defaultMaps,
         customMaps: customMaps,
         customMapPrefixes: customMapPrefixes
@@ -248,6 +252,10 @@ export default new Vuex.Store({
             state.techUpgradeOverlayControlOptions.archeryRange = data.archeryRange;
             state.techUpgradeOverlayControlOptions.stable = data.stable;
             state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
+        },
+        updatePlayerCiveOverlayControlOptions(state, data) {
+            state.playerCiveOverlayControlOptions.selectedCivs = data.selectedCivs;
+            state.playerCiveOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
         }
     },
     actions: {
