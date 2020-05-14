@@ -104,6 +104,7 @@ export default new Vuex.Store({
         civHelpTexts: {},
         civNames: {},
         dataString: {},
+        clearAllCivsClicked: false,
         clientControlOptions: {
             selectedMapsAndState: []
         },
@@ -216,19 +217,21 @@ export default new Vuex.Store({
         updateCivs(state, { civ1, civ2 }) {
             if (civ1 !== "") {
                 state.techUpgradeOverlayControlOptions.civ1 = civ1;
-                console.log('civ1')
             }
             if (civ2 !== "") {
                 state.techUpgradeOverlayControlOptions.civ2 = civ2;
-                console.log('civ2')
             }
-        },
-        updateUpgradeGroups(state, upgrades) {
-            state.upgradeGroups = upgrades;
+            state.clearAllCivsClicked = false;
         },
         clearCivs(state) {
             state.techUpgradeOverlayControlOptions.civ1 = "";
             state.techUpgradeOverlayControlOptions.civ2 = "";
+        },
+        preTransitionCivOverlay(state) {
+            state.clearAllCivsClicked = true;
+        },
+        updateUpgradeGroups(state, upgrades) {
+            state.upgradeGroups = upgrades;
         },
         clearUpgradeGroups(state) {
             state.upgradeGroups = [];
@@ -266,6 +269,15 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        // Get data from server and send that to mutations to mutate the current state
+        clearCivs(store, payload) {
+            if (payload.delayMs) {
+                store.commit("preTransitionCivOverlay");
+                setTimeout(() => {
+                    store.commit("clearCivs", 2000);
+                }, payload.delayMs);
+            } else {
+                store.commit("clearCivs");
+            }
+        },
     }
 });

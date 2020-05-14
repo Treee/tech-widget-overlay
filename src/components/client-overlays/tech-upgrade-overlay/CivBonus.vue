@@ -1,25 +1,26 @@
 <template>
-  <transition name="civ-tech-animation">
-    <div class="tech-overlay-placeholder" v-if="this.civName !==''">
-      <div class="div-background">
-        <audio v-if="playSound" autoplay :src="getAudioPath" type="audio/mp3" />
-        <div class="div-wrapper" :style="backgroundStyle()">
-          <div class="civ-icon-and-name">
-            <div class="civ-icon" :style="civIconStyle()" />
-            <div class="civ-name">{{ civName }}</div>
-            <div class="civ-icon" :style="civIconStyle()" />
-          </div>
-          <div class="civ-desc" v-html="civDescription" />
-          <div class="civ-unique-unit-wrapper">
-            <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(false)"></div>
-            <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(true)">
-              <div class="civ-elite-unique-unit-upgrade" />
-            </div>
+  <div class="tech-overlay-placeholder">
+    <div
+      class="div-background mask-img-vertical"
+      :class="{'civ-tech-animation-enter-active': this.civName !== '', 'civ-tech-animation-leave-active': (this.civName !== '' && this.$store.state.clearAllCivsClicked) }"
+    >
+      <audio v-if="playSound" autoplay :src="getAudioPath" type="audio/mp3" />
+      <div class="div-wrapper" :style="backgroundStyle()">
+        <div class="civ-icon-and-name">
+          <div class="civ-icon" :style="civIconStyle()" />
+          <div class="civ-name">{{ civName }}</div>
+          <div class="civ-icon" :style="civIconStyle()" />
+        </div>
+        <div class="civ-desc" v-html="civDescription" />
+        <div class="civ-unique-unit-wrapper">
+          <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(false)"></div>
+          <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(true)">
+            <div class="civ-elite-unique-unit-upgrade" />
           </div>
         </div>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -135,6 +136,30 @@ export default {
   background-repeat: no-repeat;
   width: 2rem;
   height: 2rem;
+}
+
+.mask-img-vertical {
+  -webkit-mask-image: linear-gradient(
+    to top,
+    transparent 33.3%,
+    hsla(0, 0%, 100%, 0) 33.4%,
+    hsla(0, 0%, 100%, 0.9) 66.6%,
+    hsla(0, 0%, 100%, 0.9) 100%
+  );
+  -webkit-mask-size: 100% 300%;
+  -webkit-mask-position: 0 200%;
+  -webkit-mask-repeat: no-repeat;
+
+  mask-image: linear-gradient(
+    to top,
+    transparent 33.3%,
+    hsla(0, 0%, 100%, 0) 33.4%,
+    hsla(0, 0%, 100%, 0.9) 66.6%,
+    hsla(0, 0%, 100%, 0.9) 100%
+  );
+  mask-size: 100% 300%;
+  mask-position: 0 200%;
+  mask-repeat: no-repeat;
 }
 
 .civ-tech-animation-enter-active {

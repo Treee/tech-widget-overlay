@@ -1,12 +1,11 @@
 <template>
   <div>
     <CivBonusOverlay
-      v-if="isCivBonusOverlayVisible()"
       :civ1="this.$store.state.techUpgradeOverlayControlOptions.civ1"
-      :civ1-description="this.$store.getters.getCivDescription(this.$store.state.civ1)"
+      :civ1-description="this.$store.getters.getCivDescription(this.$store.state.techUpgradeOverlayControlOptions.civ1)"
       :upgrade-groups="this.$store.state.upgradeGroups"
       :civ2="this.$store.state.techUpgradeOverlayControlOptions.civ2"
-      :civ2-description="this.$store.getters.getCivDescription(this.$store.state.civ2)"
+      :civ2-description="this.$store.getters.getCivDescription(this.$store.state.techUpgradeOverlayControlOptions.civ2)"
       :playSound="false"
     />
     <MapOverlay

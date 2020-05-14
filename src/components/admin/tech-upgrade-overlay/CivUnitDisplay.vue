@@ -3,7 +3,7 @@
     v-on:click="civClicked"
     class="civ-tech-icon faded"
     :style="getIconStyle"
-    :class="{'player-one': this.$store.getters.isPlayerOne(civName), 'player-two': this.$store.getters.isPlayerTwo(civName)}"
+    :class="{'player-one': this.$store.getters.isPlayerOne(this.civName), 'player-two': this.$store.getters.isPlayerTwo(this.civName)}"
   >
     <div class="civ-text">{{civName}}</div>
   </div>
@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     civClicked() {
-      // console.log(`civselected ${this.clickedCounter}`, this.civName);
       this.$emit("civselected", this.civName);
     }
   }

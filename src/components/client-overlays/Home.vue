@@ -26,7 +26,7 @@ export default {
         this.$store.commit("updateCivs", { civ1: data.civ1, civ2: data.civ2 });
       }
       if (messageType === SocketEnums.AdminHide) {
-        this.$store.commit("clearCivs");
+        this.$store.dispatch("clearCivs", { delayMs: 2000 });
       }
       console.log("client handling message", event);
     }
@@ -53,6 +53,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  overflow: hidden;
 }
 
 .large-font {

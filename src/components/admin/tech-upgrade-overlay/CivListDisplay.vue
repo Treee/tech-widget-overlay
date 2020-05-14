@@ -23,13 +23,23 @@ export default {
   methods: {
     civClicked(selectedCiv) {
       const data = { civ1: "", civ2: "" };
+      // toggle clicks between player 1 and player 2
       if (this.count % 2 === 0) {
-        data.civ1 = selectedCiv;
+        if (this.$store.getters.isPlayerOne(selectedCiv)) {
+          data.civ1 = "";
+        } else {
+          data.civ1 = selectedCiv;
+          this.count++;
+        }
       } else {
-        data.civ2 = selectedCiv;
+        if (this.$store.getters.isPlayerOne(selectedCiv)) {
+          data.civ2 = "";
+        } else {
+          data.civ2 = selectedCiv;
+          this.count++;
+        }
       }
       this.$store.commit("updateCivs", data);
-      this.count++;
     }
   }
 };

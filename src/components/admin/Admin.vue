@@ -36,11 +36,10 @@ export default {
     MapListDisplay
   },
   created: function() {
-    this.adminClient = adminOverlayWebSocket.startClient(
-      this.clientId,
-      () => {}
-    );
-    // console.log("created admin");
+    this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {
+      // this function would normally handle messages from the sebsocket server.
+      // The admin widget is purely one way outbound so this is empty
+    });
   },
   methods: {
     techOverlayHandler(overlayData) {
