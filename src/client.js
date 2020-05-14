@@ -1,15 +1,16 @@
-const SocketEnums = {
-    ClientRegister: 0
-}
+import { SocketEnums } from "./socket-enums";
+
 export default {
     clientProperties: {
         clientId: ''
     },
     // dataType: SocketEnums, rawData: any
     formatDataForWebsocket(dataType, rawData) {
-        console.log('Formatting Data for websocket');
         console.log(`Formatting Data for websocket.\nDataType: ${dataType} / RawData: ${rawData} / ClientId: ${this.clientProperties.clientId}`);
         return JSON.stringify({ type: dataType, data: rawData, toClientId: this.clientProperties.clientId });
+    },
+    sendMessage(dataType, rawData) {
+        this.socket.send(this.formatDataForWebsocket(dataType, rawData));
     },
     startClient(clientId, callbackFn) {
         this.clientProperties.clientId = clientId;
@@ -19,6 +20,7 @@ export default {
         this.socket.onmessage = callbackFn;
         this.socket.onclose = this.onClose;
         this.socket.onerror = this.onError;
+        return this;
     },
     onOpen() {
         console.log('[open] Connection established');

@@ -1,6 +1,9 @@
 <template>
   <div class="admin-page">
-    <AdminTechUpgradeOverlay v-on:techOverlayShow="techOverlayHandler" />
+    <AdminTechUpgradeOverlay
+      v-on:techOverlayShow="techOverlayHandler"
+      v-on:techOverlayClearAll="techClearAllHandler"
+    />
     <div class="md-layout md-gutter md-alignment-top-center">
       <div class="md-layout-item md-size-10">
         <PlayerCivOverlayControls />
@@ -20,7 +23,7 @@ import MapPickBanOverlayControls from "./map-pick-ban-overlay/MapPickBanOverlayC
 import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 
 import adminOverlayWebSocket from "../../client";
-
+import { SocketEnums } from "../../socket-enums";
 export default {
   name: "Admin",
   props: {
@@ -32,20 +35,25 @@ export default {
     MapPickBanOverlayControls,
     MapListDisplay
   },
-  methods: {
-    techOverlayHandler(data) {
-      console.log("data", data);
-    },
-    handleSocketMessage(event) {
-      console.log("admin handling message", event);
-    }
-  },
   created: function() {
-    this.client = adminOverlayWebSocket.startClient(
+    this.adminClient = adminOverlayWebSocket.startClient(
       this.clientId,
-      this.handleSocketMessage
+      () => {}
     );
     // console.log("created admin");
+  },
+  methods: {
+    techOverlayHandler(overlayData) {
+      const data = {
+        civ1: this.$store.state.techUpgradeOverlayControlOptions.civ1,
+        civ2: this.$store.state.techUpgradeOverlayControlOptions.civ2,
+        overlays: overlayData
+      };
+      this.adminClient.sendMessage(SocketEnums.AdminShow, data);
+    },
+    techClearAllHandler() {
+      this.adminClient.sendMessage(SocketEnums.AdminHide, {});
+    }
   }
 };
 </script>

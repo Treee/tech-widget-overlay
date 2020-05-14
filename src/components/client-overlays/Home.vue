@@ -7,6 +7,7 @@
 <script>
 import ClientOverlays from "./ClientOverlays.vue";
 import clientOverlayWebSocket from "../../client";
+import { SocketEnums } from "../../socket-enums";
 
 export default {
   name: "Home",
@@ -18,6 +19,15 @@ export default {
   },
   methods: {
     handleSocketMessage(event) {
+      const parsed = JSON.parse(event.data);
+      const messageType = parsed.type;
+      const data = parsed.data;
+      if (messageType === SocketEnums.AdminShow) {
+        this.$store.commit("updateCivs", { civ1: data.civ1, civ2: data.civ2 });
+      }
+      if (messageType === SocketEnums.AdminHide) {
+        this.$store.commit("clearCivs");
+      }
       console.log("client handling message", event);
     }
   },

@@ -104,11 +104,6 @@ export default new Vuex.Store({
         civHelpTexts: {},
         civNames: {},
         dataString: {},
-        SocketEnums: {
-            ClientRegister: 0,
-            AdminShow: 2,
-            AdminHideAll: 6
-        },
         clientControlOptions: {
             selectedMapsAndState: []
         },
@@ -137,7 +132,7 @@ export default new Vuex.Store({
             selectedMaps: [],
             mapStates: []
         },
-        playerCiveOverlayControlOptions: {
+        playerCivOverlayControlOptions: {
             selectedCivs: [],
             isCivDisplayVisible: false
         },
@@ -221,9 +216,11 @@ export default new Vuex.Store({
         updateCivs(state, { civ1, civ2 }) {
             if (civ1 !== "") {
                 state.techUpgradeOverlayControlOptions.civ1 = civ1;
+                console.log('civ1')
             }
             if (civ2 !== "") {
                 state.techUpgradeOverlayControlOptions.civ2 = civ2;
+                console.log('civ2')
             }
         },
         updateUpgradeGroups(state, upgrades) {
@@ -264,8 +261,8 @@ export default new Vuex.Store({
             state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
         },
         updatePlayerCivOverlayControlOptions(state, data) {
-            state.playerCiveOverlayControlOptions.selectedCivs = data.selectedCivs;
-            state.playerCiveOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
+            state.playerCivOverlayControlOptions.selectedCivs = data.selectedCivs;
+            state.playerCivOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
         }
     },
     actions: {

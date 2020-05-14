@@ -64,9 +64,10 @@ export default {
       this.blacksmith = this.university = this.monastary = this.dock = false;
       this.barracks = this.archeryRange = this.stable = this.siegeWorkshop = false;
       this.$store.commit("clearCivs");
+      this.$emit("bubble-up-clear-all-child");
     },
     showOverlayClick() {
-      this.$emit("bubble-up-child", { ...this.$data });
+      this.$emit("bubble-up-overlay-child", { ...this.$data });
     },
     toCamelCase(text) {
       let camelCase = "";

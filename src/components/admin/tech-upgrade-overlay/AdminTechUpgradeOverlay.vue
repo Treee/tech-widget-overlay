@@ -1,6 +1,9 @@
 <template>
   <div class="admin-tech-upgrade-overlay">
-    <TechUpgradeOverlayControls v-on:bubble-up-child="bubbleUp" />
+    <TechUpgradeOverlayControls
+      v-on:bubble-up-overlay-child="bubbleUpOverlay"
+      v-on:bubble-up-clear-all-child="bubbleUpClearAll"
+    />
     <CivListDisplay class="admin-civ-list-display" :civ-list="this.$store.getters.getCivNames" />
   </div>
 </template>
@@ -23,8 +26,11 @@ export default {
     TechUpgradeOverlayControls
   },
   methods: {
-    bubbleUp(data) {
+    bubbleUpOverlay(data) {
       this.$emit("techOverlayShow", data);
+    },
+    bubbleUpClearAll() {
+      this.$emit("techOverlayClearAll");
     }
   }
 };
