@@ -194,8 +194,8 @@ export default new Vuex.Store({
             const mapData = [];
             for (let i = 0; i < selectedMaps.length; i++) {
                 mapData.push({
-                    ...selectedMaps[i],
-                    ...(mapStates.find((inner) => { inner.mapName === selectedMaps[i] }))
+                    ...{ name: selectedMaps[i] },
+                    ...(mapStates.find((inner) => { return inner.name === selectedMaps[i] }))
                 });
             }
             return mapData;

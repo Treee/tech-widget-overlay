@@ -57,7 +57,7 @@ export default {
       this.adminClient.sendMessage(SocketEnums.AdminHide, {});
     },
     mapOverlayShow() {
-      const mapData = this.$store.getters.getMapData();
+      const mapData = this.$store.getters.getMapData;
       this.adminClient.sendMessage(SocketEnums.AdminShowMaps, mapData);
     },
     mapOverlayHide() {
