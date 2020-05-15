@@ -188,6 +188,18 @@ export default new Vuex.Store({
             // toCamelCase
             return mapName.trim();
         },
+        getMapData: (state) => {
+            const selectedMaps = state.mapPickAndBanOverlayControlOptions.selectedMaps;
+            const mapStates = state.mapPickAndBanOverlayControlOptions.mapStates;
+            const mapData = [];
+            for (let i = 0; i < selectedMaps.length; i++) {
+                mapData.push({
+                    ...selectedMaps[i],
+                    ...(mapStates.find((inner) => { inner.mapName === selectedMaps[i] }))
+                });
+            }
+            return mapData;
+        },
         isCustomMap: (state) => (map) => {
             return state.customMaps.some(customMap => {
                 return map === customMap;
@@ -266,6 +278,42 @@ export default new Vuex.Store({
         updatePlayerCivOverlayControlOptions(state, data) {
             state.playerCivOverlayControlOptions.selectedCivs = data.selectedCivs;
             state.playerCivOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
+        }, updateMapState(state, data) {
+            const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
+                return mapState.name === data.name;
+            });
+            if (mapIndex > -1) {
+                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].name = data.name;
+                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].mapState = data.mapState;
+                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].homeMapPlayer = data.homeMapPlayer;
+                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].winner = data.winner;
+            }
+            // console.log('update called', state.mapPickAndBanOverlayControlOptions.mapStates);
+        },
+        addMapState(state, selectedMaps) {
+            selectedMaps.forEach(map => {
+                const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
+                    return mapState.name === map;
+                });
+                // if a state for the selected map doesnt exist
+                if (mapIndex === -1) {
+
+                    state.mapPickAndBanOverlayControlOptions.mapStates.push({ name: map, mapState: 'open', homeMapPlayer: '', winner: '' });
+                }
+            });
+        },
+        pruneMapState(state, data) {
+            //get the list of mapstates that are no longer in the seelcted lists of maps
+            const mapStateMapNames = state.mapPickAndBanOverlayControlOptions.mapStates.map((mapState) => {
+                return mapState.name;
+            });
+            const removedMapNames = mapStateMapNames.filter((mapState) => {
+                return !data.includes(mapState);
+            });
+            removedMapNames.forEach((mapName) => {
+                const i = state.mapPickAndBanOverlayControlOptions.mapStates.map(item => item.name).indexOf(mapName);
+                state.mapPickAndBanOverlayControlOptions.mapStates.splice(i, 1);
+            })
         }
     },
     actions: {

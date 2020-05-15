@@ -9,7 +9,10 @@
         <PlayerCivOverlayControls />
       </div>
       <div class="md-layout-item md-size-50">
-        <MapPickBanOverlayControls />
+        <MapPickBanOverlayControls
+          v-on:mapOverlayShowBubble="mapOverlayShow"
+          v-on:mapOverlayHideBubble="mapOverlayHide"
+        />
       </div>
     </div>
     <MapListDisplay />
@@ -52,6 +55,13 @@ export default {
     },
     techClearAllHandler() {
       this.adminClient.sendMessage(SocketEnums.AdminHide, {});
+    },
+    mapOverlayShow() {
+      const mapData = this.$store.getters.getMapData();
+      this.adminClient.sendMessage(SocketEnums.AdminShowMaps, mapData);
+    },
+    mapOverlayHide() {
+      this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
     }
   }
 };

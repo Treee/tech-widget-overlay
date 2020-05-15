@@ -82,12 +82,8 @@ export default {
       event.stopPropagation();
     },
     menuClosed() {
-      // push map state
-      console.log("menu closed", this.mapName);
-    },
-    mapStateChanged() {
-      console.log("map state change");
-      this.$emit("mapStateChanged", { ...this.$data });
+      console.log("map state change", { ...this.$data });
+      this.$store.commit("updateMapState", { ...this.$data });
     },
     getPlayers() {
       return this.$store.getters.getPlayerNames;

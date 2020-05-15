@@ -1,7 +1,6 @@
 <template>
   <div class="overlay-container md-layout md-alignment-top-center">
     <MapDisplay
-      v-on:mapStateChanged="childMapStateChanges"
       class="md-layout-item"
       v-for="(mapName, index) in selectedMaps"
       :key="index"
@@ -28,9 +27,12 @@ export default {
   components: {
     MapDisplay
   },
-  methods: {
-    childMapStateChanges(dataObj) {
-      this.$store.commit("updateMapState", dataObj);
+  watch: {
+    selectedMaps(newVal) {
+      this.$store.commit("addMapState", newVal);
+      this.$store.commit("pruneMapState", newVal);
+      console.log(this.selectedMaps);
+      // add any new map to mapstates, remove old maps
     }
   }
 };

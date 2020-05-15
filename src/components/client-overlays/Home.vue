@@ -28,6 +28,12 @@ export default {
       if (messageType === SocketEnums.AdminHide) {
         this.$store.dispatch("clearCivs", { delayMs: 2000 });
       }
+      if (messageType === SocketEnums.AdminShowMaps) {
+        // test
+      }
+      if (messageType === SocketEnums.AdminHideMaps) {
+        // test
+      }
       console.log("client handling message", event);
     }
   },

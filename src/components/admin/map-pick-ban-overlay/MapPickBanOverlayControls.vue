@@ -89,6 +89,11 @@ export default {
       this.$store.commit("updateMapPickAndBanOverlayControls", {
         ...this.$data
       });
+      if (this.$data.mapOverlayVisible) {
+        this.$emit("mapOverlayShowBubble");
+      } else {
+        this.$emit("mapOverlayHideBubble");
+      }
     }
   }
 };
