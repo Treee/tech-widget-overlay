@@ -1,13 +1,13 @@
 <template>
-  <div class="overlay-container md-layout md-alignment-top-center">
+  <div class="client-maps md-layout md-alignment-top-center">
     <ClientMapDisplay
       class="md-layout-item"
-      v-for="({mapName, mapState, homeMapPlayer, winner}, index) in selectedMapsAndState"
+      v-for="({name, mapState, homeMapPlayer, winner}, index) in selectedMapsAndState"
       :key="index"
-      :map-name="mapName"
-      :map-state="'open'"
-      :home-map-player="''"
-      :winner="''"
+      :name="name"
+      :map-state="mapState"
+      :home-map-player="homeMapPlayer"
+      :winner="winner"
     />
   </div>
 </template>
@@ -27,4 +27,12 @@ export default {
 </script>
 
 <style language="scss">
+.client-maps {
+  width: 99vw;
+  display: inline-flex;
+  position: absolute;
+  left: 1vw;
+  top: 0;
+  margin-top: 7rem;
+}
 </style>

@@ -29,12 +29,12 @@ export default {
         this.$store.dispatch("clearCivs", { delayMs: 2000 });
       }
       if (messageType === SocketEnums.AdminShowMaps) {
-        // test
+        this.$store.commit("updateClientSideMapsAndState", data);
       }
       if (messageType === SocketEnums.AdminHideMaps) {
-        // test
+        this.$store.commit("updateClientSideMapsAndState", []);
       }
-      console.log("client handling message", event);
+      console.log("client handling message", data);
     }
   },
   created: function() {

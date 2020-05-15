@@ -314,6 +314,9 @@ export default new Vuex.Store({
                 const i = state.mapPickAndBanOverlayControlOptions.mapStates.map(item => item.name).indexOf(mapName);
                 state.mapPickAndBanOverlayControlOptions.mapStates.splice(i, 1);
             })
+        },
+        updateClientSideMapsAndState(state, data) {
+            state.clientControlOptions.selectedMapsAndState = data;
         }
     },
     actions: {
