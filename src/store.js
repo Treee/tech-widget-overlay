@@ -326,7 +326,7 @@ export default new Vuex.Store({
         },
         clearClientMaps(state) {
             state.clientControlOptions.selectedMapsAndState = [];
-        },
+        }
     },
     actions: {
         clearCivs(store, payload) {
