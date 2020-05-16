@@ -50,8 +50,8 @@ export default {
     return {
       name: this.mapName,
       mapState: this.currentMapState || "open",
-      homeMapPlayer: this.homeMapPlayerName,
-      winner: this.mapWinner
+      homeMapPlayer: this.homeMapPlayerName || "",
+      winner: this.mapWinner || ""
     };
   },
   props: {

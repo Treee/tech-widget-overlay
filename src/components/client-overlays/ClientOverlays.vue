@@ -9,7 +9,6 @@
       :playSound="false"
     />
     <MapOverlay
-      v-if="isMapOverlayVisible()"
       :selected-maps-and-state="this.$store.state.clientControlOptions.selectedMapsAndState"
     />
   </div>
@@ -24,19 +23,6 @@ export default {
   components: {
     CivBonusOverlay,
     MapOverlay
-  },
-  methods: {
-    isCivBonusOverlayVisible() {
-      return !(
-        this.$store.state.techUpgradeOverlayControlOptions.civ1 === "" ||
-        this.$store.state.techUpgradeOverlayControlOptions.civ2 === ""
-      );
-    },
-    isMapOverlayVisible() {
-      return (
-        this.$store.state.clientControlOptions.selectedMapsAndState.length > 0
-      );
-    }
   },
   created: () => {
     console.log("client overlay created");

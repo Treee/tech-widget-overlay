@@ -32,7 +32,7 @@ export default {
         this.$store.commit("updateClientSideMapsAndState", data);
       }
       if (messageType === SocketEnums.AdminHideMaps) {
-        this.$store.commit("updateClientSideMapsAndState", []);
+        this.$store.dispatch("clearMaps", { delayMs: 2000 });
       }
       console.log("client handling message", data);
     }

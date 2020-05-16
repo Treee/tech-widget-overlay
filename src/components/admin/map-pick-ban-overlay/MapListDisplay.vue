@@ -2,8 +2,8 @@
   <div class="overlay-container md-layout md-alignment-top-center">
     <MapDisplay
       class="md-layout-item"
-      v-for="(mapName, index) in selectedMaps"
-      :key="index"
+      v-for="(mapName) in selectedMaps"
+      :key="mapName"
       :map-name="mapName"
     />
   </div>

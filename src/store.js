@@ -105,6 +105,7 @@ export default new Vuex.Store({
         civNames: {},
         dataString: {},
         clearAllCivsClicked: false,
+        clearAllMapsClicked: false,
         clientControlOptions: {
             selectedMapsAndState: []
         },
@@ -242,6 +243,9 @@ export default new Vuex.Store({
         preTransitionCivOverlay(state) {
             state.clearAllCivsClicked = true;
         },
+        preTransitionMapOverlay(state) {
+            state.clearAllMapsClicked = true;
+        },
         updateUpgradeGroups(state, upgrades) {
             state.upgradeGroups = upgrades;
         },
@@ -278,7 +282,8 @@ export default new Vuex.Store({
         updatePlayerCivOverlayControlOptions(state, data) {
             state.playerCivOverlayControlOptions.selectedCivs = data.selectedCivs;
             state.playerCivOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
-        }, updateMapState(state, data) {
+        },
+        updateMapState(state, data) {
             const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
                 return mapState.name === data.name;
             });
@@ -317,7 +322,11 @@ export default new Vuex.Store({
         },
         updateClientSideMapsAndState(state, data) {
             state.clientControlOptions.selectedMapsAndState = data;
-        }
+            state.clearAllMapsClicked = false;
+        },
+        clearClientMaps(state) {
+            state.clientControlOptions.selectedMapsAndState = [];
+        },
     },
     actions: {
         clearCivs(store, payload) {
@@ -330,5 +339,15 @@ export default new Vuex.Store({
                 store.commit("clearCivs");
             }
         },
+        clearMaps(store, payload) {
+            if (payload.delayMs) {
+                store.commit("preTransitionMapOverlay");
+                setTimeout(() => {
+                    store.commit("clearClientMaps", 2000);
+                }, payload.delayMs);
+            } else {
+                store.commit("clearClientMaps");
+            }
+        }
     }
 });
