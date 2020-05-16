@@ -37,12 +37,12 @@ export default {
         ? "custom"
         : "default";
       return {
-        background: `url("/assets/images/maps/${mapFolder}/${map}.png")`
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`
       };
     },
     getMapFrame() {
       return {
-        background: `url("/assets/images/maps/frames/${this.getMapFrameImagePath()}")`
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${this.getMapFrameImagePath()}")`
       };
     }
   },
@@ -70,7 +70,7 @@ export default {
 
 <style language="scss">
 .winner-icon {
-  background: url(/assets/images/decals/winner.png);
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/winner.png");
   background-repeat: no-repeat;
   background-size: contain;
   width: 25px;
@@ -89,13 +89,13 @@ export default {
   color: white !important;
 }
 .home-map-decal {
-  background: url("/assets/images/decals/yellow-banner.png");
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/yellow-banner.png");
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 .winner-flag-decal {
-  background: url("/assets/images/decals/purple-banner.png");
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/purple-banner.png");
   background-repeat: no-repeat;
   background-size: contain;
 }

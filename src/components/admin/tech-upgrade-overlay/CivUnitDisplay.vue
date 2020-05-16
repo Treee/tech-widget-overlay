@@ -19,7 +19,7 @@ export default {
   computed: {
     getIconStyle() {
       return {
-        background: `url("/assets/images/civ-unique-units/${this.civName.toLowerCase()}.tp.png`,
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${this.civName.toLowerCase()}.tp.png`,
         "background-size": "cover",
         "background-repeat": "no-repeat"
       };

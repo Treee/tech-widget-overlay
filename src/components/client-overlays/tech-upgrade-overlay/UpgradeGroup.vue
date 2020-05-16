@@ -26,7 +26,7 @@ export default {
 .div-upgrade-background-wrapper {
   height: 15vh;
   width: 25vw;
-  background: url("/assets/images/backgrounds/chatbar_bg.png");
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/backgrounds/chatbar_bg.png");
   background-repeat: round;
   text-align: center;
 }

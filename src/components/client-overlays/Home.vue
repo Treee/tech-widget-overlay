@@ -50,7 +50,7 @@ export default {
 <style>
 @font-face {
   font-family: "Memb-Font";
-  src: url("/assets/fonts/IronstrikeSemiBold.otf");
+  src: url("https://treee.github.io/tech-widget-overlay/assets/fonts/IronstrikeSemiBold.otf");
 }
 #app {
   font-family: Memb-Font;

@@ -33,26 +33,26 @@ export default {
   },
   computed: {
     getAudioPath() {
-      return `/assets/sounds/${this.civName}.mp3`;
+      return `https://treee.github.io/tech-widget-overlay/assets/sounds/${this.civName}.mp3`;
     }
   },
   methods: {
     backgroundStyle() {
       return {
-        background: `url("/assets/images/civ-emblems/${this.civName.toLowerCase()}.png")`,
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-emblems/${this.civName.toLowerCase()}.png")`,
         "background-size": "contain"
       };
     },
     civIconStyle() {
       return {
-        background: `url("/assets/images/civ-icons/${this.civName.toLowerCase()}.png")`,
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-icons/${this.civName.toLowerCase()}.png")`,
         "background-size": "contain",
         "background-repeat": "no-repeat"
       };
     },
     uniqueUnitStyle(flipped) {
       return {
-        background: `url("/assets/images/civ-unique-units/${this.civName.toLowerCase()}.png")`,
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${this.civName.toLowerCase()}.png")`,
         "background-size": "contain",
         "background-repeat": "no-repeat",
         transform: flipped ? "scaleX(1)" : "scaleX(-1)"
@@ -74,7 +74,7 @@ export default {
 .div-background {
   width: inherit;
   height: inherit;
-  background: url("/assets/images/backgrounds/popup_menu_bg_portrait.png");
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/backgrounds/popup_menu_bg_portrait.png");
   background-repeat: round;
 }
 
@@ -131,7 +131,7 @@ export default {
 }
 
 .civ-elite-unique-unit-upgrade {
-  background: url("/assets/images/upgrade-icons/elite unique unit.png");
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/upgrade-icons/elite unique unit.png");
   background-size: contain;
   background-repeat: no-repeat;
   width: 2rem;

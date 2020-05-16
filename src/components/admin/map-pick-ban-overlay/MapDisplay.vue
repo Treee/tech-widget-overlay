@@ -67,12 +67,12 @@ export default {
         ? "custom"
         : "default";
       return {
-        background: `url("/assets/images/maps/${mapFolder}/${map}.png")`
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`
       };
     },
     getMapFrame() {
       return {
-        background: `url("/assets/images/maps/frames/${this.getMapFrameImagePath()}")`
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${this.getMapFrameImagePath()}")`
       };
     }
   },
