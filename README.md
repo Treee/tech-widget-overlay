@@ -9,3 +9,16 @@
 5. `npm run build` - Build the project for production
 6. `npm run deploy` - Deploy to gh-pages
 7. `npm run lint` - Lint files
+
+## Demo Testing
+
+You can access the demo server I host using the below urls.
+
+### Admin
+`https://treee.github.io/tech-widget-overlay/#/tech-widget-overlay/testClient/admin`
+
+### Client
+`https://treee.github.io/tech-widget-overlay/#/tech-widget-overlay/testClient`
+
+#### Note
+The `testClient` name needs to be the same in each url otherwise the admin and client will not connect properly.
