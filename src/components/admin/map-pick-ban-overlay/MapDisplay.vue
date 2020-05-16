@@ -4,12 +4,7 @@
       <md-menu-item v-if="getPlayers().length > 0">
         <md-field>
           <label :for="name+'-home'">Player Home Map</label>
-          <md-select
-            v-model="homeMapPlayer"
-            :name="name+'-home'"
-            :id="name+'-home'"
-            v-on:click.prevent="preventEventPropagation"
-          >
+          <md-select v-model="homeMapPlayer" :name="name+'-home'" :id="name+'-home'">
             <md-option value></md-option>
             <md-option v-for="(value, index) in getPlayers()" :key="index" :value="value">{{value}}</md-option>
           </md-select>
@@ -18,7 +13,12 @@
       <md-menu-item v-if="getPlayers().length > 0">
         <md-field>
           <label :for="name+'-winner'">Winner!!</label>
-          <md-select v-model="winner" :name="name+'-winner'" :id="name+'-winner'">
+          <md-select
+            v-model="winner"
+            :name="name+'-winner'"
+            :id="name+'-winner'"
+            v-on:md-selected="winnerSelected"
+          >
             <md-option value></md-option>
             <md-option v-for="(value, index) in getPlayers()" :key="index" :value="value">{{value}}</md-option>
           </md-select>
@@ -82,11 +82,17 @@ export default {
       event.stopPropagation();
     },
     menuClosed() {
-      console.log("map state change", { ...this.$data });
       this.$store.commit("updateMapState", { ...this.$data });
     },
     getPlayers() {
       return this.$store.getters.getPlayerNames;
+    },
+    winnerSelected(winner) {
+      if (winner !== "") {
+        this.mapState = "played";
+      } else {
+        this.mapState = "open";
+      }
     },
     getMapFrameImagePath() {
       let mapFrame = "frame.png";
