@@ -28,11 +28,8 @@ export default {
 
 <style language="scss">
 .client-maps {
-  width: 99vw;
+  width: 100%;
   display: inline-flex;
-  position: absolute;
-  left: 1vw;
-  top: 0;
   margin-top: 7rem;
 }
 </style>

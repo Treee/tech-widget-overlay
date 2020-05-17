@@ -1,5 +1,5 @@
 <template>
-  <div class="tech-overlay-placeholder">
+  <div class="tech-overlay-placeholder" v-if="this.civName !== ''">
     <div
       class="div-background mask-img-vertical"
       :class="{'civ-tech-animation-enter-active': this.civName !== '', 'civ-tech-animation-leave-active': (this.civName !== '' && this.$store.state.clearAllCivsClicked) }"
