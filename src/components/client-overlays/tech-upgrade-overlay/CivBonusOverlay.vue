@@ -1,8 +1,8 @@
 <template>
   <div class="tech-overlay-wrapper">
     <civ-bonus :civ-name="civ1" :civ-description="civ1Description" :play-sound="playSound" />
-    <UpgradeGroupWrapper :upgrades="upgradeGroups" :civ-name="civ1" />
-    <UpgradeGroupWrapper :upgrades="upgradeGroups" :civ-name="civ2" />
+    <UpgradeGroupWrapper :civ-name="civ1" />
+    <UpgradeGroupWrapper :civ-name="civ2" />
     <civ-bonus :civ-name="civ2" :civ-description="civ2Description" :play-sound="playSound" />
   </div>
 </template>
@@ -22,7 +22,6 @@ export default {
     civ1Description: String,
     civ2: String,
     civ2Description: String,
-    upgradeGroups: Array,
     playSound: Boolean
   }
 };

@@ -97,9 +97,6 @@ const toCamelCase = (text) => {
 export default new Vuex.Store({
     strict: true,
     state: {
-        civ1: "",
-        civ2: "",
-        upgradeGroups: [],
         ageNames: {},
         civHelpTexts: {},
         civNames: {},

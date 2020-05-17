@@ -4,7 +4,6 @@
     <CivBonusOverlay
       :civ1="techOverlayOptions.civ1"
       :civ1-description="this.$store.getters.getCivDescription(techOverlayOptions.civ1)"
-      :upgrade-groups="this.$store.state.upgradeGroups"
       :civ2="techOverlayOptions.civ2"
       :civ2-description="this.$store.getters.getCivDescription(techOverlayOptions.civ2)"
       :playSound="false"

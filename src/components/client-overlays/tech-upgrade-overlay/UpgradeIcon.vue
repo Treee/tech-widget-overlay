@@ -1,5 +1,5 @@
 <template>
-  <div class="div-upgrade" :class="{'disabled-upgrade': isEnabled}" :style="upgradeIconStyle()"></div>
+  <div class="div-upgrade" :class="{'disabled-upgrade': isEnabled}" :style="upgradeIconStyle"></div>
 </template>
 
 <script>
@@ -22,7 +22,9 @@ export default {
         "background-size": "contain",
         "background-repeat": "no-repeat"
       };
-    },
+    }
+  },
+  methods: {
     getFormattedUpgradeName() {
       let upgrade = this.upgradeName;
       if (upgrade.toLowerCase().includes("war galley")) {
@@ -46,9 +48,7 @@ export default {
         upgrade = "heavy cav archer";
       }
       return upgrade;
-    }
-  },
-  methods: {
+    },
     isDefaultBuildingUnit(upgrade) {
       return [
         "knight",
