@@ -34,6 +34,9 @@ export default {
       if (messageType === SocketEnums.AdminHideMaps) {
         this.$store.dispatch("clearMaps", { delayMs: 2000 });
       }
+      if (messageType === SocketEnums.AdminShowCiv) {
+        this.$store.commit("updateMiscOverlayControlOptions", data);
+      }
       console.log("client handling message", data);
     }
   },

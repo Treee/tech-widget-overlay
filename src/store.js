@@ -351,6 +351,16 @@ export default new Vuex.Store({
             } else {
                 store.commit("clearClientMaps");
             }
-        }
+        },
+        // toggleCivDisplay(store, payload) {
+        //     if (payload.delayMs) {
+        //         store.commit("preTransitionMapOverlay");
+        //         setTimeout(() => {
+        //             store.commit("clearClientMaps", 2000);
+        //         }, payload.delayMs);
+        //     } else {
+        //         store.commit("clearClientMaps");
+        //     }
+        // }
     }
 });
