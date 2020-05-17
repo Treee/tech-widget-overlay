@@ -211,6 +211,9 @@ export default new Vuex.Store({
         },
         isPlayerTwo: (state) => (playerName) => {
             return state.techUpgradeOverlayControlOptions.civ2 === playerName;
+        },
+        getMiscOverlayData: (state) => {
+            return { ...state.miscOverlayControlOptions };
         }
         // Compute derived state based on the current state. More like computed property.
     },

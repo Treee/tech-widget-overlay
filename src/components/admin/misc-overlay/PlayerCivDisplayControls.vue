@@ -35,6 +35,7 @@ export default {
       this.$store.commit("updateMiscOverlayControlOptions", {
         ...this.$data
       });
+      this.$emit("miscOverlayEmit", { ...this.$data });
     }
   }
 };

@@ -6,7 +6,7 @@
     />
     <div class="md-layout md-gutter md-alignment-top-center">
       <div class="md-layout-item md-size-15">
-        <PlayerCivDisplayControls />
+        <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
       </div>
       <div class="md-layout-item md-size-50">
         <MapPickBanOverlayControls
@@ -57,11 +57,19 @@ export default {
       this.adminClient.sendMessage(SocketEnums.AdminHide, {});
     },
     mapOverlayShow() {
-      const mapData = this.$store.getters.getMapData;
-      this.adminClient.sendMessage(SocketEnums.AdminShowMaps, mapData);
+      this.adminClient.sendMessage(
+        SocketEnums.AdminShowMaps,
+        this.$store.getters.getMapData
+      );
     },
     mapOverlayHide() {
       this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
+    },
+    miscOverlayBroadcast() {
+      this.adminClient.sendMessage(
+        SocketEnums.AdminShowCiv,
+        this.$store.getters.getMiscOverlayData
+      );
     }
   }
 };
