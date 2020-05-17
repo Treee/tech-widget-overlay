@@ -110,6 +110,8 @@ export default new Vuex.Store({
             selectedMapsAndState: []
         },
         miscOverlayControlOptions: {
+            civ1: "",
+            civ2: "",
             isCivDisplayVisible: false,
             showTeamColors: false
         },
@@ -283,6 +285,8 @@ export default new Vuex.Store({
             state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
         },
         updateMiscOverlayControlOptions(state, data) {
+            state.miscOverlayControlOptions.civ1 = data.civ1 || "";
+            state.miscOverlayControlOptions.civ2 = data.civ2 || "";
             state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
             state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
         },
