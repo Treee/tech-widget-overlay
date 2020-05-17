@@ -5,8 +5,8 @@
       v-on:techOverlayClearAll="techClearAllHandler"
     />
     <div class="md-layout md-gutter md-alignment-top-center">
-      <div class="md-layout-item md-size-10">
-        <PlayerCivOverlayControls />
+      <div class="md-layout-item md-size-15">
+        <PlayerCivDisplayControls />
       </div>
       <div class="md-layout-item md-size-50">
         <MapPickBanOverlayControls
@@ -21,9 +21,9 @@
 
 <script>
 import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
-import PlayerCivOverlayControls from "./PlayerCivOverlayControls.vue";
 import MapPickBanOverlayControls from "./map-pick-ban-overlay/MapPickBanOverlayControls.vue";
 import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
+import PlayerCivDisplayControls from "./misc-overlay/PlayerCivDisplayControls.vue";
 
 import adminOverlayWebSocket from "../../client";
 import { SocketEnums } from "../../socket-enums";
@@ -34,9 +34,9 @@ export default {
   },
   components: {
     AdminTechUpgradeOverlay,
-    PlayerCivOverlayControls,
     MapPickBanOverlayControls,
-    MapListDisplay
+    MapListDisplay,
+    PlayerCivDisplayControls
   },
   created: function() {
     this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {

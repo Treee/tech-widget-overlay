@@ -109,6 +109,10 @@ export default new Vuex.Store({
         clientControlOptions: {
             selectedMapsAndState: []
         },
+        miscOverlayControlOptions: {
+            isCivDisplayVisible: false,
+            showTeamColors: false
+        },
         techUpgradeOverlayControlOptions: {
             civ1: "",
             civ2: "",
@@ -121,7 +125,7 @@ export default new Vuex.Store({
             barracks: false,
             archeryRange: false,
             stable: false,
-            siegeWorkshop: false
+            siegeWorkshop: false,
         },
         mapPickAndBanOverlayControlOptions: {
             mapOverlayVisible: false,
@@ -133,10 +137,6 @@ export default new Vuex.Store({
             team2Name: "",
             selectedMaps: [],
             mapStates: []
-        },
-        playerCivOverlayControlOptions: {
-            selectedCivs: [],
-            isCivDisplayVisible: false
         },
         defaultMaps: defaultMaps,
         customMaps: customMaps,
@@ -279,9 +279,9 @@ export default new Vuex.Store({
             state.techUpgradeOverlayControlOptions.stable = data.stable;
             state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
         },
-        updatePlayerCivOverlayControlOptions(state, data) {
-            state.playerCivOverlayControlOptions.selectedCivs = data.selectedCivs;
-            state.playerCivOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
+        updateMiscOverlayControlOptions(state, data) {
+            state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
+            state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
         },
         updateMapState(state, data) {
             const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
