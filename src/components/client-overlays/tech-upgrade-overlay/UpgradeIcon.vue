@@ -104,5 +104,13 @@ export default {
 };
 </script>
 
-<style>
+<style language="scss">
+.div-upgrade {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: #654e3b 1px solid;
+  box-shadow: 3px 4px 9px #614d3d;
+  border-radius: 0.2rem;
+}
 </style>

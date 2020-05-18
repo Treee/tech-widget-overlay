@@ -1,23 +1,51 @@
 <template>
-  <transition name="upgrade-group-animation">
-    <div class="div-upgrade-background-wrapper" v-if="this.groupName !=='' && this.civName !== ''">
-      <UpgradeIcon :upgrade-name="'test'" :is-enabled="true" />
+  <div
+    v-if="'true'"
+    class="div-upgrade-background-wrapper mask-img-horizontal"
+    :class="{'upgrade-group-animation-enter-active': civName !== '', 'upgrade-group-animation-leave-active': (civName !== '' && this.$store.state.clearAllCivsClicked) }"
+  >
+    <div class="feudal-upgrades">
+      <UpgradeIcon
+        class="md-layout-item"
+        v-for="(upgrade) in upgrades"
+        :key="upgrade"
+        :upgrade-name="upgrade"
+        :is-enabled="true"
+      />
     </div>
-  </transition>
+    <div class="castle-upgrades"></div>
+    <div class="imp-upgrades"></div>
+  </div>
 </template>
 
 
 <script>
 import UpgradeIcon from "./UpgradeIcon.vue";
+import { BlacksmithUpgrades } from "./upgrade-enums";
 
 export default {
   name: "UpgradeGroup",
   props: {
     groupName: String,
-    civName: String
+    civName: String,
+    isVisible: Boolean
   },
   components: {
     UpgradeIcon
+  },
+  methods: {
+    getBlacksmithUpgradesByAge(age) {
+      const upgradeList = [];
+      Object.keys(BlacksmithUpgrades[age]).forEach(key => {
+        upgradeList.push(BlacksmithUpgrades[age][key].toLowerCase());
+      });
+      return upgradeList;
+    }
+  },
+  computed: {
+    upgrades() {
+      return ["Forging".toLowerCase(), "Scale Mail Armor".toLowerCase()];
+    }
   }
 };
 </script>
@@ -78,6 +106,30 @@ export default {
   mask-position: 0;
   mask-repeat: no-repeat;
   animation: mask-move-out-right-to-left 1.5s ease-out forwards;
+}
+
+.mask-img-horizontal {
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 33.3%,
+    hsla(0, 0%, 100%, 0) 33.4%,
+    hsla(0, 0%, 100%, 0.9) 66.6%,
+    hsla(0, 0%, 100%, 0.9) 100%
+  );
+  -webkit-mask-size: 300% 100%;
+  -webkit-mask-position: 0;
+  -webkit-mask-repeat: no-repeat;
+
+  mask-image: linear-gradient(
+    to left,
+    transparent 33.3%,
+    hsla(0, 0%, 100%, 0) 33.4%,
+    hsla(0, 0%, 100%, 0.9) 66.6%,
+    hsla(0, 0%, 100%, 0.9) 100%
+  );
+  mask-size: 300% 100%;
+  mask-position: 0;
+  mask-repeat: no-repeat;
 }
 
 @keyframes mask-move-in-left-to-right {

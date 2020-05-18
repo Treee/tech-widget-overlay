@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <UpgradeGroup :group-name="'blacksmith'" :civ-name="civName" />
-    <UpgradeGroup :group-name="'university'" :civ-name="civName" />
-    <UpgradeGroup :group-name="'monastary'" :civ-name="civName" />
-    <UpgradeGroup :group-name="'dock'" :civ-name="civName" />
-    <UpgradeGroup :group-name="'barracks'" :civ-name="civName" />
-    <UpgradeGroup :group-name="'archeryRange'" :civ-name="civName" />
-    <UpgradeGroup :group-name="'stable'" :civ-name="civName" />
-    <UpgradeGroup :group-name="'siegeWorkshop'" :civ-name="civName" />
+  <div class="upgrade-groups-wrapper" v-if="civName !== ''">
+    <UpgradeGroup :is-visible="blacksmith" :group-name="'blacksmith'" :civ-name="civName" />
+    <UpgradeGroup :is-visible="university" :group-name="'university'" :civ-name="civName" />
+    <UpgradeGroup :is-visible="monastary" :group-name="'monastary'" :civ-name="civName" />
+    <UpgradeGroup :is-visible="dock" :group-name="'dock'" :civ-name="civName" />
+    <UpgradeGroup :is-visible="barracks" :group-name="'barracks'" :civ-name="civName" />
+    <UpgradeGroup :is-visible="archeryRange" :group-name="'archeryRange'" :civ-name="civName" />
+    <UpgradeGroup :is-visible="stable" :group-name="'stable'" :civ-name="civName" />
+    <UpgradeGroup :is-visible="siegeWorkshop" :group-name="'siegeWorkshop'" :civ-name="civName" />
   </div>
 </template>
 
