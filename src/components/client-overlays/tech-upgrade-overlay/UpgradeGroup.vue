@@ -4,24 +4,43 @@
     class="div-upgrade-background-wrapper mask-img-horizontal"
     :class="{'upgrade-group-animation-enter-active': civName !== '', 'upgrade-group-animation-leave-active': (civName !== '' && this.$store.state.clearAllCivsClicked) }"
   >
-    <div class="feudal-upgrades">
+    <div class="upgrade-group">
+      <div class="age-icon feudal" v-if="doUpgradesExistFor('feudal')" />
       <UpgradeIcon
         class="md-layout-item"
-        v-for="(upgrade) in upgrades"
+        v-for="(upgrade) in this.getUpgradeList('feudal')"
         :key="upgrade"
         :upgrade-name="upgrade"
         :is-enabled="true"
       />
     </div>
-    <div class="castle-upgrades"></div>
-    <div class="imp-upgrades"></div>
+    <div class="upgrade-group">
+      <div class="age-icon castle" v-if="doUpgradesExistFor('castle')" />
+      <UpgradeIcon
+        class="md-layout-item"
+        v-for="(upgrade) in this.getUpgradeList('castle')"
+        :key="upgrade"
+        :upgrade-name="upgrade"
+        :is-enabled="true"
+      />
+    </div>
+    <div class="upgrade-group">
+      <div class="age-icon imperial" v-if="doUpgradesExistFor('imperial')" />
+      <UpgradeIcon
+        class="md-layout-item"
+        v-for="(upgrade) in this.getUpgradeList('imperial')"
+        :key="upgrade"
+        :upgrade-name="upgrade"
+        :is-enabled="true"
+      />
+    </div>
   </div>
 </template>
 
 
 <script>
 import UpgradeIcon from "./UpgradeIcon.vue";
-import { BlacksmithUpgrades } from "./upgrade-enums";
+import { upgrades } from "./upgrade-enums";
 
 export default {
   name: "UpgradeGroup",
@@ -34,23 +53,52 @@ export default {
     UpgradeIcon
   },
   methods: {
-    getBlacksmithUpgradesByAge(age) {
+    getUpgradeList(age) {
       const upgradeList = [];
-      Object.keys(BlacksmithUpgrades[age]).forEach(key => {
-        upgradeList.push(BlacksmithUpgrades[age][key].toLowerCase());
-      });
+      if (upgrades[this.groupName][age]) {
+        Object.keys(upgrades[this.groupName][age]).forEach(key => {
+          if (upgrades[this.groupName][age]) {
+            upgradeList.push(upgrades[this.groupName][age][key].toLowerCase());
+          }
+        });
+      }
       return upgradeList;
-    }
-  },
-  computed: {
-    upgrades() {
-      return ["Forging".toLowerCase(), "Scale Mail Armor".toLowerCase()];
+    },
+    doUpgradesExistFor(age) {
+      return this.getUpgradeList(age, this.groupName).length > 0;
     }
   }
 };
 </script>
 
 <style language="scss">
+.age-icon {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: #654e3b 1px solid;
+  box-shadow: 3px 4px 9px #614d3d;
+  border-radius: 0.2rem;
+}
+
+.feudal {
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/upgrade-icons/feudal.png");
+  background-size: contain;
+}
+
+.castle {
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/upgrade-icons/castle.png");
+  background-size: contain;
+}
+
+.imperial {
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/upgrade-icons/imperial.png");
+  background-size: contain;
+}
+
+.upgrade-group {
+}
+
 .div-upgrade-background-wrapper {
   height: 15vh;
   width: 25vw;
@@ -83,6 +131,7 @@ export default {
   mask-repeat: no-repeat;
   animation: mask-move-in-left-to-right 2s ease-in forwards;
 }
+
 .upgrade-group-animation-leave-active {
   -webkit-mask-image: linear-gradient(
     to left,
