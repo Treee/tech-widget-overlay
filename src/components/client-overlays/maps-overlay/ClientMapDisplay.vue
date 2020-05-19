@@ -73,20 +73,23 @@ export default {
   background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/winner.png");
   background-repeat: no-repeat;
   background-size: contain;
-  width: 25px;
+  width: 29px;
   height: 100%;
   display: inline-flex;
   float: left;
-  margin-top: 3px;
+  margin-top: 5px;
 }
 
 .flag-text {
   width: 75%;
+  padding-top: 1.2%;
   display: inline-flex;
 }
 .home-icon {
   float: left;
   color: white !important;
+  width: 29px;
+  height: 29px;
 }
 .home-map-decal {
   background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/yellow-banner.png");
@@ -102,9 +105,9 @@ export default {
 
 .player-flag-modifier {
   width: 95%;
-  height: 1.5rem;
+  height: 12.5%;
   position: relative;
-  top: 90%;
+  top: 92%;
   left: 4%;
   color: whitesmoke;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -116,8 +119,8 @@ export default {
   width: inherit;
 }
 .client-map-display {
-  width: 12rem;
-  height: 12rem;
+  width: 15rem;
+  height: 15rem;
   margin-top: 4rem;
 }
 
