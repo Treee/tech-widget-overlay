@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="'true'"
-    class="div-upgrade-background-wrapper mask-img-horizontal"
+    class="div-upgrade-background-wrapper mask-img-horizontal upgrade-group-container"
     :class="{'upgrade-group-animation-enter-active': civName !== '', 'upgrade-group-animation-leave-active': (civName !== '' && this.$store.state.clearAllCivsClicked) }"
   >
     <div class="upgrade-group">
@@ -96,7 +96,13 @@ export default {
   background-size: contain;
 }
 
+.upgrade-group-container {
+  display: inline-flex;
+  justify-content: space-evenly;
+}
+
 .upgrade-group {
+  height: 100%;
 }
 
 .div-upgrade-background-wrapper {
