@@ -59,6 +59,7 @@ export default {
   src: url("https://treee.github.io/tech-widget-overlay/assets/fonts/IronstrikeSemiBold.otf");
 }
 #app {
+  background: url("/assets/images/backgrounds/fullbackground.png");
   font-family: Memb-Font;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 

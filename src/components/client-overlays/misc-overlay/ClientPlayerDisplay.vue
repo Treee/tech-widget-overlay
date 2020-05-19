@@ -62,25 +62,26 @@ export default {
 
 .team-color-display {
   display: inline-flex;
-  width: 40%;
-  justify-content: space-between;
-  margin-top: 4rem;
+  width: 30%;
+  margin-top: 2.75rem;
   position: absolute;
+  left: 36.8%;
+  justify-content: space-around;
 }
 
 .team-color-container {
   display: inline-flex;
   align-items: center;
-  width: 7%;
   justify-content: space-between;
 }
 
 .team-civ-display {
   display: inline-flex;
-  width: 40%;
+  width: 30%;
   justify-content: space-between;
   margin-top: 6rem;
   position: absolute;
+  left: 37%;
 }
 
 .team-container {
