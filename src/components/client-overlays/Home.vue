@@ -66,6 +66,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   overflow: hidden;
+
+  height: 100vh;
 }
 
 .large-font {

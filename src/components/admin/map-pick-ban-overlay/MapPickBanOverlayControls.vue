@@ -1,6 +1,6 @@
 <template>
   <div class="md-layout md-gutter">
-    <div class="md-layout-item">
+    <div class="md-layout-item md-size-50">
       <md-switch
         v-model="mapOverlayVisible"
         class="md-primary large-font"
@@ -9,7 +9,7 @@
       <md-button class="md-raised">Update</md-button>
       <MapListSelect />
     </div>
-    <div class="md-layout-item md-size-40">
+    <div class="md-layout-item md-size-25" v-if="false">
       <md-switch
         v-model="showMapBrandingImage"
         class="md-primary large-font"
@@ -20,7 +20,7 @@
         <md-input v-model="brandingImageUrl" v-on:change="valueChanged"></md-input>
       </md-field>
     </div>
-    <div class="md-layout-item">
+    <div class="md-layout-item" v-if="false">
       <md-field>
         <label for="num-picks">Num Picks</label>
         <md-input
@@ -46,7 +46,7 @@
         />
       </md-field>
     </div>
-    <div class="md-layout-item">
+    <div class="md-layout-item md-size-50">
       <md-field>
         <label>Team 1</label>
         <md-input v-model="team1Name" v-on:change="valueChanged"></md-input>
