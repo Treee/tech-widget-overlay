@@ -62,10 +62,10 @@ export default {
 
 .team-color-display {
   display: inline-flex;
-  width: 30%;
+  width: 36%;
   margin-top: 2.75rem;
   position: absolute;
-  left: 36.8%;
+  left: 33.9%;
   justify-content: space-around;
 }
 
@@ -73,6 +73,7 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
+  width: 15%;
 }
 
 .team-civ-display {

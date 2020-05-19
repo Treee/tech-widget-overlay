@@ -6,7 +6,7 @@
         class="md-primary large-font"
         v-on:change="valueChanged"
       >Map Display</md-switch>
-      <md-button class="md-raised">Update</md-button>
+      <md-button class="md-raised" v-on:click="updateMapsClick">Update</md-button>
       <MapListSelect />
     </div>
     <div class="md-layout-item md-size-25" v-if="false">
@@ -93,6 +93,13 @@ export default {
         this.$emit("mapOverlayShowBubble");
       } else {
         this.$emit("mapOverlayHideBubble");
+      }
+    },
+    updateMapsClick() {
+      console.log("click");
+      if (this.$data.mapOverlayVisible) {
+        console.log("click1");
+        this.$emit("mapOverlayShowBubble");
       }
     }
   }

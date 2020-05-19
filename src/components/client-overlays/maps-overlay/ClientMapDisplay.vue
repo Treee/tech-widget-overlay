@@ -118,6 +118,7 @@ export default {
 .client-map-display {
   width: 12rem;
   height: 12rem;
+  margin-top: 4rem;
 }
 
 .client-image-container {
