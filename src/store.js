@@ -213,6 +213,9 @@ export default new Vuex.Store({
         },
         getMiscOverlayData: (state) => {
             return { ...state.miscOverlayControlOptions };
+        },
+        getTechOverlayData: (state) => {
+            return state.techUpgradeOverlayControlOptions;
         }
         // Compute derived state based on the current state. More like computed property.
     },

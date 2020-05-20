@@ -16,6 +16,23 @@
       </div>
     </div>
     <MapListDisplay />
+    <div class="my-footer">
+      <div>
+        Created by
+        <a href="https://www.twitch.tv/itsatreee">ItsATreee</a>
+        (2019-2020) -
+        <a href="https://github.com/Treee/tech-widget-overlay">GitHub</a>
+      </div>
+      <div>
+        Age of Empires II © Microsoft Corporation.
+        <b>AoE Tech/Map Overlay for Age of Empires II</b> was created under Microsoft's
+        "
+        <a
+          href="https://www.xbox.com/en-us/developers/rules"
+        >Game Content Usage Rules</a>"
+        using assets from Age of Empires II, and it is not endorsed by or affiliated with Microsoft.
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,13 +62,14 @@ export default {
     });
   },
   methods: {
-    techOverlayHandler(overlayData) {
-      const data = {
-        civ1: this.$store.state.techUpgradeOverlayControlOptions.civ1,
-        civ2: this.$store.state.techUpgradeOverlayControlOptions.civ2,
-        overlays: overlayData
-      };
-      this.adminClient.sendMessage(SocketEnums.AdminShow, data);
+    techOverlayHandler() {
+      const data = this.$store.getters.getTechOverlayData;
+      //  {
+      //   civ1: this.$store.state.techUpgradeOverlayControlOptions.civ1,
+      //   civ2: this.$store.state.techUpgradeOverlayControlOptions.civ2,
+      //   overlays: overlayData
+      // };
+      this.adminClient.sendMessage(SocketEnums.AdminShow, { ...data });
     },
     techClearAllHandler() {
       this.adminClient.sendMessage(SocketEnums.AdminHide, {});
@@ -86,5 +104,13 @@ export default {
   background-color: burlywood;
   height: 100vh;
   overflow: hidden;
+}
+
+.my-footer {
+  text-shadow: none;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 </style>

@@ -27,16 +27,20 @@ export default {
   },
   computed: {
     ...mapState({
-      blacksmith: state => state.techUpgradeOverlayControlOptions.blacksmith,
-      university: state => state.techUpgradeOverlayControlOptions.university,
-      monastary: state => state.techUpgradeOverlayControlOptions.monastary,
-      dock: state => state.techUpgradeOverlayControlOptions.dock,
-      barracks: state => state.techUpgradeOverlayControlOptions.barracks,
+      blacksmith: state =>
+        state.techUpgradeOverlayControlOptions.blacksmith || false,
+      university: state =>
+        state.techUpgradeOverlayControlOptions.university || false,
+      monastary: state =>
+        state.techUpgradeOverlayControlOptions.monastary || false,
+      dock: state => state.techUpgradeOverlayControlOptions.dock || false,
+      barracks: state =>
+        state.techUpgradeOverlayControlOptions.barracks || false,
       archeryRange: state =>
-        state.techUpgradeOverlayControlOptions.archeryRange,
-      stable: state => state.techUpgradeOverlayControlOptions.stable,
+        state.techUpgradeOverlayControlOptions.archeryRange || false,
+      stable: state => state.techUpgradeOverlayControlOptions.stable || false,
       siegeWorkshop: state =>
-        state.techUpgradeOverlayControlOptions.siegeWorkshop
+        state.techUpgradeOverlayControlOptions.siegeWorkshop || false
     })
   }
 };

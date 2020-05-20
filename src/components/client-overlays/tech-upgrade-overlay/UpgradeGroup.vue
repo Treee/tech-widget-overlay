@@ -1,33 +1,30 @@
 <template>
   <div
-    v-if="'true'"
+    v-if="isVisible"
     class="div-upgrade-background-wrapper mask-img-horizontal upgrade-group-container"
     :class="{'upgrade-group-animation-enter-active': civName !== '', 'upgrade-group-animation-leave-active': (civName !== '' && this.$store.state.clearAllCivsClicked) }"
   >
-    <div class="upgrade-group">
+    <div class="upgrade-group" v-if="doUpgradesExistFor('feudal')">
       <div class="age-icon feudal" v-if="doUpgradesExistFor('feudal')" />
       <UpgradeIcon
-        class="md-layout-item"
         v-for="(upgrade) in this.getUpgradeList('feudal')"
         :key="upgrade"
         :upgrade-name="upgrade"
         :is-enabled="true"
       />
     </div>
-    <div class="upgrade-group">
+    <div class="upgrade-group" :class="{'upgrade-group-large' : this.isLargeContainer('castle')}">
       <div class="age-icon castle" v-if="doUpgradesExistFor('castle')" />
       <UpgradeIcon
-        class="md-layout-item"
         v-for="(upgrade) in this.getUpgradeList('castle')"
         :key="upgrade"
         :upgrade-name="upgrade"
         :is-enabled="true"
       />
     </div>
-    <div class="upgrade-group">
+    <div class="upgrade-group" :class="{'upgrade-group-large' : this.isLargeContainer('imp')}">
       <div class="age-icon imperial" v-if="doUpgradesExistFor('imperial')" />
       <UpgradeIcon
-        class="md-layout-item"
         v-for="(upgrade) in this.getUpgradeList('imperial')"
         :key="upgrade"
         :upgrade-name="upgrade"
@@ -66,6 +63,9 @@ export default {
     },
     doUpgradesExistFor(age) {
       return this.getUpgradeList(age, this.groupName).length > 0;
+    },
+    isLargeContainer() {
+      return ["university", "monastary", "dock"].includes(this.groupName);
     }
   }
 };
@@ -99,14 +99,19 @@ export default {
 .upgrade-group-container {
   display: inline-flex;
   justify-content: space-evenly;
+  align-items: center;
 }
 
 .upgrade-group {
-  height: 100%;
+  width: 9rem;
+}
+
+.upgrade-group-large {
+  width: 10rem;
 }
 
 .div-upgrade-background-wrapper {
-  height: 15vh;
+  height: 10vh;
   width: 25vw;
   background: url("https://treee.github.io/tech-widget-overlay/assets/images/backgrounds/chatbar_bg.png");
   background-repeat: round;
