@@ -24,8 +24,8 @@ You can access the demo server I host using the below urls.
 The `testClient` name needs to be the same in each url otherwise the admin and client will not connect properly.
 
 #### Event More Info
-Created by (ItsATreee)[https://www.twitch.tv/itsatreee] (2019-2020) - (Github)[https://github.com/Treee/tech-widget-overlay]        
+Created by [ItsATreee](https://www.twitch.tv/itsatreee) (2019-2020) - [Github](https://github.com/Treee/tech-widget-overlay)
 
-Age of Empires II © Microsoft Corporation. AoE Tech/Map Overlay for Age of Empires II was created 
-under Microsoft's "(Game Content Usage Rules)[https://www.xbox.com/en-us/developers/rules]" using assets from Age of Empires II, 
-and it is not endorsed by or affiliated with Microsoft.
+Age of Empires II © Microsoft Corporation. AoE Tech/Map Overlay for Age of Empires II was 
+created under Microsoft's "[Game Content Usage Rules](https://www.xbox.com/en-us/developers/rules)" 
+using assets from Age of Empires II, and it is not endorsed by or affiliated with Microsoft.
