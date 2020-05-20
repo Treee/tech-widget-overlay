@@ -5,21 +5,25 @@
     :class="{'upgrade-group-animation-enter-active': civName !== '', 'upgrade-group-animation-leave-active': (civName !== '' && this.$store.state.clearAllCivsClicked) }"
   >
     <div class="upgrade-group" v-if="doUpgradesExistFor('feudal')">
-      <div class="age-icon feudal" v-if="doUpgradesExistFor('feudal')" />
+      <div class="age-icon feudal" />
       <UpgradeIcon
         v-for="(upgrade) in this.getUpgradeList('feudal')"
         :key="upgrade"
         :upgrade-name="upgrade"
-        :is-enabled="true"
+        :is-enabled="isUpgradeEnabledForCiv(upgrade)"
       />
     </div>
-    <div class="upgrade-group" :class="{'upgrade-group-large' : this.isLargeContainer('castle')}">
-      <div class="age-icon castle" v-if="doUpgradesExistFor('castle')" />
+    <div
+      class="upgrade-group"
+      :class="{'upgrade-group-large' : this.isLargeContainer('castle')}"
+      v-if="doUpgradesExistFor('castle')"
+    >
+      <div class="age-icon castle" />
       <UpgradeIcon
         v-for="(upgrade) in this.getUpgradeList('castle')"
         :key="upgrade"
         :upgrade-name="upgrade"
-        :is-enabled="true"
+        :is-enabled="isUpgradeEnabledForCiv(upgrade)"
       />
     </div>
     <div class="upgrade-group" :class="{'upgrade-group-large' : this.isLargeContainer('imp')}">
@@ -28,7 +32,7 @@
         v-for="(upgrade) in this.getUpgradeList('imperial')"
         :key="upgrade"
         :upgrade-name="upgrade"
-        :is-enabled="true"
+        :is-enabled="isUpgradeEnabledForCiv(upgrade)"
       />
     </div>
   </div>
@@ -38,6 +42,7 @@
 <script>
 import UpgradeIcon from "./UpgradeIcon.vue";
 import { upgrades } from "./upgrade-enums";
+import { civUpgrades } from "./upgrades";
 
 export default {
   name: "UpgradeGroup",
@@ -65,7 +70,100 @@ export default {
       return this.getUpgradeList(age, this.groupName).length > 0;
     },
     isLargeContainer() {
-      return ["university", "monastary", "dock"].includes(this.groupName);
+      return [
+        "university",
+        "monastary",
+        "dock",
+        "stable",
+        "siegeWorkshop"
+      ].includes(this.groupName);
+    },
+    isUpgradeEnabledForCiv(upgrade) {
+      return (
+        this.isUnitDisabled(upgrade) ||
+        this.isTechDisabled(upgrade) ||
+        this.areHorsesCompletelyDisabled(upgrade) ||
+        this.areElephantsDisabled(upgrade) ||
+        this.areEaglesDisabled(upgrade) ||
+        this.isGenitourEnabled(upgrade) ||
+        this.areLancersDisabled(upgrade) ||
+        this.areImperialCamelsDisabled(upgrade)
+      );
+    },
+    isUnitDisabled(upgrade) {
+      const disabledUpgrade = civUpgrades[this.civName].disabled.units.find(
+        disabledUpgrade => {
+          return disabledUpgrade.toLowerCase() === upgrade;
+        }
+      );
+      return disabledUpgrade !== undefined;
+    },
+    isTechDisabled(upgrade) {
+      const disabledUpgrade = civUpgrades[this.civName].disabled.techs.find(
+        disabledUpgrade => {
+          return disabledUpgrade.toLowerCase() === upgrade;
+        }
+      );
+      return disabledUpgrade !== undefined;
+    },
+    areHorsesCompletelyDisabled(upgrade) {
+      return (
+        civUpgrades[this.civName].disableHorses !== undefined &&
+        this.isHorseUpgrade(upgrade)
+      );
+    },
+    areElephantsDisabled(upgrade) {
+      return (
+        !["burmese", "malay", "vietnamese", "khmer"].includes(
+          this.civName.toLowerCase()
+        ) && upgrade === "elite battle elephant"
+      );
+    },
+    isHorseUpgrade(upgrade) {
+      return (
+        [
+          "bloodlines",
+          "husbandry",
+          "light cavalry",
+          "hussar",
+          "knight",
+          "camel",
+          "cavalier",
+          "paladin",
+          "heavy camel rider",
+          "imperial camel rider",
+          "heavy cavalry archer"
+        ].includes(upgrade.toLowerCase()) ||
+        upgrade.toLowerCase().includes("barding")
+      );
+    },
+    areEaglesDisabled(upgrade) {
+      return (
+        !["aztecs", "incas", "mayans"].includes(this.civName.toLowerCase()) &&
+        this.isEagleWarriorUpgrade(upgrade)
+      );
+    },
+    isEagleWarriorUpgrade(upgrade) {
+      return ["eagle warrior", "elite eagle warrior"].includes(
+        upgrade.toLowerCase()
+      );
+    },
+    isGenitourEnabled(upgrade) {
+      return (
+        this.civName.toLowerCase() !== "berbers" && upgrade.includes("genitour")
+      );
+    },
+    areLancersDisabled(upgrade) {
+      return (
+        !["cumans", "tatars", "mongols"].includes(this.civName) &&
+        upgrade === "elite steppe lancer"
+      );
+    },
+    areImperialCamelsDisabled(upgrade) {
+      return (
+        !["indians"].includes(this.civName.toLowerCase()) &&
+        upgrade === "imperial camel rider"
+      );
     }
   }
 };

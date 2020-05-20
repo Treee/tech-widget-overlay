@@ -113,4 +113,14 @@ export default {
   box-shadow: 3px 4px 9px #614d3d;
   border-radius: 0.2rem;
 }
+
+.disabled-upgrade::before {
+  display: inline-flex;
+  content: "";
+  width: inherit;
+  height: inherit;
+  background: red;
+  border-radius: inherit;
+  opacity: 0.5;
+}
 </style>

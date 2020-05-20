@@ -47,4 +47,7 @@ export default {
 </script>
 
 <style language="scss">
+.upgrade-groups-wrapper {
+  margin-top: 5rem;
+}
 </style>
