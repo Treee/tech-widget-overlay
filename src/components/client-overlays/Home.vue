@@ -58,11 +58,15 @@ export default {
   font-family: "Memb-Font";
   src: url("https://treee.github.io/tech-widget-overlay/assets/fonts/IronstrikeSemiBold.otf");
 }
+
+.transparent {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 #app {
-  background: url("/assets/images/backgrounds/fullbackground.png");
   font-family: Memb-Font;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
