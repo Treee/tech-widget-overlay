@@ -64,11 +64,6 @@ export default {
   methods: {
     techOverlayHandler() {
       const data = this.$store.getters.getTechOverlayData;
-      //  {
-      //   civ1: this.$store.state.techUpgradeOverlayControlOptions.civ1,
-      //   civ2: this.$store.state.techUpgradeOverlayControlOptions.civ2,
-      //   overlays: overlayData
-      // };
       this.adminClient.sendMessage(SocketEnums.AdminShow, { ...data });
     },
     techClearAllHandler() {

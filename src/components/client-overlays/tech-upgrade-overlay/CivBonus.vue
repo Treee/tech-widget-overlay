@@ -36,7 +36,11 @@ export default {
     }
   },
   updated() {
-    if (this.playSound && this.civName !== "") {
+    if (
+      this.playSound &&
+      this.civName !== "" &&
+      !this.$store.state.clearAllCivsClicked
+    ) {
       var civAudio = new Audio(this.getAudioPath);
       civAudio.volume = 0.25;
       civAudio.play();

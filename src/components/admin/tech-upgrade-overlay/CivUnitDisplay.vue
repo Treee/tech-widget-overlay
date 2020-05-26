@@ -1,15 +1,16 @@
 <template>
-  <div
-    v-on:click="civClicked"
-    class="civ-tech-icon faded"
-    :style="getIconStyle"
-    :class="{'player-one': this.$store.getters.isPlayerOne(this.civName), 'player-two': this.$store.getters.isPlayerTwo(this.civName)}"
-  >
+  <div v-on:click="civClicked" class="civ-tech-icon faded" :style="getIconStyle">
+    <div class="player-colors">
+      <div v-if="player1 === civName" class="player-one"></div>
+      <div v-if="player2 === civName" class="player-two"></div>
+    </div>
     <div class="civ-text">{{civName}}</div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "CivUnitDisplay",
   props: {
@@ -17,6 +18,10 @@ export default {
     clickCounter: Number
   },
   computed: {
+    ...mapState({
+      player1: state => state.techUpgradeOverlayControlOptions.civ1,
+      player2: state => state.techUpgradeOverlayControlOptions.civ2
+    }),
     getIconStyle() {
       return {
         background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${this.civName.toLowerCase()}.tp.png`,
@@ -34,6 +39,13 @@ export default {
 </script>
 
 <style language="scss">
+.player-colors {
+  width: inherit;
+  height: inherit;
+  display: inline-flex;
+  opacity: 50%;
+}
+
 .civ-tech-icon {
   width: 6rem;
   height: 6rem;
@@ -56,7 +68,6 @@ export default {
 
 .civ-text {
   display: inline-block;
-  margin-top: 75%;
   user-select: none;
 }
 
@@ -66,9 +77,13 @@ export default {
 
 .player-one {
   background-color: blue !important;
+  width: 50%;
+  height: 50%;
 }
 
 .player-two {
   background-color: red !important;
+  width: 50%;
+  height: 50%;
 }
 </style>

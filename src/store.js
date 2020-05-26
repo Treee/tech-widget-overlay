@@ -233,14 +233,10 @@ export default new Vuex.Store({
             state.dataString = dataStrings;
         },
         updateCivs(state, { civ1, civ2 }) {
-            if (civ1 !== "") {
-                state.techUpgradeOverlayControlOptions.civ1 = civ1;
-                state.miscOverlayControlOptions.civ1 = civ1;
-            }
-            if (civ2 !== "") {
-                state.techUpgradeOverlayControlOptions.civ2 = civ2;
-                state.miscOverlayControlOptions.civ2 = civ2;
-            }
+            state.techUpgradeOverlayControlOptions.civ1 = civ1;
+            state.miscOverlayControlOptions.civ1 = civ1;
+            state.techUpgradeOverlayControlOptions.civ2 = civ2;
+            state.miscOverlayControlOptions.civ2 = civ2;
             state.clearAllCivsClicked = false;
         },
         clearCivs(state) {
