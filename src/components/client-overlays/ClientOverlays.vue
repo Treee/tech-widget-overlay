@@ -11,6 +11,7 @@
     <MapOverlay
       :selected-maps-and-state="this.$store.state.clientControlOptions.selectedMapsAndState"
     />
+    <AnimatedGroupOverlay v-if="false" />
   </div>
 </template>
 
@@ -20,13 +21,15 @@ import { mapState } from "vuex";
 import CivBonusOverlay from "./tech-upgrade-overlay/CivBonusOverlay.vue";
 import MapOverlay from "./maps-overlay/MapOverlay.vue";
 import ClientPlayerDisplay from "./misc-overlay/ClientPlayerDisplay.vue";
+import AnimatedGroupOverlay from "./animated-media-overlay/AnimatedGroupOverlay.vue";
 
 export default {
   name: "ClientOverlay",
   components: {
     CivBonusOverlay,
     MapOverlay,
-    ClientPlayerDisplay
+    ClientPlayerDisplay,
+    AnimatedGroupOverlay
   },
   created: () => {
     console.log("client overlay created");
