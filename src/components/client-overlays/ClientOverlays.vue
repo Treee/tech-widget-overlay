@@ -6,7 +6,7 @@
       :civ1-description="this.$store.getters.getCivDescription(techOverlayOptions.civ1)"
       :civ2="techOverlayOptions.civ2"
       :civ2-description="this.$store.getters.getCivDescription(techOverlayOptions.civ2)"
-      :playSound="false"
+      :playSound="techOverlayOptions.sound"
     />
     <MapOverlay
       :selected-maps-and-state="this.$store.state.clientControlOptions.selectedMapsAndState"

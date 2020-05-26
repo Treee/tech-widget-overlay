@@ -4,7 +4,6 @@
       class="div-background mask-img-vertical"
       :class="{'civ-tech-animation-enter-active': this.civName !== '', 'civ-tech-animation-leave-active': (this.civName !== '' && this.$store.state.clearAllCivsClicked) }"
     >
-      <audio v-if="playSound" autoplay :src="getAudioPath" type="audio/mp3" />
       <div class="div-wrapper" :style="backgroundStyle()">
         <div class="civ-icon-and-name">
           <div class="civ-icon" :style="civIconStyle()" />
@@ -34,6 +33,13 @@ export default {
   computed: {
     getAudioPath() {
       return `https://treee.github.io/tech-widget-overlay/assets/sounds/${this.civName}.mp3`;
+    }
+  },
+  updated() {
+    if (this.playSound && this.civName !== "") {
+      var civAudio = new Audio(this.getAudioPath);
+      civAudio.volume = 0.25;
+      civAudio.play();
     }
   },
   methods: {

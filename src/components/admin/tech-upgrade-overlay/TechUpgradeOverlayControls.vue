@@ -67,6 +67,7 @@ export default {
       this.$emit("bubble-up-clear-all-child");
     },
     showOverlayClick() {
+      console.log({ ...this.$data });
       this.$emit("bubble-up-overlay-child", { ...this.$data });
     },
     toCamelCase(text) {
