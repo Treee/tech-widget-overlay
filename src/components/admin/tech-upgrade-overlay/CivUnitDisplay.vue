@@ -43,7 +43,7 @@ export default {
   width: inherit;
   height: inherit;
   display: inline-flex;
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 .civ-tech-icon {
