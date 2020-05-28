@@ -1,7 +1,7 @@
 <template>
   <md-menu md-direction="bottom-start" v-on:md-closed="menuClosed">
     <md-menu-content>
-      <md-menu-item v-if="getPlayers().length > 0">
+      <md-menu-item v-if="showPlayers()">
         <md-field>
           <label :for="name+'-home'">Player Home Map</label>
           <md-select v-model="homeMapPlayer" :name="name+'-home'" :id="name+'-home'">
@@ -10,7 +10,7 @@
           </md-select>
         </md-field>
       </md-menu-item>
-      <md-menu-item v-if="getPlayers().length > 0">
+      <md-menu-item v-if="showPlayers()">
         <md-field>
           <label :for="name+'-winner'">Winner!!</label>
           <md-select
@@ -87,6 +87,14 @@ export default {
     },
     menuClosed() {
       this.$store.commit("updateMapState", { ...this.$data });
+    },
+    showPlayers() {
+      return (
+        this.$store.getters.getPlayerNames[0] &&
+        this.$store.getters.getPlayerNames[0] !== "" &&
+        this.$store.getters.getPlayerNames[1] &&
+        this.$store.getters.getPlayerNames[1] !== ""
+      );
     },
     getPlayers() {
       return this.$store.getters.getPlayerNames;
