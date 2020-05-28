@@ -62,6 +62,7 @@ export default {
 .transparent {
   background: transparent !important;
   background-color: transparent !important;
+  overflow: hidden;
 }
 
 #app {

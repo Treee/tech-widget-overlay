@@ -110,7 +110,8 @@ export default new Vuex.Store({
             civ1: "",
             civ2: "",
             isCivDisplayVisible: false,
-            showTeamColors: false
+            showTeamColors: false,
+            showCurrentMapName: false,
         },
         techUpgradeOverlayControlOptions: {
             civ1: "",
@@ -287,6 +288,7 @@ export default new Vuex.Store({
             state.miscOverlayControlOptions.civ2 = data.civ2 || "";
             state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
             state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
+            state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
         },
         updateMapState(state, data) {
             const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {

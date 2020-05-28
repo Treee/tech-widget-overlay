@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ClientPlayerDisplay />
+    <ScoreboardOverlay />
     <CivBonusOverlay
       :civ1="techOverlayOptions.civ1"
       :civ1-description="this.$store.getters.getCivDescription(techOverlayOptions.civ1)"
@@ -20,7 +20,7 @@ import { mapState } from "vuex";
 
 import CivBonusOverlay from "./tech-upgrade-overlay/CivBonusOverlay.vue";
 import MapOverlay from "./maps-overlay/MapOverlay.vue";
-import ClientPlayerDisplay from "./misc-overlay/ClientPlayerDisplay.vue";
+import ScoreboardOverlay from "./scoreboard-overlay/ScoreboardOverlay.vue";
 import AnimatedGroupOverlay from "./animated-media-overlay/AnimatedGroupOverlay.vue";
 
 export default {
@@ -28,7 +28,7 @@ export default {
   components: {
     CivBonusOverlay,
     MapOverlay,
-    ClientPlayerDisplay,
+    ScoreboardOverlay,
     AnimatedGroupOverlay
   },
   created: () => {
