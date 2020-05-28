@@ -7,10 +7,10 @@
       :civ1="miscOverlayOptions.civ1"
       :civ2="miscOverlayOptions.civ2"
     />
-    <CurrentMapDisplay :showCurrentMapName="true" :mapName="'African Waters test trest test'" />
-    <!-- Team colors FLANK POCKET (POCKET) FLANK -->
-    <!-- Team Civ Display P1 and P2 -->
-    <!-- Current Map -->
+    <CurrentMapDisplay
+      :showCurrentMapName="miscOverlayOptions.showCurrentMapName"
+      :mapName="miscOverlayOptions.currentMap"
+    />
   </div>
 </template>
 
@@ -41,6 +41,8 @@ export default {
   background: url("/assets/images/backgrounds/fullbackground.png");
   width: 100vw;
   height: 100vh;
+  position: absolute;
+  top: 0;
 }
 .score-board-overlay {
   width: inherit;

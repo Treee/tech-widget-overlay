@@ -112,6 +112,7 @@ export default new Vuex.Store({
             isCivDisplayVisible: false,
             showTeamColors: false,
             showCurrentMapName: false,
+            currentMap: ""
         },
         techUpgradeOverlayControlOptions: {
             civ1: "",
@@ -284,11 +285,12 @@ export default new Vuex.Store({
             state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
         },
         updateMiscOverlayControlOptions(state, data) {
-            state.miscOverlayControlOptions.civ1 = data.civ1 || "";
-            state.miscOverlayControlOptions.civ2 = data.civ2 || "";
+            state.miscOverlayControlOptions.civ1 = data.civ1 || state.techUpgradeOverlayControlOptions.civ1 || "";
+            state.miscOverlayControlOptions.civ2 = data.civ2 || state.techUpgradeOverlayControlOptions.civ2 || "";
             state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
             state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
             state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
+            state.miscOverlayControlOptions.currentMap = data.currentMap || state.miscOverlayControlOptions.currentMap || "";
         },
         updateMapState(state, data) {
             const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
@@ -300,6 +302,9 @@ export default new Vuex.Store({
                 state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].homeMapPlayer = data.homeMapPlayer;
                 state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].winner = data.winner;
             }
+            if (data.mapState === 'current') {
+                state.miscOverlayControlOptions.currentMap = data.name;
+            }
             // console.log('update called', state.mapPickAndBanOverlayControlOptions.mapStates);
         },
         addMapState(state, selectedMaps) {
@@ -309,7 +314,6 @@ export default new Vuex.Store({
                 });
                 // if a state for the selected map doesnt exist
                 if (mapIndex === -1) {
-
                     state.mapPickAndBanOverlayControlOptions.mapStates.push({ name: map, mapState: 'open', homeMapPlayer: '', winner: '' });
                 }
             });

@@ -38,6 +38,7 @@ export default {
         this.$store.dispatch("clearMaps", { delayMs: 2000 });
       }
       if (messageType === SocketEnums.AdminShowCiv) {
+        console.log(data);
         this.$store.commit("updateMiscOverlayControlOptions", data);
       }
       console.log("client handling message", data);

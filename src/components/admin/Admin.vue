@@ -79,15 +79,8 @@ export default {
       this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
     },
     miscOverlayBroadcast() {
-      const data = {
-        ...this.$store.getters.getMiscOverlayData,
-        ...{
-          civ1: this.$store.state.techUpgradeOverlayControlOptions.civ1 || "",
-          civ2: this.$store.state.techUpgradeOverlayControlOptions.civ2 || ""
-        }
-      };
-
-      this.adminClient.sendMessage(SocketEnums.AdminShowCiv, data);
+      const data = this.$store.getters.getMiscOverlayData;
+      this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
     }
   }
 };

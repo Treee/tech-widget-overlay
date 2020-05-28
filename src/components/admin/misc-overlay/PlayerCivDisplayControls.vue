@@ -10,6 +10,11 @@
       v-on:change="valueChanged"
       class="md-primary large-font"
     >Show Team Colors</md-switch>
+    <md-switch
+      v-model="showCurrentMapName"
+      v-on:change="valueChanged"
+      class="md-primary large-font"
+    >Show Current Map</md-switch>
   </div>
 </template>
 
@@ -21,10 +26,10 @@ export default {
   data() {
     return {
       isCivDisplayVisible: this.controlOptions?.isCivDisplayVisible || false,
-      showTeamColors: this.controlOptions?.showTeamColors || false
+      showTeamColors: this.controlOptions?.showTeamColors || false,
+      showCurrentMapName: this.controlOptions?.showCurrentMapName || false
     };
   },
-  props: {},
   computed: {
     ...mapState({
       controlOptions: state => state.miscOverlayControlOptions
