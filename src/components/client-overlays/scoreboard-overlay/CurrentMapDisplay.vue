@@ -1,6 +1,6 @@
 <template>
   <div class="current-map-display" v-show="showCurrentMapName && mapName !== ''">
-    <div class="current-map-name">{{mapName}} {{showCurrentMapName}}</div>
+    <div class="current-map-name">{{this.$store.getters.getFormattedMapName(mapName)}}</div>
   </div>
 </template>
 
