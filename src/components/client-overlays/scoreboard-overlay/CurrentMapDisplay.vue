@@ -19,9 +19,9 @@ export default {
   display: inline-flex;
   width: 20%;
   position: absolute;
-  left: 44.5%;
+  left: 42.8%;
   top: 98%;
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 .current-map-name {
