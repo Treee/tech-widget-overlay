@@ -7,7 +7,10 @@
       <div class="client-map-frame" :style="getMapFrame"></div>
       <div class="client-map-image" :style="getMapImage"></div>
       <div class="column-list">
-        <div class="client-map-name">{{this.$store.getters.getFormattedMapName(name)}}</div>
+        <div
+          class="client-map-name"
+          :class="{'white-text': this.useWhiteText()}"
+        >{{this.$store.getters.getFormattedMapName(name)}}</div>
         <div class="home-map home-map-decal player-flag-modifier" v-if="this.homeMapPlayer !== ''">
           <div class="flag-text">{{this.homeMapPlayer}}</div>
           <md-icon class="home-icon">home</md-icon>
@@ -63,6 +66,9 @@ export default {
         .toLowerCase()
         .split(" ")
         .join("-");
+    },
+    useWhiteText() {
+      return this.mapState !== "played";
     }
   }
 };
@@ -84,6 +90,9 @@ export default {
   width: 75%;
   padding-top: 1.2%;
   display: inline-flex;
+  font-size: large;
+  color: black;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
 .home-icon {
   float: left;
@@ -152,13 +161,16 @@ export default {
 .client-map-name {
   z-index: 2;
   font-size: larger;
-  color: whitesmoke;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   display: inline-flex;
   height: fit-content;
   position: relative;
-  top: 86%;
+  top: 87%;
   align-self: center;
+}
+
+.white-text {
+  color: whitesmoke;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .fade-in-map {
