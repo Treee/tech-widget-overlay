@@ -25,7 +25,7 @@
         </md-field>
       </md-menu-item>
       <md-menu-item>
-        <div class="md-layout" v-on:click.prevent="preventEventPropagation">
+        <div class="md-layout" v-on:click.prevent="mapStateRadioButtonClick">
           <md-radio v-model="mapState" class="md-primary" value="current">Current</md-radio>
           <md-radio v-model="mapState" class="md-primary" value="played">Played</md-radio>
           <md-radio v-model="mapState" class="md-primary" value="banned">Banned</md-radio>
@@ -77,8 +77,12 @@ export default {
     }
   },
   methods: {
-    preventEventPropagation(event) {
-      // event.preventDefault();
+    mapStateRadioButtonClick(event) {
+      if (this.mapState === "current") {
+        this.menuClosed();
+        this.$emit("scoreboardChildBubbleUp");
+        // raise event to send scoreboard overlay map name
+      }
       event.stopPropagation();
     },
     menuClosed() {

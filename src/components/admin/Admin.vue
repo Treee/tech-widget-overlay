@@ -15,7 +15,7 @@
         />
       </div>
     </div>
-    <MapListDisplay />
+    <MapListDisplay v-on:scoreboardOverlayBubbleUp="scoreboardMapChange" />
     <div class="my-footer">
       <div>
         Created by
@@ -81,6 +81,16 @@ export default {
     miscOverlayBroadcast() {
       const data = this.$store.getters.getMiscOverlayData;
       this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
+    },
+    scoreboardMapChange() {
+      const data = {
+        showCurrentMapName: this.$store.getters.getMiscOverlayData
+          .showCurrentMapName,
+        currentMap: this.$store.getters.getMiscOverlayData.currentMap
+      };
+      this.adminClient.sendMessage(SocketEnums.AdminShowDock, {
+        ...data
+      });
     }
   }
 };

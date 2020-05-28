@@ -2,6 +2,7 @@
   <div class="overlay-container md-layout md-alignment-top-center">
     <MapDisplay
       class="md-layout-item"
+      v-on:scoreboardChildBubbleUp="scoreboardBubbleUp"
       v-for="(mapName) in selectedMaps"
       :key="mapName"
       :map-name="mapName"
@@ -27,12 +28,16 @@ export default {
   components: {
     MapDisplay
   },
+  methods: {
+    scoreboardBubbleUp() {
+      this.$emit("scoreboardOverlayBubbleUp");
+    }
+  },
   watch: {
     selectedMaps(newVal) {
       this.$store.commit("addMapState", newVal);
       this.$store.commit("pruneMapState", newVal);
-      console.log(this.selectedMaps);
-      // add any new map to mapstates, remove old maps
+      // console.log(this.selectedMaps);
     }
   }
 };

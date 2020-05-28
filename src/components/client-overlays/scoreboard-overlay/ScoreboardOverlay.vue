@@ -38,7 +38,7 @@ export default {
 
 <style language="scss">
 .score-board-overlay-container {
-  /* background: url("/assets/images/backgrounds/fullbackground.png"); */
+  /* background: url("/assets/images/backgrounds/main-boa2-overlay.png"); */
   width: 100vw;
   height: 100vh;
   position: absolute;

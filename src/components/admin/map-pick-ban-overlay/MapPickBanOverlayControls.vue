@@ -96,9 +96,7 @@ export default {
       }
     },
     updateMapsClick() {
-      console.log("click");
       if (this.$data.mapOverlayVisible) {
-        console.log("click1");
         this.$emit("mapOverlayShowBubble");
       }
     }

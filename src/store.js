@@ -292,6 +292,10 @@ export default new Vuex.Store({
             state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
             state.miscOverlayControlOptions.currentMap = data.currentMap || state.miscOverlayControlOptions.currentMap || "";
         },
+        updateScoreboardMapName(state, data) {
+            state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
+            state.miscOverlayControlOptions.currentMap = data.currentMap;
+        },
         updateMapState(state, data) {
             const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
                 return mapState.name === data.name;
