@@ -29,7 +29,7 @@ export default {
   name: "ClientMapDisplay",
   props: {
     name: String,
-    mapState: String,
+    state: String,
     homeMapPlayer: String,
     winner: String
   },
@@ -52,11 +52,11 @@ export default {
   methods: {
     getMapFrameImagePath() {
       let mapFrame = "frame.png";
-      if (this.mapState === "current") {
+      if (this.state === "current") {
         mapFrame = "frame-current.png";
-      } else if (this.mapState === "banned") {
+      } else if (this.state === "banned") {
         mapFrame = "frame-veto.png";
-      } else if (this.mapState === "played") {
+      } else if (this.state === "played") {
         mapFrame = "frame-previously-played.png";
       }
       return mapFrame;
@@ -68,7 +68,7 @@ export default {
         .join("-");
     },
     useWhiteText() {
-      return this.mapState !== "played";
+      return this.state !== "played";
     }
   }
 };

@@ -2,10 +2,10 @@
   <div class="client-maps md-layout md-alignment-top-center">
     <ClientMapDisplay
       class="md-layout-item"
-      v-for="({name, mapState, homeMapPlayer, winner}, index) in selectedMapsAndState"
+      v-for="({name, state, homeMapPlayer, winner}, index) in selectedMapsAndState"
       :key="index"
       :name="name"
-      :map-state="mapState"
+      :state="state"
       :home-map-player="homeMapPlayer"
       :winner="winner"
     />

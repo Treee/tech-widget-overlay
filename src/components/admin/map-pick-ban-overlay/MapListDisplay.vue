@@ -34,8 +34,43 @@ export default {
     }
   },
   watch: {
-    selectedMaps(newVal) {
-      this.$store.commit("addMapState", newVal);
+    selectedMaps(newVal, oldVal) {
+      const removedDifference = [];
+      for (let i = 0; i < oldVal.length; i++) {
+        let foundMatch = false;
+        for (let k = 0; k < newVal.length; k++) {
+          if (oldVal[i] === newVal[k]) {
+            foundMatch = true;
+          }
+        }
+        if (!foundMatch) {
+          removedDifference.push(oldVal[i]);
+        }
+      }
+
+      const addedDifference = [];
+      for (let i = 0; i < newVal.length; i++) {
+        let foundMatch = false;
+        for (let k = 0; k < oldVal.length; k++) {
+          if (newVal[i] === oldVal[k]) {
+            foundMatch = true;
+          }
+        }
+        if (!foundMatch) {
+          addedDifference.push(newVal[i]);
+        }
+      }
+
+      console.log("addedDifference", addedDifference);
+      console.log("removedDifference", removedDifference);
+      if (addedDifference.length > 0) {
+        this.$store.commit("updateMapState", {
+          name: addedDifference[0],
+          state: "open",
+          homeMapPlayer: "",
+          winner: ""
+        });
+      }
       this.$store.commit("pruneMapState", newVal);
       // console.log(this.selectedMaps);
     }

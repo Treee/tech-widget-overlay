@@ -218,6 +218,12 @@ export default new Vuex.Store({
         },
         getTechOverlayData: (state) => {
             return state.techUpgradeOverlayControlOptions;
+        },
+        getMapStateForMap: (state) => (map) => {
+            const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
+                return mapState.name === map;
+            });
+            return state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex];
         }
         // Compute derived state based on the current state. More like computed property.
     },
@@ -297,30 +303,32 @@ export default new Vuex.Store({
             state.miscOverlayControlOptions.currentMap = data.currentMap;
         },
         updateMapState(state, data) {
+            // console.log('update map state start', state.mapPickAndBanOverlayControlOptions.mapStates);
+            // console.log('data', data);
             const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
                 return mapState.name === data.name;
             });
+            // console.log('did we find anything?', mapIndex);
             if (mapIndex > -1) {
+                // console.log('yes, update it with ', data)
                 state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].name = data.name;
-                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].mapState = data.mapState;
+                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].state = data.state;
                 state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].homeMapPlayer = data.homeMapPlayer;
                 state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].winner = data.winner;
+            } else {
+                // console.log('nope, pushing', data);
+                state.mapPickAndBanOverlayControlOptions.mapStates.push(data);
             }
-            if (data.mapState === 'current') {
+            if (data.state === 'current') {
                 state.miscOverlayControlOptions.currentMap = data.name;
-            }
-            // console.log('update called', state.mapPickAndBanOverlayControlOptions.mapStates);
-        },
-        addMapState(state, selectedMaps) {
-            selectedMaps.forEach(map => {
                 const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
-                    return mapState.name === map;
+                    return mapState.name !== data.name && mapState.state === 'current';
                 });
-                // if a state for the selected map doesnt exist
-                if (mapIndex === -1) {
-                    state.mapPickAndBanOverlayControlOptions.mapStates.push({ name: map, mapState: 'open', homeMapPlayer: '', winner: '' });
+                if (mapIndex > -1) {
+                    // console.log(`map changing current state to played`);
+                    state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].state = "played";
                 }
-            });
+            }
         },
         pruneMapState(state, data) {
             //get the list of mapstates that are no longer in the seelcted lists of maps

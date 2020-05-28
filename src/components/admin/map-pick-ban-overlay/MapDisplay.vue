@@ -1,7 +1,7 @@
 <template>
   <md-menu md-direction="bottom-start" v-on:md-closed="menuClosed">
     <md-menu-content>
-      <md-menu-item v-if="showPlayers()">
+      <md-menu-item v-if="showPlayerDropdown()">
         <md-field>
           <label :for="name+'-home'">Player Home Map</label>
           <md-select v-model="homeMapPlayer" :name="name+'-home'" :id="name+'-home'">
@@ -10,7 +10,7 @@
           </md-select>
         </md-field>
       </md-menu-item>
-      <md-menu-item v-if="showPlayers()">
+      <md-menu-item v-if="showPlayerDropdown()">
         <md-field>
           <label :for="name+'-winner'">Winner!!</label>
           <md-select
@@ -26,10 +26,10 @@
       </md-menu-item>
       <md-menu-item>
         <div class="md-layout" v-on:click.prevent="mapStateRadioButtonClick">
-          <md-radio v-model="mapState" class="md-primary" value="current">Current</md-radio>
-          <md-radio v-model="mapState" class="md-primary" value="played">Played</md-radio>
-          <md-radio v-model="mapState" class="md-primary" value="banned">Banned</md-radio>
-          <md-radio v-model="mapState" class="md-primary" value="open">Open</md-radio>
+          <md-radio v-model="state" class="md-primary" value="current">Current</md-radio>
+          <md-radio v-model="state" class="md-primary" value="played">Played</md-radio>
+          <md-radio v-model="state" class="md-primary" value="banned">Banned</md-radio>
+          <md-radio v-model="state" class="md-primary" value="open">Open</md-radio>
         </div>
       </md-menu-item>
     </md-menu-content>
@@ -44,23 +44,38 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "MapDisplay",
   data() {
     return {
       name: this.mapName,
-      mapState: this.currentMapState || "open",
-      homeMapPlayer: this.homeMapPlayerName || "",
-      winner: this.mapWinner || ""
+      state: this.$store.getters.getMapStateForMap(this.mapName).state,
+      homeMapPlayer: this.$store.getters.getMapStateForMap(this.mapName)
+        .homeMapPlayer,
+      winner: this.$store.getters.getMapStateForMap(this.mapName).winner
     };
   },
   props: {
-    mapName: String,
-    currentMapState: String,
-    homeMapPlayerName: String,
-    mapWinner: String
+    mapName: String
   },
   computed: {
+    ...mapState({
+      currentMapState: state => {
+        let foundMapState = state.miscOverlayControlOptions.mapStates.find(
+          value => {
+            value.name === this.mapName;
+          }
+        );
+        foundMapState = state.miscOverlayControlOptions.mapStates.find(
+          value => {
+            value.name === this.mapName;
+          }
+        );
+        return foundMapState;
+      }
+    }),
     getMapImage() {
       const map = this.toKabobCase(this.name);
       const mapFolder = this.$store.getters.isCustomMap(map)
@@ -78,7 +93,7 @@ export default {
   },
   methods: {
     mapStateRadioButtonClick(event) {
-      if (this.mapState === "current") {
+      if (this.state === "current") {
         this.menuClosed();
         this.$emit("scoreboardChildBubbleUp");
         // raise event to send scoreboard overlay map name
@@ -86,9 +101,12 @@ export default {
       event.stopPropagation();
     },
     menuClosed() {
-      this.$store.commit("updateMapState", { ...this.$data });
+      this.$store.commit("updateMapState", {
+        ...this.$data
+      });
+      this.$forceUpdate();
     },
-    showPlayers() {
+    showPlayerDropdown() {
       return (
         this.$store.getters.getPlayerNames[0] &&
         this.$store.getters.getPlayerNames[0] !== "" &&
@@ -101,18 +119,18 @@ export default {
     },
     winnerSelected(winner) {
       if (winner !== "") {
-        this.mapState = "played";
+        this.state = "played";
       } else {
-        this.mapState = "open";
+        this.state = "open";
       }
     },
     getMapFrameImagePath() {
       let mapFrame = "frame.png";
-      if (this.mapState === "current") {
+      if (this.state === "current") {
         mapFrame = "frame-current.png";
-      } else if (this.mapState === "banned") {
+      } else if (this.state === "banned") {
         mapFrame = "frame-veto.png";
-      } else if (this.mapState === "played") {
+      } else if (this.state === "played") {
         mapFrame = "frame-previously-played.png";
       }
       return mapFrame;
