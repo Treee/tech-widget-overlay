@@ -15,13 +15,13 @@
 You can access the demo server I host using the below urls.
 
 ### Admin
-`https://treee.github.io/tech-widget-overlay/#/tech-widget-overlay/testClient/admin`
+`https://treee.github.io/tech-widget-overlay/#/{clientId}/admin`
 
 ### Client
-`https://treee.github.io/tech-widget-overlay/#/tech-widget-overlay/testClient`
+`https://treee.github.io/tech-widget-overlay/#/{clientId}`
 
 #### Note
-The `testClient` name needs to be the same in each url otherwise the admin and client will not connect properly.
+The `{clientId}` name needs to be the same in each url otherwise the admin and client will not connect properly.
 
 #### Even More Info
 Created by [ItsATreee](https://www.twitch.tv/itsatreee) (2019-2020) - [Github](https://github.com/Treee/tech-widget-overlay)
