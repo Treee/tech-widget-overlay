@@ -3,9 +3,10 @@
     <MapDisplay
       class="md-layout-item"
       v-on:scoreboardChildBubbleUp="scoreboardBubbleUp"
-      v-for="(mapName) in selectedMaps"
+      v-for="(mapName, index) in selectedMaps"
       :key="mapName"
       :map-name="mapName"
+      :current-state="mapStates[index]"
     />
   </div>
 </template>
@@ -22,7 +23,8 @@ export default {
   computed: {
     ...mapState({
       selectedMaps: state =>
-        state.mapPickAndBanOverlayControlOptions.selectedMaps
+        state.mapPickAndBanOverlayControlOptions.selectedMaps,
+      mapStates: state => state.mapPickAndBanOverlayControlOptions.mapStates
     })
   },
   components: {
@@ -61,15 +63,17 @@ export default {
         }
       }
 
-      console.log("addedDifference", addedDifference);
-      console.log("removedDifference", removedDifference);
       if (addedDifference.length > 0) {
+        console.log("adding this map", addedDifference);
         this.$store.commit("updateMapState", {
           name: addedDifference[0],
           state: "open",
           homeMapPlayer: "",
           winner: ""
         });
+      }
+      if (removedDifference.length > 0) {
+        console.log("pruning", removedDifference);
       }
       this.$store.commit("pruneMapState", newVal);
       // console.log(this.selectedMaps);

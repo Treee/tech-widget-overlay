@@ -137,7 +137,8 @@ export default new Vuex.Store({
             team1Name: "",
             team2Name: "",
             selectedMaps: [],
-            mapStates: []
+            mapStates: [],
+            mapStates1: []
         },
         defaultMaps: defaultMaps,
         customMaps: customMaps,

@@ -49,17 +49,18 @@ export default {
   data() {
     return {
       name: this.mapName,
-      state: this.currentMapState?.state || "open",
-      homeMapPlayer: this.currentMapState?.homeMapPlayer || "",
-      winner: this.currentMapState?.winner || ""
+      state: this.currentState.state,
+      homeMapPlayer: this.currentState.homeMapPlayer,
+      winner: this.currentState.winner
     };
   },
   props: {
-    mapName: String
+    mapName: String,
+    currentState: Object
   },
   computed: {
-    currentMapState() {
-      return this.$store.getters.getMapStateForMap(this.mapName);
+    getState() {
+      return this.currentState.state;
     },
     getMapImage() {
       const map = this.toKabobCase(this.name);
@@ -110,11 +111,11 @@ export default {
     },
     getMapFrameImagePath() {
       let mapFrame = "frame.png";
-      if (this.state === "current") {
+      if (this.getState === "current") {
         mapFrame = "frame-current.png";
-      } else if (this.state === "banned") {
+      } else if (this.getState === "banned") {
         mapFrame = "frame-veto.png";
-      } else if (this.state === "played") {
+      } else if (this.getState === "played") {
         mapFrame = "frame-previously-played.png";
       }
       return mapFrame;
