@@ -44,38 +44,23 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "MapDisplay",
   data() {
     return {
       name: this.mapName,
-      state: this.$store.getters.getMapStateForMap(this.mapName).state,
-      homeMapPlayer: this.$store.getters.getMapStateForMap(this.mapName)
-        .homeMapPlayer,
-      winner: this.$store.getters.getMapStateForMap(this.mapName).winner
+      state: this.currentMapState?.state || "open",
+      homeMapPlayer: this.currentMapState?.homeMapPlayer || "",
+      winner: this.currentMapState?.winner || ""
     };
   },
   props: {
     mapName: String
   },
   computed: {
-    ...mapState({
-      currentMapState: state => {
-        let foundMapState = state.miscOverlayControlOptions.mapStates.find(
-          value => {
-            value.name === this.mapName;
-          }
-        );
-        foundMapState = state.miscOverlayControlOptions.mapStates.find(
-          value => {
-            value.name === this.mapName;
-          }
-        );
-        return foundMapState;
-      }
-    }),
+    currentMapState() {
+      return this.$store.getters.getMapStateForMap(this.mapName);
+    },
     getMapImage() {
       const map = this.toKabobCase(this.name);
       const mapFolder = this.$store.getters.isCustomMap(map)
@@ -104,7 +89,6 @@ export default {
       this.$store.commit("updateMapState", {
         ...this.$data
       });
-      this.$forceUpdate();
     },
     showPlayerDropdown() {
       return (
