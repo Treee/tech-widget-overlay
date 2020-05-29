@@ -1,5 +1,5 @@
 <template>
-  <md-menu md-direction="bottom-start" v-on:md-closed="menuClosed">
+  <md-menu md-direction="bottom-start" v-on:md-closed="saveMapState">
     <md-menu-content>
       <md-menu-item v-if="showPlayerDropdown()">
         <md-field>
@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       name: this.mapName,
-      state: this.currentState.state,
+      state: this.currentState.state || "open",
       homeMapPlayer: this.currentState.homeMapPlayer,
       winner: this.currentState.winner
     };
@@ -79,14 +79,14 @@ export default {
   },
   methods: {
     mapStateRadioButtonClick(event) {
-      if (this.state === "current") {
-        this.menuClosed();
+      if (this.getState === "current") {
+        this.saveMapState();
         this.$emit("scoreboardChildBubbleUp");
         // raise event to send scoreboard overlay map name
       }
       event.stopPropagation();
     },
-    menuClosed() {
+    saveMapState() {
       this.$store.commit("updateMapState", {
         ...this.$data
       });
@@ -118,6 +118,8 @@ export default {
       } else if (this.getState === "played") {
         mapFrame = "frame-previously-played.png";
       }
+      // this is here because for some reason the data state is not updating with the props state
+      this.state = this.getState;
       return mapFrame;
     },
     toKabobCase(text) {
