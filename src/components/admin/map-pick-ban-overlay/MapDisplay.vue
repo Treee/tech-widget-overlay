@@ -79,8 +79,8 @@ export default {
   },
   methods: {
     mapStateRadioButtonClick(event) {
+      this.saveMapState();
       if (this.getState === "current") {
-        this.saveMapState();
         this.$emit("scoreboardChildBubbleUp");
         // raise event to send scoreboard overlay map name
       }

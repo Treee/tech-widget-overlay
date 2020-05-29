@@ -21,7 +21,6 @@ export default {
   position: absolute;
   left: 42.8%;
   top: 98%;
-  opacity: 0.7;
 }
 
 .current-map-name {
