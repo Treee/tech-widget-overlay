@@ -14,8 +14,9 @@ export default {
     },
     startClient(clientId, callbackFn) {
         this.clientProperties.clientId = clientId;
-        this.socket = new WebSocket('wss://itsatreee.com/aoe-websocket-server/');
-        // this.socket = new WebSocket('ws://localhost:8443');
+        const isLocal = false;
+        const url = isLocal ? 'ws://localhost:8443' : 'wss://itsatreee.com/aoe-websocket-server/';
+        this.socket = new WebSocket(url);
         this.socket.onopen = this.onOpen.bind(this);
         // this.socket.onmessage = this.onMessage.bind(this);
         this.socket.onmessage = callbackFn;
