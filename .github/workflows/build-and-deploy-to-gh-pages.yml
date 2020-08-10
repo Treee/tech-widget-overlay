@@ -42,4 +42,5 @@ jobs:
         git init
         git add -A
         git commit -m 'deploy'
+        git config --global user.email "itsatreee.twitch@gmail.com" && git config --global user.name "Treee"
         git push -f git@github.com:Treee/tech-widget-overlay.git master:gh-pages
