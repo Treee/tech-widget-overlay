@@ -6,6 +6,9 @@
       :isCivDisplayVisible="miscOverlayOptions.isCivDisplayVisible"
       :civ1="miscOverlayOptions.civ1"
       :civ2="miscOverlayOptions.civ2"
+      :xPosition="miscOverlayOptions.xPosition"
+      :yPosition="miscOverlayOptions.yPosition"
+      :width="miscOverlayOptions.width"
     />
     <CurrentMapDisplay
       :showCurrentMapName="miscOverlayOptions.showCurrentMapName"
@@ -26,13 +29,13 @@ export default {
   components: {
     PlayerPositions,
     PlayersCivDisplay,
-    CurrentMapDisplay
+    CurrentMapDisplay,
   },
   computed: {
     ...mapState({
-      miscOverlayOptions: state => state.miscOverlayControlOptions
-    })
-  }
+      miscOverlayOptions: (state) => state.miscOverlayControlOptions,
+    }),
+  },
 };
 </script> 
 

@@ -5,7 +5,7 @@
       v-on:techOverlayClearAll="techClearAllHandler"
     />
     <div class="md-layout md-gutter md-alignment-top-center">
-      <div class="md-layout-item md-size-20">
+      <div class="md-layout-item md-size-25">
         <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
       </div>
       <div class="md-layout-item md-size-25">
@@ -47,15 +47,15 @@ import { SocketEnums } from "../../socket-enums";
 export default {
   name: "Admin",
   props: {
-    clientId: String
+    clientId: String,
   },
   components: {
     AdminTechUpgradeOverlay,
     MapPickBanOverlayControls,
     MapListDisplay,
-    PlayerCivDisplayControls
+    PlayerCivDisplayControls,
   },
-  created: function() {
+  created: function () {
     this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {
       // this function would normally handle messages from the sebsocket server.
       // The admin widget is purely one way outbound so this is empty
@@ -86,13 +86,13 @@ export default {
       const data = {
         showCurrentMapName: this.$store.getters.getMiscOverlayData
           .showCurrentMapName,
-        currentMap: this.$store.getters.getMiscOverlayData.currentMap
+        currentMap: this.$store.getters.getMiscOverlayData.currentMap,
       };
       this.adminClient.sendMessage(SocketEnums.AdminShowDock, {
-        ...data
+        ...data,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

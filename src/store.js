@@ -298,6 +298,9 @@ export default new Vuex.Store({
             state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
             state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
             state.miscOverlayControlOptions.currentMap = data.currentMap || state.miscOverlayControlOptions.currentMap || "";
+            state.miscOverlayControlOptions.xPosition = data.xPosition || state.miscOverlayControlOptions.xPosition;
+            state.miscOverlayControlOptions.yPosition = data.yPosition || state.miscOverlayControlOptions.yPosition;
+            state.miscOverlayControlOptions.width = data.width || state.miscOverlayControlOptions.width;
         },
         updateScoreboardMapName(state, data) {
             state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
