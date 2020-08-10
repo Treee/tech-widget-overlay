@@ -1,5 +1,10 @@
 <template>
-  <div v-on:click="civClicked" class="civ-tech-icon faded" :style="getIconStyle">
+  <div
+    v-on:click="civClicked"
+    v-on:contextmenu.prevent="civRightClick"
+    class="civ-tech-icon faded"
+    :style="getIconStyle"
+  >
     <div class="player-colors">
       <div v-if="player1 === civName" class="player-one"></div>
       <div v-if="player2 === civName" class="player-two"></div>
@@ -15,26 +20,29 @@ export default {
   name: "CivUnitDisplay",
   props: {
     civName: String,
-    clickCounter: Number
+    clickCounter: Number,
   },
   computed: {
     ...mapState({
-      player1: state => state.techUpgradeOverlayControlOptions.civ1,
-      player2: state => state.techUpgradeOverlayControlOptions.civ2
+      player1: (state) => state.techUpgradeOverlayControlOptions.civ1,
+      player2: (state) => state.techUpgradeOverlayControlOptions.civ2,
     }),
     getIconStyle() {
       return {
         background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${this.civName.toLowerCase()}.tp.png`,
         "background-size": "cover",
-        "background-repeat": "no-repeat"
+        "background-repeat": "no-repeat",
       };
-    }
+    },
   },
   methods: {
     civClicked() {
       this.$emit("civselected", this.civName);
-    }
-  }
+    },
+    civRightClick() {
+      this.$emit("civrightclickselected", this.civName);
+    },
+  },
 };
 </script>
 
