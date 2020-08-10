@@ -33,7 +33,9 @@ jobs:
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: npm ci
-    - name: deploy
+    - name: build and deploy
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: npm run deploy
+      run: |
+        npm run build
+        git push git@github.com:Treee/tech-widget-overlay.git gh-pages
