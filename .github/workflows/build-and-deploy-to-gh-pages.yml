@@ -40,7 +40,7 @@ jobs:
         npm run build
         cd dist
         git init
-        git config --global user.email "itsatreee.twitch@gmail.com" && git config --global user.name "Treee"
+        git config --global user.email "<>" && git config --global user.name "Build Pipeline"
         git add .
         git commit -m "deploy"
         git push -f git@github.com:Treee/tech-widget-overlay.git master:gh-pages
