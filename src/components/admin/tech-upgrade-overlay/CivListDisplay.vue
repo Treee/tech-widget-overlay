@@ -50,7 +50,7 @@ export default {
       } else {
         data.civ2 = selectedCiv;
       }
-
+      //
       this.$store.commit("updateCivs", data);
     },
   },
