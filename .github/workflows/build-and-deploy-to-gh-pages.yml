@@ -25,5 +25,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: git config --global user.email "{{ secrets.GIT_ACCOUNT_EMAIL }}" && git config --global user.name "{{ secrets.GIT_ACCOUNT_USERNAME }}"
-    - run: npm run deploy
+    - run: git config user.email "{{ secrets.GIT_ACCOUNT_EMAIL }}" && git config user.name "{{ secrets.GIT_ACCOUNT_USERNAME }}" && npm run deploy
