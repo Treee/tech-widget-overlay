@@ -28,7 +28,7 @@ export default {
         console.log('[open] Connection established');
         this.socket.send(this.formatDataForWebsocket(SocketEnums.ClientRegister, this.clientProperties.clientId));
         this.pingInterval = setInterval(() => {
-            this.socket?.send('PING');
+            this.socket?.send({ toClientId: this.clientProperties.clientId, data: 'PING' });
         }, 45 * 1000); // ping the server on startup every 45 seconds to keep the connection alive
     },
     onMessage(event) {
