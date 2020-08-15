@@ -27,6 +27,9 @@ export default {
     onOpen() {
         console.log('[open] Connection established');
         this.socket.send(this.formatDataForWebsocket(SocketEnums.ClientRegister, this.clientProperties.clientId));
+        this.pingInterval = setInterval(() => {
+            this.socket?.send('PING');
+        }, 45 * 1000); // ping the server on startup every 45 seconds to keep the connection alive
     },
     onMessage(event) {
         console.log(`DataType: ${event.type} / RawData: ${JSON.stringify(event.data)}`);
@@ -39,6 +42,7 @@ export default {
             // event.code is usually 1006 in this case
             console.log('[close] Connection died');
         }
+        clearInterval(this.pingInterval);
     },
     onError(event) {
         console.log(`[error] ${event.message}`);
