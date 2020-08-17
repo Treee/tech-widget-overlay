@@ -22,5 +22,6 @@ export const SocketEnums = {
     AdminHideMaps: 20,
     AdminShowPlayerPicks: 21,
     AdminHidePlayerPicks: 22,
-    OverlayPlayerInfo: 23
+    OverlayPlayerInfo: 23,
+    PING: 24
 }
