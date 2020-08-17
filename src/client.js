@@ -1,4 +1,5 @@
 import { SocketEnums } from "./socket-enums";
+import aoe2Api from "./api";
 
 export default {
     clientProperties: {
@@ -30,6 +31,15 @@ export default {
         this.pingInterval = setInterval(() => {
             this.socket.send(this.formatDataForWebsocket("PING", this.clientProperties.clientId));
         }, 45 * 1000); // ping the server on startup every 45 seconds to keep the connection alive
+
+        this.tournamentPlayerInfoInterval = setInterval(() => {
+            const info = aoe2Api.getAoEOverlayInfo().then((datas) => {
+                console.log('data=========================', datas);
+                this.socket.send(this.formatDataForWebsocket(SocketEnums.OverlayPlayerInfo, info));
+            }, () => {
+                console.log('no data');
+            });
+        }, 120 * 1000);
     },
     onMessage(event) {
         console.log(`DataType: ${event.type} / RawData: ${JSON.stringify(event.data)}`);
@@ -43,6 +53,7 @@ export default {
             console.log('[close] Connection died');
         }
         clearInterval(this.pingInterval);
+        clearInterval(this.tournamentPlayerInfoInterval);
     },
     onError(event) {
         console.log(`[error] ${event.message}`);
