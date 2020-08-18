@@ -8,8 +8,8 @@ export default {
         const options = {
             headers: {
                 method: "GET",
-                mode: "no-cors"
             },
+            mode: "no-cors"
         };
         const info = await fetch("http://localhost:32123/players", options);
         return info.json();
