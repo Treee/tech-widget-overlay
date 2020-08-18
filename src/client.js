@@ -39,7 +39,7 @@ export default {
             }, () => {
                 console.log('no data');
             });
-        }, 120 * 1000);
+        }, 60 * 1000);
     },
     onMessage(event) {
         console.log(`DataType: ${event.type} / RawData: ${JSON.stringify(event.data)}`);
