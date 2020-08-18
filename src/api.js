@@ -7,7 +7,8 @@ export default {
     async getAoEOverlayInfo() {
         const options = {
             headers: {
-                mode: 'no-cors'
+                method: "GET",
+                mode: "no-cors"
             },
         };
         const info = await fetch("http://localhost:32123/players", options);
