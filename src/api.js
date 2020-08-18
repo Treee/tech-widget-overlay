@@ -5,7 +5,12 @@ export default {
     },
 
     async getAoEOverlayInfo() {
-        const info = await fetch("http://localhost:32123/players");
+        const options = {
+            headers: {
+                'Access-Control-Allow-Origin': 'https://treee.github.io'
+            },
+        };
+        const info = await fetch("http://localhost:32123/players", options);
         return info.json();
     }
 }
