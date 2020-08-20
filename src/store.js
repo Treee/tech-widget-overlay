@@ -40,6 +40,18 @@ const defaultMaps = [
 ];
 
 const customMaps = [
+    "rbw2-arabia",
+    "rbw2-atacama",
+    "rbw2-blockades",
+    "rbw2-cross",
+    "rbw2-eruption",
+    "rbw2-frigid-lake",
+    "rbw2-golden-swamp",
+    "rbw2-haboob",
+    "rbw2-kawasan",
+    "rbw2-land-madness",
+    "rbw2-lowland",
+    "rbw2-wings",
     "boa2-african-waters",
     "boa2-arabia",
     "boa2-beachfight",
@@ -81,7 +93,7 @@ const customMaps = [
     "msm-lowland"
 ];
 
-const customMapPrefixes = ["boa2", "rbw", "hc3", "msm"];
+const customMapPrefixes = ["boa2", "rbw", "rbw2", "hc3", "msm"];
 
 const toCamelCase = (text) => {
     let camelCase = "";
