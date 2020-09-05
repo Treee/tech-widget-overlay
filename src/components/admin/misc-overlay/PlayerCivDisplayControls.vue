@@ -46,8 +46,8 @@ export default {
   data() {
     return {
       xPosition: "37",
-      yPosition: "9.5",
-      width: "30",
+      yPosition: "6.5",
+      width: "25.5",
       isCivDisplayVisible: this.controlOptions?.isCivDisplayVisible || false,
       showTeamColors: this.controlOptions?.showTeamColors || false,
       showCurrentMapName: this.controlOptions?.showCurrentMapName || false,
