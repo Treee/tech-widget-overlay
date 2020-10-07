@@ -6,9 +6,12 @@
       :isCivDisplayVisible="miscOverlayOptions.isCivDisplayVisible"
       :civ1="miscOverlayOptions.civ1"
       :civ2="miscOverlayOptions.civ2"
-      :xPosition="miscOverlayOptions.xPosition"
-      :yPosition="miscOverlayOptions.yPosition"
-      :width="miscOverlayOptions.width"
+      :civ1X="miscOverlayOptions.civ1X"
+      :civ1Y="miscOverlayOptions.civ1Y"
+      :civ1Width="miscOverlayOptions.civ1Width"
+      :civ2X="miscOverlayOptions.civ2X"
+      :civ2Y="miscOverlayOptions.civ2Y"
+      :civ2Width="miscOverlayOptions.civ2Width"
     />
     <CurrentMapDisplay
       :showCurrentMapName="miscOverlayOptions.showCurrentMapName"
@@ -41,7 +44,7 @@ export default {
 
 <style language="scss">
 .score-board-overlay-container {
-  /* background: url("/assets/images/backgrounds/main-boa2-overlay.png"); */
+  background: url("/assets/images/backgrounds/main-boa2-overlay.png");
   width: 100vw;
   height: 100vh;
   position: absolute;

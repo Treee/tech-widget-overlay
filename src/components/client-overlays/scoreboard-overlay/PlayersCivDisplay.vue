@@ -1,15 +1,12 @@
 <template>
   <div
-    class="team-civ-display"
-    v-if="isCivDisplayVisible"
-    :style="customPositionAndWidth(xPosition, yPosition, width)"
-  >
-    <div class="team-container" v-if="civ1 !== ''">
+    v-if="isCivDisplayVisible">
+    <div class="team-container" v-if="civ1 !== ''" :style="customPositionAndWidth(civ1X, civ1Y, civ1Width)">
       <div class="player-civ-icon civ-icon" :style="civIconStyle(civ1)" />
       <div class="civ-name">{{ civ1 }}</div>
       <div class="player-civ-icon civ-icon" :style="civIconStyle(civ1)" />
     </div>
-    <div class="team-container" v-if="civ2 !== ''">
+    <div class="team-container" v-if="civ2 !== ''" :style="customPositionAndWidth(civ2X, civ2Y, civ2Width)">
       <div class="player-civ-icon civ-icon" :style="civIconStyle(civ2)" />
       <div class="civ-name">{{ civ2 }}</div>
       <div class="player-civ-icon civ-icon" :style="civIconStyle(civ2)" />
@@ -24,9 +21,12 @@ export default {
     isCivDisplayVisible: Boolean,
     civ1: String,
     civ2: String,
-    xPosition: String,
-    yPosition: String,
-    width: String,
+    civ1X: String,
+    civ1Y: String,
+    civ1Width: String,
+    civ2X: String,
+    civ2Y: String,
+    civ2Width: String,
   },
   methods: {
     customPositionAndWidth(x, y, width) {
@@ -37,6 +37,7 @@ export default {
         width: `${width}%`,
         left: `${x}%`,
         top: `${y}%`,
+        position: "absolute"
       };
     },
     civIconStyle(civName) {
@@ -59,15 +60,6 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-
-.team-civ-display {
-  display: inline-flex;
-  /* width: 30%; */
-  justify-content: space-between;
-  /* margin-top: 6.5rem; */
-  position: absolute;
-  /* left: 37%; */
 }
 
 .team-container {

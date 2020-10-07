@@ -14,7 +14,8 @@
           v-for="(value, index) in this.$store.getters.getAllMaps"
           :key="index"
           :value="value"
-        >{{getPrettyMapName(value)}}</md-option>
+        >{{getPrettyMapName(value)}} 
+        </md-option>
       </md-select>
     </md-field>
   </div>
@@ -39,6 +40,7 @@ export default {
       this.$store.commit("clearSelectedMaps");
     },
     mapSelected(event) {
+      console.log('event selected', event);
       this.$store.commit("updateSelectedMaps", event);
     }
   }

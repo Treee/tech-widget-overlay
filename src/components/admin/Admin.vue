@@ -5,10 +5,10 @@
       v-on:techOverlayClearAll="techClearAllHandler"
     />
     <div class="md-layout md-gutter md-alignment-top-center">
-      <div class="md-layout-item md-size-25">
+      <div class="md-layout-item md-size-50">
         <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
       </div>
-      <div class="md-layout-item md-size-25">
+      <div class="md-layout-item md-size-45">
         <MapPickBanOverlayControls
           v-on:mapOverlayShowBubble="mapOverlayShow"
           v-on:mapOverlayHideBubble="mapOverlayHide"

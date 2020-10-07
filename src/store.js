@@ -124,7 +124,13 @@ export default new Vuex.Store({
             isCivDisplayVisible: false,
             showTeamColors: false,
             showCurrentMapName: false,
-            currentMap: ""
+            currentMap: "",
+            civ1X: "0",
+            civ1Y: "0",
+            civ1Width: "0",
+            civ2X: "0",
+            civ2Y: "0",
+            civ2Width: "0"
         },
         techUpgradeOverlayControlOptions: {
             civ1: "",
@@ -310,9 +316,12 @@ export default new Vuex.Store({
             state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
             state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
             state.miscOverlayControlOptions.currentMap = data.currentMap || state.miscOverlayControlOptions.currentMap || "";
-            state.miscOverlayControlOptions.xPosition = data.xPosition || state.miscOverlayControlOptions.xPosition;
-            state.miscOverlayControlOptions.yPosition = data.yPosition || state.miscOverlayControlOptions.yPosition;
-            state.miscOverlayControlOptions.width = data.width || state.miscOverlayControlOptions.width;
+            state.miscOverlayControlOptions.civ1X = data.civ1X || state.miscOverlayControlOptions.civ1X;
+            state.miscOverlayControlOptions.civ1Y = data.civ1Y || state.miscOverlayControlOptions.civ1Y;
+            state.miscOverlayControlOptions.civ1Width = data.civ1Width || state.miscOverlayControlOptions.civ1Width;
+            state.miscOverlayControlOptions.civ2X = data.civ2X || state.miscOverlayControlOptions.civ2X;
+            state.miscOverlayControlOptions.civ2Y = data.civ2Y || state.miscOverlayControlOptions.civ2Y;
+            state.miscOverlayControlOptions.civ2Width = data.civ2Width || state.miscOverlayControlOptions.civ2Width;
         },
         updateScoreboardMapName(state, data) {
             state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
