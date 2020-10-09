@@ -9,7 +9,7 @@
         <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
       </div>
       <div class="md-layout-item md-size-45">
-        <MapPickBanOverlayControls
+        <NewRoundModal
           v-on:mapOverlayShowBubble="mapOverlayShow"
           v-on:mapOverlayHideBubble="mapOverlayHide"
         />
@@ -38,7 +38,7 @@
 
 <script>
 import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
-import MapPickBanOverlayControls from "./map-pick-ban-overlay/MapPickBanOverlayControls.vue";
+import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
 import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 import PlayerCivDisplayControls from "./misc-overlay/PlayerCivDisplayControls.vue";
 
@@ -51,7 +51,7 @@ export default {
   },
   components: {
     AdminTechUpgradeOverlay,
-    MapPickBanOverlayControls,
+    NewRoundModal,
     MapListDisplay,
     PlayerCivDisplayControls,
   },

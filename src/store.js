@@ -148,15 +148,14 @@ export default new Vuex.Store({
         },
         mapPickAndBanOverlayControlOptions: {
             mapOverlayVisible: false,
-            showMapBrandingImage: false,
-            brandingImageUrl: "",
+            selectedMapName: "",
             numPicks: 1,
             numBans: 1,
             team1Name: "",
             team2Name: "",
+            adminOptions: [],
             selectedMaps: [],
             mapStates: [],
-            mapStates1: []
         },
         defaultMaps: defaultMaps,
         customMaps: customMaps,
@@ -290,8 +289,6 @@ export default new Vuex.Store({
         },
         updateMapPickAndBanOverlayControls(state, data) {
             state.mapPickAndBanOverlayControlOptions.mapOverlayVisible = data.mapOverlayVisible;
-            state.mapPickAndBanOverlayControlOptions.showMapBrandingImage = data.showMapBrandingImage;
-            state.mapPickAndBanOverlayControlOptions.brandingImageUrl = data.brandingImageUrl;
             state.mapPickAndBanOverlayControlOptions.numPick = data.numPick;
             state.mapPickAndBanOverlayControlOptions.numBan = data.numBan;
             state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
@@ -374,6 +371,28 @@ export default new Vuex.Store({
         },
         clearClientMaps(state) {
             state.clientControlOptions.selectedMapsAndState = [];
+        },
+        addNewPlayerRound(state, data) {
+            const similarMapNames = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
+                return map.selectedMapName === data.selectedMapName;
+            });            
+            data.id = `${data.selectedMapName}-${similarMapNames.length}`;            
+            state.mapPickAndBanOverlayControlOptions.adminOptions.push(data);
+        },
+        saveRoundState(state, data) {
+            const mapToUpdateIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+                return map.id === data.mapIdToUpdate;
+            });
+            if (mapToUpdateIndex > -1) {
+                state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState = data.mapState;
+                state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].homeMapPlayer = data.homeMap;
+                state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].winner = data.winner;
+            }
+        },
+        deleteRound(state, data) {
+            state.mapPickAndBanOverlayControlOptions.adminOptions = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
+                return map.id !== data.mapIdToDelete;
+            });
         }
     },
     actions: {
@@ -397,15 +416,14 @@ export default new Vuex.Store({
                 store.commit("clearClientMaps");
             }
         },
-        // toggleCivDisplay(store, payload) {
-        //     if (payload.delayMs) {
-        //         store.commit("preTransitionMapOverlay");
-        //         setTimeout(() => {
-        //             store.commit("clearClientMaps", 2000);
-        //         }, payload.delayMs);
-        //     } else {
-        //         store.commit("clearClientMaps");
-        //     }
-        // }
+        addNewPlayerRound(store, payload) {            
+            store.commit("addNewPlayerRound", payload);            
+        },
+        saveRoundState(store, payload) {
+            store.commit("saveRoundState", payload);
+        },
+        deleteRound(store, payload) {
+            store.commit("deleteRound", payload);
+        }
     }
 });
