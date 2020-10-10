@@ -21,38 +21,38 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+  import { mapState } from "vuex";
 
-import PlayerPositions from "./PlayerPositions.vue";
-import PlayersCivDisplay from "./PlayersCivDisplay.vue";
-import CurrentMapDisplay from "./CurrentMapDisplay.vue";
+  import PlayerPositions from "./PlayerPositions.vue";
+  import PlayersCivDisplay from "./PlayersCivDisplay.vue";
+  import CurrentMapDisplay from "./CurrentMapDisplay.vue";
 
-export default {
-  name: "ScoreboardOverlay",
-  components: {
-    PlayerPositions,
-    PlayersCivDisplay,
-    CurrentMapDisplay,
-  },
-  computed: {
-    ...mapState({
-      miscOverlayOptions: (state) => state.miscOverlayControlOptions,
-    }),
-  },
-};
+  export default {
+    name: "ScoreboardOverlay",
+    components: {
+      PlayerPositions,
+      PlayersCivDisplay,
+      CurrentMapDisplay,
+    },
+    computed: {
+      ...mapState({
+        miscOverlayOptions: (state) => state.miscOverlayControlOptions,
+      }),
+    },
+  };
 </script> 
 
 <style language="scss">
-.score-board-overlay-container {
-  background: url("/assets/images/backgrounds/main-boa2-overlay.png");
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-}
-.score-board-overlay {
-  width: inherit;
-  height: inherit;
-  display: inline-flex;
-}
+  .score-board-overlay-container {
+    /* background: url("/assets/images/backgrounds/main-boa2-overlay.png"); */
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+  }
+  .score-board-overlay {
+    width: inherit;
+    height: inherit;
+    display: inline-flex;
+  }
 </style>
