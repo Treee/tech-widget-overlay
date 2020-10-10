@@ -4,18 +4,30 @@
     :class="{'fade-in-map': this.name !== '', 'fade-out-map': this.$store.state.clearAllMapsClicked}"
   >
     <div class="client-image-container">
-      <div class="client-map-frame" :style="getMapFrame"></div>
-      <div class="client-map-image" :style="getMapImage"></div>
+      <div
+        class="client-map-frame"
+        :style="getMapFrame"
+      ></div>
+      <div
+        class="client-map-image"
+        :style="getMapImage"
+      ></div>
       <div class="column-list">
         <div
           class="client-map-name"
           :class="{'white-text': this.useWhiteText()}"
         >{{this.$store.getters.getFormattedMapName(name)}}</div>
-        <div class="home-map home-map-decal player-flag-modifier" v-if="this.homeMapPlayer !== ''">
+        <div
+          class="home-map home-map-decal player-flag-modifier"
+          v-if="this.homeMapPlayer !== ''"
+        >
           <div class="flag-text">{{this.homeMapPlayer}}</div>
           <md-icon class="home-icon">home</md-icon>
         </div>
-        <div class="winner-decal winner-flag-decal player-flag-modifier" v-if="this.winner !== ''">
+        <div
+          class="winner-decal winner-flag-decal player-flag-modifier"
+          v-if="this.winner !== ''"
+        >
           <div class="flag-text">{{this.winner}}</div>
           <div class="winner-icon"></div>
         </div>
@@ -25,177 +37,174 @@
 </template>
 
 <script>
-export default {
-  name: "ClientMapDisplay",
-  props: {
-    name: String,
-    state: String,
-    homeMapPlayer: String,
-    winner: String
-  },
-  computed: {
-    getMapImage() {
-      const map = this.toKabobCase(this.name);
-      const mapFolder = this.$store.getters.isCustomMap(map)
-        ? "custom"
-        : "default";
-      return {
-        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`
-      };
+  export default {
+    name: "ClientMapDisplay",
+    props: {
+      name: String,
+      state: String,
+      homeMapPlayer: String,
+      winner: String,
     },
-    getMapFrame() {
-      return {
-        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${this.getMapFrameImagePath()}")`
-      };
-    }
-  },
-  methods: {
-    getMapFrameImagePath() {
-      let mapFrame = "frame.png";
-      if (this.state === "current") {
-        mapFrame = "frame-current.png";
-      } else if (this.state === "banned") {
-        mapFrame = "frame-veto.png";
-      } else if (this.state === "played") {
-        mapFrame = "frame-previously-played.png";
-      }
-      return mapFrame;
+    computed: {
+      getMapImage() {
+        const map = this.toKabobCase(this.name);
+        const mapFolder = this.$store.getters.isCustomMap(map)
+          ? "custom"
+          : "default";
+        return {
+          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`,
+        };
+      },
+      getMapFrame() {
+        return {
+          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${this.getMapFrameImagePath()}")`,
+        };
+      },
     },
-    toKabobCase(text) {
-      return text
-        .toLowerCase()
-        .split(" ")
-        .join("-");
+    methods: {
+      getMapFrameImagePath() {
+        let mapFrame = "frame.png";
+        if (this.state === "current") {
+          mapFrame = "frame-current.png";
+        } else if (this.state === "banned") {
+          mapFrame = "frame-veto.png";
+        } else if (this.state === "played") {
+          mapFrame = "frame-previously-played.png";
+        }
+        return mapFrame;
+      },
+      toKabobCase(text) {
+        return text.toLowerCase().split(" ").join("-");
+      },
+      useWhiteText() {
+        return this.state !== "played";
+      },
     },
-    useWhiteText() {
-      return this.state !== "played";
-    }
-  }
-};
+  };
 </script> 
 
 <style language="scss">
-.winner-icon {
-  background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/winner.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 29px;
-  height: 100%;
-  display: inline-flex;
-  float: left;
-  margin-top: 5px;
-}
-
-.flag-text {
-  width: 75%;
-  padding-top: 1.2%;
-  display: inline-flex;
-  font-size: large;
-  color: black;
-  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-}
-.home-icon {
-  float: left;
-  color: white !important;
-  width: 29px;
-  height: 29px;
-}
-.home-map-decal {
-  background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/yellow-banner.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.winner-flag-decal {
-  background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/purple-banner.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.player-flag-modifier {
-  width: 95%;
-  height: 12.5%;
-  position: relative;
-  top: 92%;
-  left: 4%;
-  color: whitesmoke;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
-
-.column-list {
-  display: inline-flex;
-  flex-direction: column;
-  width: inherit;
-}
-.client-map-display {
-  width: 15rem;
-  height: 15rem;
-  margin-top: 4rem;
-}
-
-.client-image-container {
-  width: inherit;
-  height: inherit;
-  display: inline-flex;
-  justify-content: center;
-}
-
-.client-map-frame {
-  width: inherit;
-  height: inherit;
-  background-size: cover !important;
-  position: absolute;
-  z-index: 2;
-}
-
-.client-map-image {
-  width: inherit;
-  height: inherit;
-  background-size: cover !important;
-  background-repeat: round !important;
-  position: absolute;
-  transform: scale(0.9) translateY(-3px) translateX(2px);
-  z-index: 1;
-}
-
-.client-map-name {
-  z-index: 2;
-  font-size: larger;
-  display: inline-flex;
-  height: fit-content;
-  position: relative;
-  top: 87%;
-  align-self: center;
-}
-
-.white-text {
-  color: whitesmoke;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
-
-.fade-in-map {
-  animation: key-fade-in 2s ease-out forwards;
-}
-
-.fade-out-map {
-  animation: key-fade-out 2s ease-out forwards;
-}
-
-@keyframes key-fade-in {
-  from {
-    opacity: 0;
+  .winner-icon {
+    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/winner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 29px;
+    height: 100%;
+    display: inline-flex;
+    float: left;
+    margin-top: 5px;
   }
-  to {
-    opacity: 1;
-  }
-}
 
-@keyframes key-fade-out {
-  from {
-    opacity: 1;
+  .flag-text {
+    width: 75%;
+    padding-top: 1.2%;
+    display: inline-flex;
+    font-size: large;
+    color: black;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   }
-  to {
-    opacity: 0;
+  .home-icon {
+    float: left;
+    color: white !important;
+    width: 29px;
+    height: 29px;
   }
-}
+  .home-map-decal {
+    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/yellow-banner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .winner-flag-decal {
+    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/purple-banner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .player-flag-modifier {
+    width: 95%;
+    height: 12.5%;
+    position: relative;
+    top: 92%;
+    left: 4%;
+    color: whitesmoke;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+
+  .column-list {
+    display: inline-flex;
+    flex-direction: column;
+    width: inherit;
+  }
+  .client-map-display {
+    width: 15rem;
+    height: 15rem;
+    margin-top: 4rem;
+  }
+
+  .client-image-container {
+    width: inherit;
+    height: inherit;
+    display: inline-flex;
+    justify-content: center;
+  }
+
+  .client-map-frame {
+    width: inherit;
+    height: inherit;
+    background-size: cover !important;
+    position: absolute;
+    z-index: 2;
+  }
+
+  .client-map-image {
+    width: inherit;
+    height: inherit;
+    background-size: cover !important;
+    background-repeat: round !important;
+    position: absolute;
+    transform: scale(0.9) translateY(-3px) translateX(2px);
+    z-index: 1;
+  }
+
+  .client-map-name {
+    z-index: 2;
+    font-size: larger;
+    display: inline-flex;
+    height: fit-content;
+    position: relative;
+    top: 87%;
+    align-self: center;
+  }
+
+  .white-text {
+    color: whitesmoke;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  }
+
+  .fade-in-map {
+    animation: key-fade-in 2s ease-out forwards;
+  }
+
+  .fade-out-map {
+    animation: key-fade-out 2s ease-out forwards;
+  }
+
+  @keyframes key-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes key-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 </style>

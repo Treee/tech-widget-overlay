@@ -179,7 +179,7 @@ export default new Vuex.Store({
             return players;
         },
         getAllMaps: (state) => {
-            return state.customMaps.concat(state.defaultMaps);
+            return state.defaultMaps.concat(state.customMaps);
         },
         getCustomPrefixes: (state) => {
             return state.customMapPrefixes;
@@ -209,16 +209,7 @@ export default new Vuex.Store({
             return mapName.trim();
         },
         getMapData: (state) => {
-            const selectedMaps = state.mapPickAndBanOverlayControlOptions.selectedMaps;
-            const mapStates = state.mapPickAndBanOverlayControlOptions.mapStates;
-            const mapData = [];
-            for (let i = 0; i < selectedMaps.length; i++) {
-                mapData.push({
-                    ...{ name: selectedMaps[i] },
-                    ...(mapStates.find((inner) => { return inner.name === selectedMaps[i] }))
-                });
-            }
-            return mapData;
+            return state.mapPickAndBanOverlayControlOptions.adminOptions;
         },
         isCustomMap: (state) => (map) => {
             return state.customMaps.some(customMap => {

@@ -7,7 +7,7 @@ export default {
     },
     // dataType: SocketEnums, rawData: any
     formatDataForWebsocket(dataType, rawData) {
-        console.log(`Formatting Data for websocket.\nDataType: ${dataType} / ClientId: ${this.clientProperties.clientId} / RawData:`, rawData);
+        console.log(`Formatting Data for websocket.\nDataType: ${dataType} / ClientId: ${this.clientProperties.clientId} / RawData:`, JSON.stringify(rawData));
         return JSON.stringify({ type: dataType, data: rawData, toClientId: this.clientProperties.clientId });
     },
     sendMessage(dataType, rawData) {

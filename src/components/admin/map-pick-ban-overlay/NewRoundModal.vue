@@ -4,6 +4,7 @@
       <md-switch
         v-model="mapOverlayVisible"
         class="md-primary large-font"
+        v-on:click="updateMapsClick"
       >Map Display</md-switch>
       <md-button
         class="md-raised"
@@ -118,7 +119,7 @@
         this.newRoundDialog = false;
       },
       updateMapsClick() {
-        if (this.$data.mapOverlayVisible) {
+        if (this.mapOverlayVisible) {
           this.$emit("mapOverlayShowBubble");
         } else {
           this.$emit("mapOverlayHideBubble");

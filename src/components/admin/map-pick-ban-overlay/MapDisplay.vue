@@ -124,9 +124,9 @@
         // things that change, home player map, winner, map state
         this.$store.dispatch("saveRoundState", {
           mapIdToUpdate: this.id,
-          homeMap: this.$data.homeMapPlayer,
-          winner: this.$data.winner,
-          mapState: this.$data.state,
+          homeMap: this.homePlayer,
+          winner: this.winner,
+          mapState: this.state,
         });
       },
       deleteMap() {
