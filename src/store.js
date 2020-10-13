@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import AoE2Api from "./api";
+
 Vue.use(Vuex);
 
 const defaultMaps = [
@@ -149,7 +151,7 @@ export default new Vuex.Store({
         mapPickAndBanOverlayControlOptions: {
             mapOverlayVisible: false,
             selectedMapName: "",
-            numPicks: 1,
+            numMapsToGenerate: 1,
             numBans: 1,
             team1Name: "",
             team2Name: "",
@@ -233,6 +235,9 @@ export default new Vuex.Store({
                 return mapState.name === map;
             });
             return state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex];
+        },
+        getCMInfo: () => (profileId) => {
+            return AoE2Api.getAoECMInfo(profileId);
         }
         // Compute derived state based on the current state. More like computed property.
     },
@@ -384,6 +389,10 @@ export default new Vuex.Store({
             state.mapPickAndBanOverlayControlOptions.adminOptions = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
                 return map.id !== data.mapIdToDelete;
             });
+        },        
+        syncTeamNames: (state, data) => {
+            state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
+            state.mapPickAndBanOverlayControlOptions.team2Name = data.team2Name;
         }
     },
     actions: {
@@ -409,6 +418,9 @@ export default new Vuex.Store({
         },
         addNewPlayerRound(store, payload) {            
             store.commit("addNewPlayerRound", payload);            
+        },
+        syncTeamNames(store, payload) {
+            store.commit("syncTeamNames", payload);
         },
         saveRoundState(store, payload) {
             store.commit("saveRoundState", payload);

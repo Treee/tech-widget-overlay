@@ -8,8 +8,8 @@
       :id="map.id"
       :mapName="map.selectedMapName"
       :mapState="map.mapState"
-      :team1Name="map.team1Name"
-      :team2Name="map.team2Name"
+      :teamOneName="team1"
+      :teamTwoName="team2"
       :mapWinner="map.winner"
       :homeMapPlayer="map.homeMapPlayer"
     />
@@ -22,11 +22,12 @@
 
   export default {
     name: "MapListDisplay",
-
     computed: {
       ...mapState({
         selectedMaps: (state) =>
           state.mapPickAndBanOverlayControlOptions.adminOptions,
+        team1: (state) => state.mapPickAndBanOverlayControlOptions.team1Name,
+        team2: (state) => state.mapPickAndBanOverlayControlOptions.team2Name,
       }),
     },
     components: {

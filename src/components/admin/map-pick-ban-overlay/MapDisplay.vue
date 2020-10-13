@@ -47,7 +47,6 @@
             name="state"
             id="state"
           >
-            <md-option value></md-option>
             <md-option value="current">Current</md-option>
             <md-option value="played">Played</md-option>
             <md-option value="banned">Banned</md-option>
@@ -91,15 +90,15 @@
         name: this.mapName,
         state: this.mapState,
         homePlayer: this.homeMapPlayer,
-        winner: this.mapWwinner,
+        winner: this.mapWinner,
       };
     },
     props: {
       id: String,
       mapName: String,
       mapState: String,
-      team1Name: String,
-      team2Name: String,
+      teamOneName: String,
+      teamTwoName: String,
       mapWinner: String,
       homeMapPlayer: String,
     },
@@ -136,14 +135,14 @@
       },
       showPlayerDropdown() {
         return (
-          this.team1Name &&
-          this.team1Name !== "" &&
-          this.team2Name &&
-          this.team2Name !== ""
+          this.teamOneName &&
+          this.teamOneName !== "" &&
+          this.teamTwoName &&
+          this.teamTwoName !== ""
         );
       },
       getPlayers() {
-        return [this.team1Name, this.team2Name];
+        return [this.teamOneName, this.teamTwoName];
       },
       winnerSelected(winner) {
         if (winner !== "") {

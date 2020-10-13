@@ -34,34 +34,15 @@
         </md-field>
 
         <md-field>
-          <label for="num-picks">Num Picks</label>
+          <label for="num-maps">Num Maps</label>
           <md-input
             type="number"
-            id="num-picks"
-            name="num-picks"
+            id="num-maps"
+            name="num-maps"
             min="1"
-            max="4"
-            v-model="numPicks"
+            max="99"
+            v-model="numMapsToGenerate"
           />
-        </md-field>
-        <md-field>
-          <label for="num-bans">Num Bans</label>
-          <md-input
-            type="number"
-            id="num-bans"
-            name="num-bans"
-            min="0"
-            max="10"
-            v-model="numBans"
-          />
-        </md-field>
-        <md-field>
-          <label>Team 1</label>
-          <md-input v-model="team1Name"></md-input>
-        </md-field>
-        <md-field>
-          <label>Team 2</label>
-          <md-input v-model="team2Name"></md-input>
         </md-field>
         <md-dialog-actions>
           <md-button
@@ -74,28 +55,29 @@
           >Save</md-button>
         </md-dialog-actions>
       </md-dialog>
-
       <md-button
         class="md-raised"
         @click="newRoundDialog = true"
       >New Round</md-button>
     </div>
+    <CMDraftInfo />
   </div>
 </template>
 
 <script>
   import { mapState } from "vuex";
+  import CMDraftInfo from "./CMDraftInfo.vue";
 
   export default {
     name: "NewRoundModal",
+    components: {
+      CMDraftInfo,
+    },
     data() {
       return {
         mapOverlayVisible: this.controlOptions?.mapOverlayVisible,
         selectedMapName: this.controlOptions?.selectedMapName,
-        numPicks: this.controlOptions?.numPicks || 1,
-        numBans: this.controlOptions?.numBans || 1,
-        team1Name: this.controlOptions?.team1Name,
-        team2Name: this.controlOptions?.team2Name,
+        numMapsToGenerate: this.controlOptions?.numMapsToGenerate || 1,
         newRoundDialog: false,
       };
     },
@@ -110,10 +92,12 @@
       },
       confirmDialog(isSaved) {
         if (isSaved) {
-          this.$store.dispatch("addNewPlayerRound", {
-            ...this.$data,
-            mapState: "open",
-          });
+          for (let i = 0; i < this.numMapsToGenerate; i++) {
+            this.$store.dispatch("addNewPlayerRound", {
+              selectedMapName: this.selectedMapName,
+              mapState: "open",
+            });
+          }
           this.updateMapsClick();
         }
         this.newRoundDialog = false;
