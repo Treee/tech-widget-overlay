@@ -25,12 +25,26 @@
           <md-icon class="home-icon">home</md-icon>
         </div>
         <div
-          class="winner-decal winner-flag-decal player-flag-modifier"
-          v-if="this.winner !== ''"
+          :class="[
+            teamOne === winner ? 'winner-flag-decal' : 'defeated-flag-decal',
+            'player-flag-modifier'
+          ]"
+          v-if="this.teamOneCiv !== ''"
         >
-          <div class="flag-text">{{this.winner}}</div>
-          <div class="winner-icon"></div>
+          <div class="flag-text">{{this.teamOneCiv}}</div>
+          <div :class="teamOne === winner ? 'winner-icon' : 'defeated-icon'"></div>
         </div>
+        <div
+          :class="[
+            teamTwo === winner ? 'winner-flag-decal' : 'defeated-flag-decal',
+            'player-flag-modifier'
+          ]"
+          v-if="this.teamTwoCiv !== ''"
+        >
+          <div class="flag-text">{{this.teamTwoCiv}}</div>
+          <div :class="teamTwo === winner ? 'winner-icon' : 'defeated-icon'"></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -44,6 +58,10 @@
       state: String,
       homeMapPlayer: String,
       winner: String,
+      teamOneCiv: String,
+      teamTwoCiv: String,
+      teamOne: String,
+      teamTwo: String,
     },
     computed: {
       getMapImage() {
@@ -94,6 +112,15 @@
     float: left;
     margin-top: 5px;
   }
+  .defeated-icon {
+    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/defeated.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 29px;
+    height: 95%;
+    display: inline-flex;
+    float: left;
+  }
 
   .flag-text {
     width: 75%;
@@ -116,7 +143,13 @@
   }
 
   .winner-flag-decal {
-    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/purple-banner.png");
+    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/green-banner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .defeated-flag-decal {
+    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/red-banner.png");
     background-repeat: no-repeat;
     background-size: contain;
   }

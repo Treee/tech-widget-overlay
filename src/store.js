@@ -118,7 +118,8 @@ export default new Vuex.Store({
         clearAllCivsClicked: false,
         clearAllMapsClicked: false,
         clientControlOptions: {
-            selectedMapsAndState: []
+            selectedMapsAndState: [],
+            players: []
         },
         miscOverlayControlOptions: {
             civ1: "",
@@ -238,6 +239,9 @@ export default new Vuex.Store({
         },
         getCMInfo: () => (profileId) => {
             return AoE2Api.getAoECMInfo(profileId);
+        },
+        getClientPlayers: (state) => {
+            return state.clientControlOptions.players;
         }
         // Compute derived state based on the current state. More like computed property.
     },
@@ -343,7 +347,8 @@ export default new Vuex.Store({
             })
         },
         updateClientSideMapsAndState(state, data) {
-            state.clientControlOptions.selectedMapsAndState = data;
+            state.clientControlOptions.selectedMapsAndState = data.mapData;
+            state.clientControlOptions.players = data.players;
             state.clearAllMapsClicked = false;
         },
         clearClientMaps(state) {

@@ -8,6 +8,10 @@
       :state="map.mapState"
       :home-map-player="map.homeMapPlayer || ''"
       :winner="map.winner || ''"
+      :teamOneCiv="map.teamOneCiv"
+      :teamTwoCiv="map.teamTwoCiv"
+      :teamOne="players[0] || ''"
+      :teamTwo="players[1] || ''"
     />
   </div>
 </template>
@@ -19,6 +23,7 @@
     name: "MapListDisplay",
     props: {
       selectedMapsAndState: Array,
+      players: Array,
     },
     components: {
       ClientMapDisplay,
@@ -29,6 +34,7 @@
 <style language="scss">
   .client-maps {
     width: 100%;
+    gap: 3rem;
     margin-top: 7rem;
     position: absolute;
     top: 0;

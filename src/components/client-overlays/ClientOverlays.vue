@@ -8,7 +8,10 @@
       :civ2-description="this.$store.getters.getCivDescription(techOverlayOptions.civ2)"
       :playSound="techOverlayOptions.sound"
     />
-    <MapOverlay :selected-maps-and-state="this.$store.state.clientControlOptions.selectedMapsAndState" />
+    <MapOverlay
+      :selected-maps-and-state="selectedMaps"
+      :players="players"
+    />
     <AnimatedGroupOverlay v-if="false" />
 
     <!-- <object
@@ -46,6 +49,8 @@
     computed: {
       ...mapState({
         techOverlayOptions: (state) => state.techUpgradeOverlayControlOptions,
+        selectedMaps: (state) => state.clientControlOptions.selectedMapsAndState,
+        players: (state) => state.clientControlOptions.players,
       }),
     },
   };

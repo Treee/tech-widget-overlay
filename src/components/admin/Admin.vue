@@ -27,9 +27,7 @@
         Age of Empires II © Microsoft Corporation.
         <b>AoE Tech/Map Overlay for Age of Empires II</b> was created under Microsoft's
         "
-        <a
-          href="https://www.xbox.com/en-us/developers/rules"
-        >Game Content Usage Rules</a>"
+        <a href="https://www.xbox.com/en-us/developers/rules">Game Content Usage Rules</a>"
         using assets from Age of Empires II, and it is not endorsed by or affiliated with Microsoft.
       </div>
     </div>
@@ -37,78 +35,78 @@
 </template>
 
 <script>
-import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
-import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
-import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
-import PlayerCivDisplayControls from "./misc-overlay/PlayerCivDisplayControls.vue";
+  import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
+  import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
+  import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
+  import PlayerCivDisplayControls from "./misc-overlay/PlayerCivDisplayControls.vue";
 
-import adminOverlayWebSocket from "../../client";
-import { SocketEnums } from "../../socket-enums";
-export default {
-  name: "Admin",
-  props: {
-    clientId: String,
-  },
-  components: {
-    AdminTechUpgradeOverlay,
-    NewRoundModal,
-    MapListDisplay,
-    PlayerCivDisplayControls,
-  },
-  created: function () {
-    this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {
-      // this function would normally handle messages from the sebsocket server.
-      // The admin widget is purely one way outbound so this is empty
-    });
-  },
-  methods: {
-    techOverlayHandler() {
-      const data = this.$store.getters.getTechOverlayData;
-      this.adminClient.sendMessage(SocketEnums.AdminShow, { ...data });
+  import adminOverlayWebSocket from "../../client";
+  import { SocketEnums } from "../../socket-enums";
+  export default {
+    name: "Admin",
+    props: {
+      clientId: String,
     },
-    techClearAllHandler() {
-      this.adminClient.sendMessage(SocketEnums.AdminHide, {});
+    components: {
+      AdminTechUpgradeOverlay,
+      NewRoundModal,
+      MapListDisplay,
+      PlayerCivDisplayControls,
     },
-    mapOverlayShow() {
-      this.adminClient.sendMessage(
-        SocketEnums.AdminShowMaps,
-        this.$store.getters.getMapData
-      );
-    },
-    mapOverlayHide() {
-      this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
-    },
-    miscOverlayBroadcast() {
-      const data = this.$store.getters.getMiscOverlayData;
-      this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
-    },
-    scoreboardMapChange() {
-      const data = {
-        showCurrentMapName: this.$store.getters.getMiscOverlayData
-          .showCurrentMapName,
-        currentMap: this.$store.getters.getMiscOverlayData.currentMap,
-      };
-      this.adminClient.sendMessage(SocketEnums.AdminShowDock, {
-        ...data,
+    created: function () {
+      this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {
+        // this function would normally handle messages from the sebsocket server.
+        // The admin widget is purely one way outbound so this is empty
       });
     },
-  },
-};
+    methods: {
+      techOverlayHandler() {
+        const data = this.$store.getters.getTechOverlayData;
+        this.adminClient.sendMessage(SocketEnums.AdminShow, { ...data });
+      },
+      techClearAllHandler() {
+        this.adminClient.sendMessage(SocketEnums.AdminHide, {});
+      },
+      mapOverlayShow() {
+        this.adminClient.sendMessage(SocketEnums.AdminShowMaps, {
+          mapData: this.$store.getters.getMapData,
+          players: this.$store.getters.getPlayerNames,
+        });
+      },
+      mapOverlayHide() {
+        this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
+      },
+      miscOverlayBroadcast() {
+        const data = this.$store.getters.getMiscOverlayData;
+        this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
+      },
+      scoreboardMapChange() {
+        const data = {
+          showCurrentMapName: this.$store.getters.getMiscOverlayData
+            .showCurrentMapName,
+          currentMap: this.$store.getters.getMiscOverlayData.currentMap,
+        };
+        this.adminClient.sendMessage(SocketEnums.AdminShowDock, {
+          ...data,
+        });
+      },
+    },
+  };
 </script>
 
 <style language="scss">
-.admin-page {
-  user-select: none;
-  background-color: burlywood;
-  height: 100vh;
-  overflow: hidden;
-}
+  .admin-page {
+    user-select: none;
+    background-color: burlywood;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-.my-footer {
-  text-shadow: none;
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-}
+  .my-footer {
+    text-shadow: none;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
 </style>
