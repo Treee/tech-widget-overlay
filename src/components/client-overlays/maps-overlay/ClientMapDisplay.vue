@@ -18,7 +18,7 @@
           :class="{'white-text': this.useWhiteText()}"
         >{{this.$store.getters.getFormattedMapName(name)}}</div>
         <div
-          class="home-map home-map-decal player-flag-modifier"
+          class="home-map yellow-flag-banner flags-under-maps"
           v-if="this.homeMapPlayer !== ''"
         >
           <div class="flag-text">{{this.homeMapPlayer}}</div>
@@ -26,20 +26,20 @@
         </div>
         <div
           :class="[
-            teamOne === winner ? 'winner-flag-decal' : 'defeated-flag-decal',
-            'player-flag-modifier'
+            teamOne === winner ? 'green-flag-banner' : 'red-flag-banner',
+            'flags-under-maps'
           ]"
-          v-if="this.teamOneCiv !== ''"
+          v-if="this.winner !== ''"
         >
           <div class="flag-text">{{this.teamOneCiv}}</div>
           <div :class="teamOne === winner ? 'winner-icon' : 'defeated-icon'"></div>
         </div>
         <div
           :class="[
-            teamTwo === winner ? 'winner-flag-decal' : 'defeated-flag-decal',
-            'player-flag-modifier'
+            teamTwo === winner ? 'green-flag-banner' : 'red-flag-banner',
+            'flags-under-maps'
           ]"
-          v-if="this.teamTwoCiv !== ''"
+          v-if="this.winner !== ''"
         >
           <div class="flag-text">{{this.teamTwoCiv}}</div>
           <div :class="teamTwo === winner ? 'winner-icon' : 'defeated-icon'"></div>
@@ -130,38 +130,58 @@
     color: black;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
   }
+
+  .flag-text-no-icon {
+    width: 65%;
+    padding-top: 1.2%;
+    display: inline-flex;
+    font-size: large;
+    color: black;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  }
+
   .home-icon {
     float: left;
     color: white !important;
     width: 29px;
     height: 29px;
   }
-  .home-map-decal {
+  .yellow-flag-banner {
     background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/yellow-banner.png");
     background-repeat: no-repeat;
     background-size: contain;
   }
 
-  .winner-flag-decal {
+  .green-flag-banner {
     background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/green-banner.png");
     background-repeat: no-repeat;
     background-size: contain;
   }
 
-  .defeated-flag-decal {
+  .red-flag-banner {
     background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/red-banner.png");
     background-repeat: no-repeat;
     background-size: contain;
   }
 
-  .player-flag-modifier {
+  .purple-flag-banner {
+    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/purple-banner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .player-flag {
+    width: 95%;
+    height: 12.5%;
+    margin-left: 5rem;
+  }
+
+  .flags-under-maps {
     width: 95%;
     height: 12.5%;
     position: relative;
     top: 92%;
     left: 4%;
-    color: whitesmoke;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   }
 
   .column-list {

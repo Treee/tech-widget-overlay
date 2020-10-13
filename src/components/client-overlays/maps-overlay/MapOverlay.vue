@@ -1,5 +1,15 @@
 <template>
   <div class="client-maps md-layout md-alignment-top-center">
+    <div class="client-map-display fade-in-map">
+      <div class="client-image-container"></div>
+      <div class="yellow-flag-banner player-flag">
+        <div class="flag-text-no-icon">{{players[0] || ''}}</div>
+      </div>
+      <div class="purple-flag-banner player-flag">
+        <div class="flag-text-no-icon">{{players[1] || ''}}</div>
+      </div>
+
+    </div>
     <ClientMapDisplay
       class="md-layout-item"
       v-for="map in selectedMapsAndState"
