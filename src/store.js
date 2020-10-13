@@ -271,25 +271,6 @@ export default new Vuex.Store({
         preTransitionMapOverlay(state) {
             state.clearAllMapsClicked = true;
         },
-        updateUpgradeGroups(state, upgrades) {
-            state.upgradeGroups = upgrades;
-        },
-        clearUpgradeGroups(state) {
-            state.upgradeGroups = [];
-        },
-        clearSelectedMaps(state) {
-            state.mapPickAndBanOverlayControlOptions.selectedMaps = [];
-        },
-        updateSelectedMaps(state, newMaps) {
-            state.mapPickAndBanOverlayControlOptions.selectedMaps = newMaps;
-        },
-        updateMapPickAndBanOverlayControls(state, data) {
-            state.mapPickAndBanOverlayControlOptions.mapOverlayVisible = data.mapOverlayVisible;
-            state.mapPickAndBanOverlayControlOptions.numPick = data.numPick;
-            state.mapPickAndBanOverlayControlOptions.numBan = data.numBan;
-            state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
-            state.mapPickAndBanOverlayControlOptions.team2Name = data.team2Name;
-        },
         updateTechUpgradeOverlayControlOptions(state, data) {
             state.techUpgradeOverlayControlOptions.sound = data.sound;
             state.techUpgradeOverlayControlOptions.tech = data.tech;
@@ -383,6 +364,8 @@ export default new Vuex.Store({
                 state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState = data.mapState;
                 state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].homeMapPlayer = data.homeMap;
                 state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].winner = data.winner;
+                state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamOneCiv = data.teamOneCiv;
+                state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamTwoCiv = data.teamTwoCiv;
             }
         },
         deleteRound(state, data) {

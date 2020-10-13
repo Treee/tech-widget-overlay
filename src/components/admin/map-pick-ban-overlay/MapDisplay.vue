@@ -55,6 +55,40 @@
         </md-field>
       </md-menu-item>
       <md-menu-item>
+        <md-field>
+          <label for="teamOneCiv">Team One Civ</label>
+          <md-select
+            v-model="teamOneCiv"
+            name="teamOneCiv"
+            id="teamOneCiv"
+          >
+            <md-option value></md-option>
+            <md-option
+              v-for="(value, index) in getCivs()"
+              :key="index"
+              :value="value"
+            >{{value}}</md-option>
+          </md-select>
+        </md-field>
+      </md-menu-item>
+      <md-menu-item>
+        <md-field>
+          <label for="teamTwoCiv">Team Two Civ</label>
+          <md-select
+            v-model="teamTwoCiv"
+            name="teamTwoCiv"
+            id="teamTwoCiv"
+          >
+            <md-option value></md-option>
+            <md-option
+              v-for="(value, index) in getCivs()"
+              :key="index"
+              :value="value"
+            >{{value}}</md-option>
+          </md-select>
+        </md-field>
+      </md-menu-item>
+      <md-menu-item>
         <md-button
           class="md-raised md-accent"
           @click="deleteMap"
@@ -91,6 +125,8 @@
         state: this.mapState,
         homePlayer: this.homeMapPlayer,
         winner: this.mapWinner,
+        teamOneCiv: "",
+        teamTwoCiv: "",
       };
     },
     props: {
@@ -126,6 +162,8 @@
           homeMap: this.homePlayer,
           winner: this.winner,
           mapState: this.state,
+          teamOneCiv: this.teamOneCiv,
+          teamTwoCiv: this.teamTwoCiv,
         });
       },
       deleteMap() {
@@ -143,6 +181,9 @@
       },
       getPlayers() {
         return [this.teamOneName, this.teamTwoName];
+      },
+      getCivs() {
+        return this.$store.getters.getCivNames;
       },
       winnerSelected(winner) {
         if (winner !== "") {
