@@ -1,5 +1,4 @@
 import { SocketEnums } from "./socket-enums";
-import aoe2Api from "./api";
 
 export default {
     clientProperties: {
