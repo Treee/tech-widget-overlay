@@ -34,7 +34,7 @@
         </md-field>
 
         <md-field>
-          <label for="num-maps">Num Maps</label>
+          <label for="num-maps">Num Maps To Generate</label>
           <md-input
             type="number"
             id="num-maps"

@@ -13,11 +13,17 @@
     <div class="cm-draft-info-row">
       <md-field>
         <label>Team 1</label>
-        <md-input v-model="team1Name"></md-input>
+        <md-input
+          v-model="team1Name"
+          @blur="updateTeamNames(team1Name, team2Name)"
+        ></md-input>
       </md-field>
       <md-field>
         <label>Team 2</label>
-        <md-input v-model="team2Name"></md-input>
+        <md-input
+          v-model="team2Name"
+          @blur="updateTeamNames(team1Name, team2Name)"
+        ></md-input>
       </md-field>
     </div>
   </div>
@@ -46,10 +52,13 @@
           // console.log("draftData", draftData);
           this.team1Name = draftData.draft.playerOne.name || "";
           this.team2Name = draftData.draft.playerTwo.name || "";
-          this.$store.dispatch("syncTeamNames", {
-            team1Name: draftData.draft.playerOne.name,
-            team2Name: draftData.draft.playerTwo.name,
-          });
+          this.updateTeamNames(this.team1Name, this.team2Name);
+        });
+      },
+      updateTeamNames(teamOne, teamTwo) {
+        this.$store.dispatch("syncTeamNames", {
+          team1Name: teamOne,
+          team2Name: teamTwo,
         });
       },
     },
