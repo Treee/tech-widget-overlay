@@ -1,6 +1,9 @@
 <template>
   <div class="client-maps md-layout md-alignment-top-center">
-    <div class="client-map-display fade-in-map">
+    <div
+      class="client-map-display fade-in-map"
+      :class="{'fade-in-map': players[0] && players[0] !== '' || players[1] && players[1] !== '', 'fade-out-map': this.$store.state.clearAllMapsClicked}"
+    >
       <div class="client-image-container"></div>
       <div
         class="yellow-flag-banner player-flag"
