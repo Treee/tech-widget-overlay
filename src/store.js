@@ -305,47 +305,6 @@ export default new Vuex.Store({
             state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
             state.miscOverlayControlOptions.currentMap = data.currentMap;
         },
-        updateMapState(state, data) {
-            // console.log('update map state start', state.mapPickAndBanOverlayControlOptions.mapStates);
-            // console.log('data', data);
-            const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
-                return mapState.name === data.name;
-            });
-            // console.log('did we find anything?', mapIndex);
-            if (mapIndex > -1) {
-                // console.log('yes, update it with ', data)
-                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].name = data.name;
-                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].state = data.state;
-                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].homeMapPlayer = data.homeMapPlayer;
-                state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].winner = data.winner;
-            } else {
-                // console.log('nope, pushing', data);
-                state.mapPickAndBanOverlayControlOptions.mapStates.push(data);
-            }
-            if (data.state === 'current') {
-                state.miscOverlayControlOptions.currentMap = data.name;
-                const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
-                    return mapState.name !== data.name && mapState.state === 'current';
-                });
-                if (mapIndex > -1) {
-                    // console.log(`map changing current state to played`);
-                    state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex].state = "played";
-                }
-            }
-        },
-        pruneMapState(state, data) {
-            //get the list of mapstates that are no longer in the seelcted lists of maps
-            const mapStateMapNames = state.mapPickAndBanOverlayControlOptions.mapStates.map((mapState) => {
-                return mapState.name;
-            });
-            const removedMapNames = mapStateMapNames.filter((mapState) => {
-                return !data.includes(mapState);
-            });
-            removedMapNames.forEach((mapName) => {
-                const i = state.mapPickAndBanOverlayControlOptions.mapStates.map(item => item.name).indexOf(mapName);
-                state.mapPickAndBanOverlayControlOptions.mapStates.splice(i, 1);
-            })
-        },
         updateClientSideMapsAndState(state, data) {
             state.clientControlOptions.selectedMapsAndState = data.mapData;
             state.clientControlOptions.players = data.players;
@@ -359,6 +318,9 @@ export default new Vuex.Store({
                 return map.selectedMapName === data.selectedMapName;
             });            
             data.id = `${data.selectedMapName}-${similarMapNames.length}`;            
+            if (state.mapPickAndBanOverlayControlOptions.adminOptions.length === 0) {
+                data.mapState = "current";
+            }
             state.mapPickAndBanOverlayControlOptions.adminOptions.push(data);
         },
         saveRoundState(state, data) {
@@ -366,11 +328,34 @@ export default new Vuex.Store({
                 return map.id === data.mapIdToUpdate;
             });
             if (mapToUpdateIndex > -1) {
-                state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState = data.mapState;
+                const previousState = state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState;
                 state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].homeMapPlayer = data.homeMap;
                 state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].winner = data.winner;
                 state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamOneCiv = data.teamOneCiv;
                 state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamTwoCiv = data.teamTwoCiv;
+                state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState = data.mapState;
+                // this map was current, now played. next map is current if exists
+                if (data.mapState === "played") {
+                    const nextMapIndex = mapToUpdateIndex + 1;
+                    if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].homeMapPlayer = data.homeMap;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].mapState = "current";
+                    }
+                }
+                else if (previousState === "played" && data.mapState !== "played") {
+                    // set the next map to open
+                    const nextMapIndex = mapToUpdateIndex + 1;
+                    if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].homeMapPlayer = data.homeMap;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
+                        state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].mapState = "open";
+                    }
+                }
             }
         },
         deleteRound(state, data) {

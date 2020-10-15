@@ -188,8 +188,10 @@
       winnerSelected(winner) {
         if (winner !== "") {
           this.state = "played";
+          // set next map state to current
         } else {
-          this.state = "open";
+          this.state = "current";
+          // set next map state to open
         }
       },
       getMapFrameImagePath() {
