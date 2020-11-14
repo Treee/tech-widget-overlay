@@ -42,6 +42,7 @@ const defaultMaps = [
 ];
 
 const customMaps = [
+    "wc-chaos-pit",
     "rbw2-arabia",
     "rbw2-atacama",
     "rbw2-blockades",
@@ -95,7 +96,7 @@ const customMaps = [
     "msm-lowland"
 ];
 
-const customMapPrefixes = ["boa2", "rbw", "rbw2", "hc3", "msm"];
+const customMapPrefixes = ["wc","boa2", "rbw", "rbw2", "hc3", "msm"];
 
 const toCamelCase = (text) => {
     let camelCase = "";
