@@ -1,14 +1,14 @@
 <template>
   <div class="team-color-display" v-show="showTeamColors">
     <div class="team-color-container">
-      <div class="team-color blue">FLNK</div>
-      <div class="team-color green">PKT</div>
-      <div class="team-color teal">FLNK</div>
+      <div class="team-color blue"></div>
+      <div class="team-color green"></div>
+      <!-- <div class="team-color teal">FLNK</div> -->
     </div>
     <div class="team-color-container">
-      <div class="team-color red">FLNK</div>
-      <div class="team-color yellow">PKT</div>
-      <div class="team-color purple">FLNK</div>
+      <div class="team-color red"></div>
+      <div class="team-color yellow"></div>
+      <!-- <div class="team-color purple">FLNK</div> -->
     </div>
   </div>
 </template>
