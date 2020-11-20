@@ -26,9 +26,9 @@ export default {
 .team-color-display {
   display: inline-flex;
   width: 36%;
-  margin-top: 3.75rem;
+  margin-top: 5.75rem;
   position: absolute;
-  left: 33.9%;
+  left: 31.9%;
   justify-content: space-around;
 }
 
@@ -36,7 +36,7 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  width: 15%;
+  width: 10%;
 }
 
 .team-color {

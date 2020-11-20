@@ -45,6 +45,8 @@
 <style language="scss">
   .score-board-overlay-container {
     /* background: url("/assets/images/backgrounds/main-boa2-overlay.png"); */
+    background: url("/assets/images/backgrounds/aaa-background.png");
+    background-repeat: round;
     width: 100vw;
     height: 100vh;
     position: absolute;
