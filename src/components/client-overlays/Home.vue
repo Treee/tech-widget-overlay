@@ -23,7 +23,8 @@
         const messageType = parsed.type;
         const data = parsed.data;
         if (messageType === SocketEnums.AdminShow) {
-          this.$store.commit("updateCivs", { civ1: data.civ1, civ2: data.civ2 });
+          this.$store.dispatch("updatePlayerCivs", { civ1: data.civ1, civ2: data.civ2 });
+          // this.$store.commit("updateCivs", { civ1: data.civ1, civ2: data.civ2 });
           this.$store.commit("updateTechUpgradeOverlayControlOptions", {
             ...data,
           });

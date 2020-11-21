@@ -167,7 +167,11 @@ export default new Vuex.Store({
     },
     getters: {
         getCivDescription: (state) => (civName) => {
+          if (civName === "") {
+            return "";
+          }else {
             return state.dataString[state.civHelpTexts[civName]] || "";
+          }
         },
         getCivNames: (state) => {
             return Object.keys(state.civNames);
@@ -401,6 +405,9 @@ export default new Vuex.Store({
         },
         deleteRound(store, payload) {
             store.commit("deleteRound", payload);
+        },
+        updatePlayerCivs(store, payload) {
+          store.commit("updateCivs", payload);
         }
     }
 });

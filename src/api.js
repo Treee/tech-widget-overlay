@@ -4,6 +4,10 @@ export default {
         return aoeData.json();
     },
 
+    async getAoEDataStrings() {
+      const aoeDataStrings = await fetch("https://aoe2techtree.net/data/locales/en/strings.json");
+      return aoeDataStrings.json();
+    },
     async getAoEOverlayInfo() {
         const options = {
             headers: {

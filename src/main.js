@@ -47,7 +47,9 @@ new Vue({
       // console.log("civ Names", aoeData.civ_names);
       this.$store.commit("setCivNames", aoeData.civ_names);
       // console.log("strings", aoeData.strings);
-      this.$store.commit("setDataStrings", aoeData.strings);
+    });
+    aoe2Api.getAoEDataStrings().then(aoeStrings => {
+      this.$store.commit("setDataStrings", aoeStrings);
     });
   }
 });

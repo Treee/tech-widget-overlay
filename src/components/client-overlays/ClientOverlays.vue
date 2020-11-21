@@ -2,11 +2,11 @@
   <div>
     <ScoreboardOverlay />
     <CivBonusOverlay
-      :civ1="techOverlayOptions.civ1"
-      :civ1-description="this.$store.getters.getCivDescription(techOverlayOptions.civ1)"
-      :civ2="techOverlayOptions.civ2"
-      :civ2-description="this.$store.getters.getCivDescription(techOverlayOptions.civ2)"
-      :playSound="techOverlayOptions.sound"
+      :civ1="civ1"
+      :civ1-description="this.$store.getters.getCivDescription(civ1)"
+      :civ2="civ2"
+      :civ2-description="this.$store.getters.getCivDescription(civ2)"
+      :playSound="sound"
     />
     <MapOverlay
       :selected-maps-and-state="selectedMaps"
@@ -48,7 +48,9 @@
     },
     computed: {
       ...mapState({
-        techOverlayOptions: (state) => state.techUpgradeOverlayControlOptions,
+        civ1: (state) => state.techUpgradeOverlayControlOptions.civ1,
+        civ2: (state) => state.techUpgradeOverlayControlOptions.civ2,
+        sound: (state) => state.techUpgradeOverlayControlOptions.sound,
         selectedMaps: (state) => state.clientControlOptions.selectedMapsAndState,
         players: (state) => state.clientControlOptions.players,
       }),
