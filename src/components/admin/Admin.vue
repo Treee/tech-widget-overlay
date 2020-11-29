@@ -1,5 +1,6 @@
 <template>
   <div class="admin-page">
+    <!-- <RoundOverlay/> -->
     <AdminTechUpgradeOverlay
       v-on:techOverlayShow="techOverlayHandler"
       v-on:techOverlayClearAll="techClearAllHandler"
@@ -39,6 +40,7 @@
   import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
   import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
   import PlayerCivDisplayControls from "./misc-overlay/PlayerCivDisplayControls.vue";
+  // import RoundOverlay from "./round-overlay/RoundOverlay.vue";
 
   import adminOverlayWebSocket from "../../client";
   import { SocketEnums } from "../../socket-enums";
@@ -52,6 +54,7 @@
       NewRoundModal,
       MapListDisplay,
       PlayerCivDisplayControls,
+      // RoundOverlay
     },
     created: function () {
       this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {

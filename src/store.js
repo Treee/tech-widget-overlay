@@ -112,58 +112,61 @@ const toCamelCase = (text) => {
 export default new Vuex.Store({
     strict: true,
     state: {
-        ageNames: {},
-        civHelpTexts: {},
-        civNames: {},
-        dataString: {},
-        clearAllCivsClicked: false,
-        clearAllMapsClicked: false,
-        clientControlOptions: {
-            selectedMapsAndState: [],
-            players: []
-        },
-        miscOverlayControlOptions: {
-            civ1: "",
-            civ2: "",
-            isCivDisplayVisible: false,
-            showTeamColors: false,
-            showCurrentMapName: false,
-            currentMap: "",
-            civ1X: "0",
-            civ1Y: "0",
-            civ1Width: "0",
-            civ2X: "0",
-            civ2Y: "0",
-            civ2Width: "0"
-        },
-        techUpgradeOverlayControlOptions: {
-            civ1: "",
-            civ2: "",
-            sound: true,
-            tech: true,
-            blacksmith: false,
-            university: false,
-            monastary: false,
-            dock: false,
-            barracks: false,
-            archeryRange: false,
-            stable: false,
-            siegeWorkshop: false,
-        },
-        mapPickAndBanOverlayControlOptions: {
-            mapOverlayVisible: false,
-            selectedMapName: "",
-            numMapsToGenerate: 1,
-            numBans: 1,
-            team1Name: "",
-            team2Name: "",
-            adminOptions: [],
-            selectedMaps: [],
-            mapStates: [],
-        },
-        defaultMaps: defaultMaps,
-        customMaps: customMaps,
-        customMapPrefixes: customMapPrefixes
+      roundOverlay: {
+        roundMode: 0
+      },
+      ageNames: {},
+      civHelpTexts: {},
+      civNames: {},
+      dataString: {},
+      clearAllCivsClicked: false,
+      clearAllMapsClicked: false,
+      clientControlOptions: {
+          selectedMapsAndState: [],
+          players: []
+      },
+      miscOverlayControlOptions: {
+          civ1: "",
+          civ2: "",
+          isCivDisplayVisible: false,
+          showTeamColors: false,
+          showCurrentMapName: false,
+          currentMap: "",
+          civ1X: "0",
+          civ1Y: "0",
+          civ1Width: "0",
+          civ2X: "0",
+          civ2Y: "0",
+          civ2Width: "0"
+      },
+      techUpgradeOverlayControlOptions: {
+          civ1: "",
+          civ2: "",
+          sound: true,
+          tech: true,
+          blacksmith: false,
+          university: false,
+          monastary: false,
+          dock: false,
+          barracks: false,
+          archeryRange: false,
+          stable: false,
+          siegeWorkshop: false,
+      },
+      mapPickAndBanOverlayControlOptions: {
+          mapOverlayVisible: false,
+          selectedMapName: "",
+          numMapsToGenerate: 1,
+          numBans: 1,
+          team1Name: "",
+          team2Name: "",
+          adminOptions: [],
+          selectedMaps: [],
+          mapStates: [],
+      },
+      defaultMaps: defaultMaps,
+      customMaps: customMaps,
+      customMapPrefixes: customMapPrefixes
     },
     getters: {
         getCivDescription: (state) => (civName) => {
@@ -371,6 +374,9 @@ export default new Vuex.Store({
         syncTeamNames: (state, data) => {
             state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
             state.mapPickAndBanOverlayControlOptions.team2Name = data.team2Name;
+        },
+        updateRoundType: (state, data) => {
+          state.roundOverlay.roundMode = data.roundMode;
         }
     },
     actions: {
@@ -408,6 +414,9 @@ export default new Vuex.Store({
         },
         updatePlayerCivs(store, payload) {
           store.commit("updateCivs", payload);
+        },
+        setRoundType(store, payload) {
+          store.commit("updateRoundType", payload);
         }
     }
 });
