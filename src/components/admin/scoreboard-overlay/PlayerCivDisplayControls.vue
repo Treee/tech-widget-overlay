@@ -2,8 +2,8 @@
   <md-card md-with-hover class="card-style row-contents">
     <div class="scoreboard-card-content">
       <md-card-header>
-        <div class="md-title">Scoreboard Controls</div>
-        <div class="md-subhead">Toggle Visibility</div>
+        <div class="md-title">Scoreboard</div>
+        <div class="md-subhead">Visibility Controls</div>
       </md-card-header>
       <md-card-content class="column-contents">
         <md-switch
@@ -154,6 +154,7 @@ export default {
 }
 .scoreboard-card-content {
   display: inline-flex;
+  align-items: center;
 }
 .scoreboard-card-content .column-contents {
   align-items: initial;
