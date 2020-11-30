@@ -154,6 +154,8 @@ export default {
 }
 .scoreboard-card-content {
   display: inline-flex;
-  align-items: baseline;
+}
+.scoreboard-card-content .column-contents {
+  align-items: initial;
 }
 </style>
