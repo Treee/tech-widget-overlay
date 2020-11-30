@@ -1,10 +1,10 @@
 <template>
   <div class="admin-page">
-    <div class="card-holder card-centered">
+    <div class="card-holder-left card-centered">
       <RoundOverlay />
       <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
     </div>
-    <div class="card-holder card-centered">
+    <div class="card-holder-right card-centered">
       <AdminTechUpgradeOverlay
         v-on:techOverlayShow="techOverlayHandler"
         v-on:techOverlayClearAll="techClearAllHandler"
@@ -19,7 +19,7 @@
         />
       </div>
     </div>-->
-    <MapListDisplay v-on:scoreboardOverlayBubbleUp="scoreboardMapChange" />
+    <!-- <MapListDisplay v-on:scoreboardOverlayBubbleUp="scoreboardMapChange" /> -->
     <div class="my-footer">
       <div>
         Created by
@@ -43,7 +43,7 @@
 <script>
 import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
 // import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
-import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
+// import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 import PlayerCivDisplayControls from "./scoreboard-overlay/PlayerCivDisplayControls.vue";
 import RoundOverlay from "./round-overlay/RoundOverlay.vue";
 
@@ -57,7 +57,7 @@ export default {
   components: {
     AdminTechUpgradeOverlay,
     // NewRoundModal,
-    MapListDisplay,
+    // MapListDisplay,
     PlayerCivDisplayControls,
     RoundOverlay
   },
@@ -116,17 +116,37 @@ export default {
   width: 100%;
   bottom: 0;
 }
-.card-holder {
+.column-contents {
   display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.row-contents {
+  display: inline-flex;
+  align-items: center;
+}
+.width-100p {
   width: 100%;
+}
+.width-50p {
+  width: 50%;
+}
+.card-holder-left {
+  display: inline-flex;
+  width: 50%;
+  align-items: center;
+  flex-direction: column;
+}
+.card-holder-right {
+  display: inline-flex;
+  width: 50%;
   align-items: center;
 }
 .card-centered {
   justify-content: center;
 }
 .card-style {
-  display: inline-block;
-  width: 25%;
+  width: 100%;
   background-color: burlywood !important;
   margin: 0.25rem;
 }

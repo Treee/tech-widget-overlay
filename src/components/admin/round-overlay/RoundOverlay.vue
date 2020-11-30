@@ -1,64 +1,69 @@
 <template>
-  <md-card md-with-hover class="card-style card-rounds">
-    <md-card-header>
-      <div class="md-title">Round Info</div>
-      <div class="md-subhead">Match Mode</div>
-    </md-card-header>
-    <md-card-content>
-      <md-button
-        class="md-raised vs1"
-        :class="this.isRoundModeSelected(0) ? 'active-round' : ''"
-        :disabled="this.isRoundModeSelected(0)"
-        @click="selectRoundMode(0);"
-      >1v1</md-button>
-      <md-button
-        class="md-raised vs2"
-        :class="this.isRoundModeSelected(1) ? 'active-round' : ''"
-        :disabled="this.isRoundModeSelected(1)"
-        @click="selectRoundMode(1);"
-      >2v2</md-button>
-      <md-button
-        class="md-raised vs3"
-        :class="this.isRoundModeSelected(2) ? 'active-round' : ''"
-        :disabled="this.isRoundModeSelected(2)"
-        @click="selectRoundMode(2);"
-      >3v3</md-button>
-      <md-button
-        class="md-raised vs4"
-        :class="this.isRoundModeSelected(3) ? 'active-round' : ''"
-        :disabled="this.isRoundModeSelected(3)"
-        @click="selectRoundMode(3);"
-      >4v4</md-button>
-    </md-card-content>
-    <md-card-header>
-      <div class="md-title">Round Controls</div>
-      <div class="md-subhead">Add/Clear All/CM Info</div>
-    </md-card-header>
-    <md-card-content>
-      <md-button class="md-raised md-accent" @click="clearRounds();">Clear Rounds</md-button>
-      <md-button class="md-raised" @click="addRound();">Add Round</md-button>
-      <md-switch
-        v-model="roundOverlayVisible"
-        class="md-primary large-font"
-        @click="toggleRoundOverlayVisibility"
-      >Show Rounds</md-switch>
-      <br />
-      <md-field>
-        <label>Draft Session Id</label>
-        <md-input v-model="cmDraftId"></md-input>
-      </md-field>
-      <md-button class="md-raised" @click="loadCMData">Load CM</md-button>
-    </md-card-content>
-    <md-card-content>
-      <md-field>
-        <label>Team 1</label>
-        <md-input v-model="team1Name" @blur="updateTeamNames(team1Name, team2Name)"></md-input>
-      </md-field>
-      <md-field>
-        <label>Team 2</label>
-        <md-input v-model="team2Name" @blur="updateTeamNames(team1Name, team2Name)"></md-input>
-      </md-field>
-    </md-card-content>
+  <md-card md-with-hover class="card-style card-rounds column-contents">
+    <div class="rounds-left">
+      <md-card-header>
+        <div class="md-title">Round Info</div>
+        <div class="md-subhead">Match Mode</div>
+      </md-card-header>
+      <md-card-content>
+        <md-button
+          class="md-raised vs1"
+          :class="this.isRoundModeSelected(0) ? 'active-round' : ''"
+          :disabled="this.isRoundModeSelected(0)"
+          @click="selectRoundMode(0);"
+        >1v1</md-button>
+        <md-button
+          class="md-raised vs2"
+          :class="this.isRoundModeSelected(1) ? 'active-round' : ''"
+          :disabled="this.isRoundModeSelected(1)"
+          @click="selectRoundMode(1);"
+        >2v2</md-button>
+        <md-button
+          class="md-raised vs3"
+          :class="this.isRoundModeSelected(2) ? 'active-round' : ''"
+          :disabled="this.isRoundModeSelected(2)"
+          @click="selectRoundMode(2);"
+        >3v3</md-button>
+        <md-button
+          class="md-raised vs4"
+          :class="this.isRoundModeSelected(3) ? 'active-round' : ''"
+          :disabled="this.isRoundModeSelected(3)"
+          @click="selectRoundMode(3);"
+        >4v4</md-button>
+      </md-card-content>
+    </div>
+    <div class="rounds-right">
+      <md-card-header>
+        <div class="md-title">Round Controls</div>
+        <div class="md-subhead">Add/Clear All/CM Info</div>
+      </md-card-header>
+      <md-card-content>
+        <md-button class="md-raised md-accent" @click="clearRounds();">Clear Rounds</md-button>
+        <md-button class="md-raised" @click="addRound();">Add Round</md-button>
+        <md-switch
+          v-model="roundOverlayVisible"
+          class="md-primary large-font"
+          @click="toggleRoundOverlayVisibility"
+        >Show Rounds</md-switch>
+        <br />
+        <md-field>
+          <label>Draft Session Id</label>
+          <md-input v-model="cmDraftId"></md-input>
+        </md-field>
+        <md-button class="md-raised" @click="loadCMData">Load CM</md-button>
+      </md-card-content>
+      <md-card-content style="width:35%;">
+        <md-field>
+          <label>Team 1</label>
+          <md-input v-model="team1Name" @blur="updateTeamNames(team1Name, team2Name)"></md-input>
+        </md-field>
+        <br />
+        <md-field>
+          <label>Team 2</label>
+          <md-input v-model="team2Name" @blur="updateTeamNames(team1Name, team2Name)"></md-input>
+        </md-field>
+      </md-card-content>
+    </div>
   </md-card>
 </template>
 
@@ -114,9 +119,19 @@ export default {
 </script>
 
 <style language="scss">
+.rounds-left {
+  display: inline-flex;
+  align-items: center;
+}
+.rounds-right {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
 .card-rounds .md-field {
   display: inline-flex;
-  width: 35%;
+  width: 70%;
   margin: 0.25rem;
 }
 .md-raised.active-round {
