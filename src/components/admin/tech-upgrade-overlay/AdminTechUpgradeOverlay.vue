@@ -1,5 +1,5 @@
 <template>
-  <md-card md-with-hover class="card-style card-technology-overlay">
+  <md-card md-with-hover class="card-style">
     <md-card-header>
       <div class="md-title">Technology Overlay</div>
       <div class="md-subhead">Controls</div>
@@ -48,7 +48,5 @@ export default {
 </script>
 
 <style language="scss">
-.card-style.card-technology-overlay {
-  width: 95%;
-}
+
 </style>

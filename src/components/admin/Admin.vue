@@ -1,8 +1,8 @@
 <template>
   <div class="admin-page">
     <div class="card-holder-left card-centered">
-      <RoundOverlay />
       <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
+      <RoundOverlay />
       <RoundDisplayCard />
     </div>
     <div class="card-holder-right card-centered">
@@ -110,7 +110,10 @@ export default {
   user-select: none;
   background-color: burlywood;
   height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
+  display: inline-flex;
+  flex-direction: row;
+  align-items: start;
 }
 .my-footer {
   text-shadow: none;
@@ -149,7 +152,7 @@ export default {
   justify-content: center;
 }
 .card-style {
-  width: 100%;
+  width: 99%;
   background-color: burlywood !important;
   margin: 0.25rem;
 }
@@ -167,7 +170,7 @@ export default {
   padding-bottom: 0.25rem;
 }
 .md-switch {
-  margin: 0.25rem;
+  margin: 0.5rem;
 }
 .md-switch .md-switch-label {
   padding-left: 0.25rem;
