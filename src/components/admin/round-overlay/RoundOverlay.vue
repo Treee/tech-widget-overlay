@@ -116,7 +116,7 @@ export default {
 <style language="scss">
 .card-rounds .md-field {
   display: inline-flex;
-  width: 65%;
+  width: 35%;
   margin: 0.25rem;
 }
 .md-raised.active-round {

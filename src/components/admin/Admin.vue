@@ -1,13 +1,15 @@
 <template>
   <div class="admin-page">
-    <div class="card-holder">
+    <div class="card-holder card-centered">
       <RoundOverlay />
       <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
     </div>
-    <AdminTechUpgradeOverlay
-      v-on:techOverlayShow="techOverlayHandler"
-      v-on:techOverlayClearAll="techClearAllHandler"
-    />
+    <div class="card-holder card-centered">
+      <AdminTechUpgradeOverlay
+        v-on:techOverlayShow="techOverlayHandler"
+        v-on:techOverlayClearAll="techClearAllHandler"
+      />
+    </div>
     <!-- <div class="md-layout md-gutter md-alignment-top-center">
       <div class="md-layout-item md-size-50"></div>
       <div class="md-layout-item md-size-45">
@@ -117,8 +119,10 @@ export default {
 .card-holder {
   display: inline-flex;
   width: 100%;
-  justify-content: center;
   align-items: center;
+}
+.card-centered {
+  justify-content: center;
 }
 .card-style {
   display: inline-block;
