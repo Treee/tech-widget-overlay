@@ -3,6 +3,7 @@
     <div class="card-holder-left card-centered">
       <RoundOverlay />
       <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
+      <RoundDisplayCard />
     </div>
     <div class="card-holder-right card-centered">
       <AdminTechUpgradeOverlay
@@ -46,6 +47,7 @@ import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOver
 // import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
 import PlayerCivDisplayControls from "./scoreboard-overlay/PlayerCivDisplayControls.vue";
 import RoundOverlay from "./round-overlay/RoundOverlay.vue";
+import RoundDisplayCard from "./round-overlay/RoundDisplayCard.vue";
 
 import adminOverlayWebSocket from "../../client";
 import { SocketEnums } from "../../socket-enums";
@@ -59,7 +61,8 @@ export default {
     // NewRoundModal,
     // MapListDisplay,
     PlayerCivDisplayControls,
-    RoundOverlay
+    RoundOverlay,
+    RoundDisplayCard
   },
   created: function() {
     this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {
