@@ -1,21 +1,22 @@
 <template>
   <div class="admin-page">
-    <RoundOverlay />
+    <div class="card-holder">
+      <RoundOverlay />
+      <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
+    </div>
     <AdminTechUpgradeOverlay
       v-on:techOverlayShow="techOverlayHandler"
       v-on:techOverlayClearAll="techClearAllHandler"
     />
-    <div class="md-layout md-gutter md-alignment-top-center">
-      <div class="md-layout-item md-size-50">
-        <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
-      </div>
+    <!-- <div class="md-layout md-gutter md-alignment-top-center">
+      <div class="md-layout-item md-size-50"></div>
       <div class="md-layout-item md-size-45">
         <NewRoundModal
           v-on:mapOverlayShowBubble="mapOverlayShow"
           v-on:mapOverlayHideBubble="mapOverlayHide"
         />
       </div>
-    </div>
+    </div>-->
     <MapListDisplay v-on:scoreboardOverlayBubbleUp="scoreboardMapChange" />
     <div class="my-footer">
       <div>
@@ -39,9 +40,9 @@
 
 <script>
 import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
-import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
+// import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
 import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
-import PlayerCivDisplayControls from "./misc-overlay/PlayerCivDisplayControls.vue";
+import PlayerCivDisplayControls from "./scoreboard-overlay/PlayerCivDisplayControls.vue";
 import RoundOverlay from "./round-overlay/RoundOverlay.vue";
 
 import adminOverlayWebSocket from "../../client";
@@ -53,7 +54,7 @@ export default {
   },
   components: {
     AdminTechUpgradeOverlay,
-    NewRoundModal,
+    // NewRoundModal,
     MapListDisplay,
     PlayerCivDisplayControls,
     RoundOverlay
@@ -106,12 +107,42 @@ export default {
   height: 100vh;
   overflow: hidden;
 }
-
 .my-footer {
   text-shadow: none;
   text-align: center;
   position: absolute;
   width: 100%;
   bottom: 0;
+}
+.card-holder {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.card-style {
+  display: inline-block;
+  width: 25%;
+  background-color: burlywood !important;
+  margin: 0.25rem;
+}
+.card-section {
+  display: inline-flex;
+  flex-direction: column;
+}
+.md-card-header {
+  padding: 0.25rem;
+}
+.md-card-content {
+  padding: 0.25rem;
+}
+.md-card-content:last-of-type {
+  padding-bottom: 0.25rem;
+}
+.md-switch {
+  margin: 0.25rem;
+}
+.md-switch .md-switch-label {
+  padding-left: 0.25rem;
 }
 </style>
