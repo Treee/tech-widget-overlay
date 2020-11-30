@@ -14,7 +14,7 @@
       <div class="md-subhead">Civilizations</div>
     </md-card-header>
     <md-card-content>
-      <CivListDisplay class="admin-civ-list-display" :civ-list="this.$store.getters.getCivNames" />
+      <CivListDisplay :civ-list="this.$store.getters.getCivNames" />
     </md-card-content>
   </md-card>
 </template>
@@ -50,9 +50,5 @@ export default {
 <style language="scss">
 .card-style.card-technology-overlay {
   width: 95%;
-}
-.admin-civ-list-display {
-  width: 90vw;
-  display: inline-block;
 }
 </style>
