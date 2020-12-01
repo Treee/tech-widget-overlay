@@ -7,106 +7,87 @@
       :key="map.id"
       :id="map.id">
       <div class="md-card-header md-subhead">Round {{index+1}}</div>
-      <md-card-content>
-        <md-menu md-direction="bottom-start">
-          <md-menu-content>
-            <md-menu-item v-if="showPlayerDropdown()">
-              <md-field>
-                <label :for="name+'-home'">Player Home Map</label>
-                <md-select
-                  v-model="homePlayer"
-                  :name="name+'-home'"
-                  :id="name+'-home'"
-                >
-                  <md-option value></md-option>
-                  <md-option
-                    v-for="(value, index) in getPlayers()"
-                    :key="index"
-                    :value="value"
-                  >{{value}}</md-option>
-                </md-select>
-              </md-field>
-            </md-menu-item>
-            <md-menu-item v-if="showPlayerDropdown()">
-              <md-field>
-                <label :for="name+'-winner'">Winner!!</label>
-                <md-select
-                  v-model="winner"
-                  :name="name+'-winner'"
-                  :id="name+'-winner'"
-                  v-on:md-selected="winnerSelected"
-                >
-                  <md-option value></md-option>
-                  <md-option
-                    v-for="(value, index) in getPlayers()"
-                    :key="index"
-                    :value="value"
-                  >{{value}}</md-option>
-                </md-select>
-              </md-field>
-            </md-menu-item>
-            <md-menu-item>
-              <md-field>
-                <label for="state">Map State</label>
-                <md-select
-                  v-model="state"
-                  name="state"
-                  id="state"
-                >
-                  <md-option value="current">Current</md-option>
-                  <md-option value="played">Played</md-option>
-                  <md-option value="banned">Banned</md-option>
-                  <md-option value="open">Open</md-option>
-                </md-select>
-              </md-field>
-            </md-menu-item>
-            <md-menu-item>
-              <md-field>
-                <label for="teamOneCiv">Team One Civ</label>
-                <md-select
-                  v-model="teamOneCiv"
-                  name="teamOneCiv"
-                  id="teamOneCiv"
-                >
-                  <md-option value></md-option>
-                  <md-option
-                    v-for="(value, index) in getCivs()"
-                    :key="index"
-                    :value="value"
-                  >{{value}}</md-option>
-                </md-select>
-              </md-field>
-            </md-menu-item>
-            <md-menu-item>
-              <md-field>
-                <label for="teamTwoCiv">Team Two Civ</label>
-                <md-select
-                  v-model="teamTwoCiv"
-                  name="teamTwoCiv"
-                  id="teamTwoCiv"
-                >
-                  <md-option value></md-option>
-                  <md-option
-                    v-for="(value, index) in getCivs()"
-                    :key="index"
-                    :value="value"
-                  >{{value}}</md-option>
-                </md-select>
-              </md-field>
-            </md-menu-item>
-            <md-menu-item>
-              <md-button
-                class="md-raised md-accent"
-                @click="deleteMap"
-              >
-                <md-icon>delete</md-icon>
-              </md-button>
-            </md-menu-item>
-          </md-menu-content>
-          <div
-            class="map-display"
-            md-menu-trigger
+      <md-card-content class="round-display-content">
+        <md-field v-if="showPlayerDropdown()">
+          <label :for="name+'-home'">Player Home Map</label>
+          <md-select
+            v-model="map.homePlayer"
+            :name="name+'-home'"
+            :id="name+'-home'">
+            <md-option value></md-option>
+            <md-option
+              v-for="(value, index) in getPlayers()"
+              :key="index"
+              :value="value"
+            >{{value}}</md-option>
+          </md-select>
+        </md-field>
+        <md-field v-if="showPlayerDropdown()">
+          <label :for="name+'-winner'">Winner!!</label>
+          <md-select
+            v-model="winner"
+            :name="name+'-winner'"
+            :id="name+'-winner'"
+            v-on:md-selected="winnerSelected"
           >
+            <md-option value></md-option>
+            <md-option
+              v-for="(value, index) in getPlayers()"
+              :key="index"
+              :value="value"
+            >{{value}}</md-option>
+          </md-select>
+        </md-field>
+        <md-field>
+          <label for="state">Map State</label>
+          <md-select
+            v-model="state"
+            name="state"
+            id="state"
+          >
+            <md-option value="current">Current</md-option>
+            <md-option value="played">Played</md-option>
+            <md-option value="banned">Banned</md-option>
+            <md-option value="open">Open</md-option>
+          </md-select>
+        </md-field>
+        <md-field>
+          <label for="teamOneCiv">Team One Civ</label>
+          <md-select
+            v-model="teamOneCiv"
+            name="teamOneCiv"
+            id="teamOneCiv"
+          >
+            <md-option value></md-option>
+            <md-option
+              v-for="(value, index) in getCivs()"
+              :key="index"
+              :value="value"
+            >{{value}}</md-option>
+          </md-select>
+        </md-field>
+        <md-field>
+          <label for="teamTwoCiv">Team Two Civ</label>
+          <md-select
+            v-model="teamTwoCiv"
+            name="teamTwoCiv"
+            id="teamTwoCiv"
+          >
+            <md-option value></md-option>
+            <md-option
+              v-for="(value, index) in getCivs()"
+              :key="index"
+              :value="value"
+            >{{value}}</md-option>
+          </md-select>
+        </md-field>
+        <md-button
+          class="md-raised md-accent"
+          @click="deleteMap">
+          <md-icon>delete</md-icon>
+        </md-button>
+        <md-menu md-direction="bottom-start">
+          <div class="map-display" md-menu-trigger>
             <div class="image-container">
               <div
                 class="map-frame"
@@ -114,7 +95,7 @@
               ></div>
               <div
                 class="map-image"
-                :style="getMapImage"
+                :style="getMapImage(map.id)"
               ></div>
               <div class="map-name">{{getMapName(map.id)}}</div>
             </div>
@@ -132,6 +113,7 @@ export default {
   name: "RoundDisplayCard",
   data() {
     return {
+      localRounds: [],
       name: "",
       homePlayer: "",
       winnerSelected: "",
@@ -146,16 +128,7 @@ export default {
       rounds: (state) => state.mapPickAndBanOverlayControlOptions.adminOptions,
       teamOneName: (state) => state.roundOverlay.team1Name,
       teamTwoName: (state) => state.roundOverlay.team2Name,
-    }),
-    getMapImage() {
-      const map = this.name === "" ? 'unknown' : this.toKabobCase(this.name);
-      const mapFolder = this.$store.getters.isCustomMap(map)
-        ? "custom"
-        : "default";
-      return {
-        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`,
-      };
-    },
+    }),    
     getMapFrame() {
       return {
         background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${this.getMapFrameImagePath()}")`,
@@ -168,6 +141,18 @@ export default {
       this.$store.dispatch("deleteRound", {
         mapIdToDelete: this.id,
       });
+    },
+    getMapImage(mapId) {
+      let map = this.toKabobCase(mapId);
+      if (map.split('-')[0] === '') {
+        map = "unknown";
+      }
+      const mapFolder = this.$store.getters.isCustomMap(map)
+        ? "custom"
+        : "default";
+      return {
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`,
+      };
     },
     showPlayerDropdown() {
       return (
@@ -184,7 +169,6 @@ export default {
       return this.$store.getters.getCivNames;
     },
     getMapName(mapId) {
-      console.log('rounds', this.rounds);
       return this.$store.getters.getFormattedMapName(mapId);
     },
     getMapFrameImagePath() {
@@ -207,44 +191,46 @@ export default {
 </script>
 
 <style language="scss">
-  .map-display {
-    width: 12rem;
-    height: 12rem;
-  }
-
-  .image-container {
-    width: inherit;
-    height: inherit;
-    display: inline-flex;
-    justify-content: center;
-  }
-
-  .map-frame {
-    width: inherit;
-    height: inherit;
-    background-size: cover !important;
-    position: absolute;
-    z-index: 2;
-  }
-
-  .map-image {
-    width: inherit;
-    height: inherit;
-    background-size: cover !important;
-    background-repeat: round !important;
-    position: absolute;
-    transform: scale(0.9) translateY(-3px) translateX(2px);
-    z-index: 1;
-  }
-
-  .map-name {
-    z-index: 2;
-    font-size: larger;
-    color: whitesmoke;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    display: inline-flex;
-    height: fit-content;
-    position: relative;
-    top: 86%;
-  }
+.round-display-content {
+  display: inline-flex;  
+}
+/* .round-display-content .md-field {
+  width: 20%;
+} */
+.map-display {
+  width: 6rem;
+  height: 6rem;
+}
+.image-container {
+  width: inherit;
+  height: inherit;
+  display: inline-flex;
+  justify-content: center;
+}
+.map-frame {
+  width: inherit;
+  height: inherit;
+  background-size: cover !important;
+  position: absolute;
+  z-index: 2;
+}
+.map-image {
+  width: inherit;
+  height: inherit;
+  background-size: cover !important;
+  background-repeat: round !important;
+  position: absolute;
+  transform: scale(0.9) translateY(-3px) translateX(2px);
+  z-index: 1;
+}
+.map-name {
+  z-index: 2;
+  font-size: larger;
+  color: whitesmoke;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  display: inline-flex;
+  height: fit-content;
+  position: relative;
+  top: 86%;
+}
 </style>
