@@ -48,7 +48,7 @@
         <br />
         <md-field>
           <label>Draft Session Id</label>
-          <md-input v-model="cmDraftId"></md-input>
+          <md-input v-model="cmDraftId" type="password"></md-input>
         </md-field>
         <md-button class="md-raised" @click="loadCMData">Load CM</md-button>
       </md-card-content>
@@ -97,8 +97,14 @@ export default {
     isRoundModeSelected(roundType) {
       return this.roundMode === roundType;
     },
-    addRound() {},
-    clearRounds() {},
+    addRound() {
+      this.$store.dispatch("addNewPlayerRound", {
+        selectedMapName: '',
+        mapState: "open",
+      });
+    },
+    clearRounds() {
+    },
     toggleRoundOverlayVisibility() {},
     loadCMData() {
       this.$store.getters.getCMInfo(this.cmDraftId).then(draftData => {
