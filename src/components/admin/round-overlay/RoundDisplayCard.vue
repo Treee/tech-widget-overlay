@@ -1,5 +1,5 @@
 <template>
-  <md-card md-with-hover class="card-style">
+  <md-card md-with-hover class="card-style round-display">
     <md-card-header>
       <div class="md-title">Rounds</div>      
     </md-card-header>
@@ -7,85 +7,86 @@
       :key="map.id"
       :id="map.id">
       <div class="md-card-header md-subhead">Round {{index+1}}</div>
-      <md-card-content class="round-display-content">
-        <md-field v-if="showPlayerDropdown()">
-          <label :for="name+'-home'">Player Home Map</label>
-          <md-select
-            v-model="map.homePlayer"
-            :name="name+'-home'"
-            :id="name+'-home'">
-            <md-option value></md-option>
-            <md-option
-              v-for="(value, index) in getPlayers()"
-              :key="index"
-              :value="value"
-            >{{value}}</md-option>
-          </md-select>
-        </md-field>
-        <md-field v-if="showPlayerDropdown()">
-          <label :for="name+'-winner'">Winner!!</label>
-          <md-select
-            v-model="winner"
-            :name="name+'-winner'"
-            :id="name+'-winner'"
-            v-on:md-selected="winnerSelected"
-          >
-            <md-option value></md-option>
-            <md-option
-              v-for="(value, index) in getPlayers()"
-              :key="index"
-              :value="value"
-            >{{value}}</md-option>
-          </md-select>
-        </md-field>
-        <md-field>
-          <label for="state">Map State</label>
-          <md-select
-            v-model="state"
-            name="state"
-            id="state"
-          >
-            <md-option value="current">Current</md-option>
-            <md-option value="played">Played</md-option>
-            <md-option value="banned">Banned</md-option>
-            <md-option value="open">Open</md-option>
-          </md-select>
-        </md-field>
-        <md-field>
-          <label for="teamOneCiv">Team One Civ</label>
-          <md-select
-            v-model="teamOneCiv"
-            name="teamOneCiv"
-            id="teamOneCiv"
-          >
-            <md-option value></md-option>
-            <md-option
-              v-for="(value, index) in getCivs()"
-              :key="index"
-              :value="value"
-            >{{value}}</md-option>
-          </md-select>
-        </md-field>
-        <md-field>
-          <label for="teamTwoCiv">Team Two Civ</label>
-          <md-select
-            v-model="teamTwoCiv"
-            name="teamTwoCiv"
-            id="teamTwoCiv"
-          >
-            <md-option value></md-option>
-            <md-option
-              v-for="(value, index) in getCivs()"
-              :key="index"
-              :value="value"
-            >{{value}}</md-option>
-          </md-select>
-        </md-field>
-        <md-button
-          class="md-raised md-accent"
-          @click="deleteMap">
-          <md-icon>delete</md-icon>
-        </md-button>
+      <md-card-content class="row-contents">
+        <div class="column-contents">
+          <md-field v-if="showPlayerDropdown()">            
+            <md-select
+              placeholder="Home Map"
+              v-model="map.homePlayer"
+              :name="name+'-home'"
+              :id="name+'-home'">
+              <md-option value></md-option>
+              <md-option
+                v-for="(value, index) in getPlayers()"
+                :key="index"
+                :value="value"
+              >{{value}}</md-option>
+            </md-select>
+          </md-field>
+          <md-field v-if="showPlayerDropdown()">            
+            <md-select
+              placeholder="Winner!!"
+              v-model="map.winner"
+              :name="name+'-winner'"
+              :id="name+'-winner'"
+              v-on:md-selected="winnerSelected"
+            >
+              <md-option value></md-option>
+              <md-option
+                v-for="(value, index) in getPlayers()"
+                :key="index"
+                :value="value"
+              >{{value}}</md-option>
+            </md-select>
+          </md-field>
+        </div>
+        <div class="column-contents">             
+          <md-field>
+            <md-select
+              placeholder="Team One Civ"
+              v-model="map.teamOneCiv"
+              name="teamOneCiv"
+              id="teamOneCiv"
+            >
+              <md-option value></md-option>
+              <md-option
+                v-for="(value, index) in getCivs()"
+                :key="index"
+                :value="value"
+              >{{value}}</md-option>
+            </md-select>
+          </md-field>
+          <md-field>            
+            <md-select
+              placeholder="Team Two Civ"
+              v-model="map.teamTwoCiv"
+              name="teamTwoCiv"
+              id="teamTwoCiv"
+            >
+              <md-option value></md-option>
+              <md-option
+                v-for="(value, index) in getCivs()"
+                :key="index"
+                :value="value"
+              >{{value}}</md-option>
+            </md-select>
+          </md-field> 
+        </div>
+        <div class="column-contents">
+          <md-field>            
+            <md-select
+              placeholder="Map State"
+              v-model="map.state"
+              name="state"
+              id="state"
+            >
+              <md-option value="current">Current</md-option>
+              <md-option value="played">Played</md-option>
+              <md-option value="banned">Banned</md-option>
+              <md-option value="open">Open</md-option>
+            </md-select>
+          </md-field> 
+        </div>
         <md-menu md-direction="bottom-start">
           <div class="map-display" md-menu-trigger>
             <div class="image-container">
@@ -101,6 +102,11 @@
             </div>
           </div>
         </md-menu>
+        <md-button
+          class="md-raised md-accent"
+          @click="deleteMap(map.id)">
+          <md-icon>delete</md-icon>
+        </md-button>
       </md-card-content>
     </div>    
   </md-card>
@@ -137,9 +143,9 @@ export default {
   },
   components: {},
   methods: {
-    deleteMap() {
+    deleteMap(mapId) {
       this.$store.dispatch("deleteRound", {
-        mapIdToDelete: this.id,
+        mapIdToDelete: mapId,
       });
     },
     getMapImage(mapId) {
@@ -191,12 +197,18 @@ export default {
 </script>
 
 <style language="scss">
-.round-display-content {
-  display: inline-flex;  
+.round-display .md-field {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  height: 1rem;
+  min-height: 2rem;
 }
-/* .round-display-content .md-field {
-  width: 20%;
-} */
+.round-display .md-menu.md-select {
+  overflow: hidden;
+}
+.round-display .md-field label {
+  top: initial;
+}
 .map-display {
   width: 6rem;
   height: 6rem;
@@ -225,12 +237,11 @@ export default {
 }
 .map-name {
   z-index: 2;
-  font-size: larger;
   color: whitesmoke;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   display: inline-flex;
   height: fit-content;
   position: relative;
-  top: 86%;
+  top: 80%;
 }
 </style>

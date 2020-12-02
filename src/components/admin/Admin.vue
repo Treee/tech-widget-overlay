@@ -130,6 +130,8 @@ export default {
 .row-contents {
   display: inline-flex;
   align-items: center;
+  width: 100%;
+  justify-content: space-evenly;
 }
 .width-100p {
   width: 100%;
@@ -161,10 +163,13 @@ export default {
   flex-direction: column;
 }
 .md-card-header {
-  padding: 0.25rem;
+  padding: 0rem;
+}
+.md-title {
+  margin: 0rem;
 }
 .md-card-content {
-  padding: 0.25rem;
+  padding: 0rem;
 }
 .md-card-content:last-of-type {
   padding-bottom: 0.25rem;

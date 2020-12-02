@@ -99,7 +99,7 @@ export default {
     },
     addRound() {
       this.$store.dispatch("addNewPlayerRound", {
-        selectedMapName: '',
+        selectedMapName: 'unknown',
         mapState: "open",
       });
     },

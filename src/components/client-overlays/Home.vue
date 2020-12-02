@@ -66,7 +66,7 @@
   .transparent {
     background: transparent !important;
     background-color: transparent !important;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 
   #app {
@@ -75,7 +75,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 
     height: 100vh;
   }
