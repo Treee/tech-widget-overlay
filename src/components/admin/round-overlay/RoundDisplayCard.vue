@@ -146,7 +146,7 @@
           </md-menu-content>
         </md-menu>
         <md-button
-          class="md-raised md-accent btn-delete-map"
+          class="md-raised md-accent md-icon-button"
           @click="deleteMap(map.id)">
           <md-icon>delete</md-icon>
         </md-button>
@@ -196,8 +196,11 @@ export default {
     },
     getMapImage(mapId) {
       let map = this.toKabobCase(mapId);
-      if (map.split('-')[0] === 'unknown') {
-        map = "unknown";
+      let mapParts = map.split('-');
+      // if the last part is a number we know to remove it fopr rendering the image
+      if (!isNaN(mapParts[mapParts.length - 1])) {
+        mapParts = mapParts.slice(0, [mapParts.length - 1]);
+        map = mapParts.join('-');
       }
       const mapFolder = this.$store.getters.isCustomMap(map)
         ? "custom"
@@ -284,10 +287,6 @@ export default {
 }
 .menu-content-map .md-list-item-default:hover {
   background-color: rgba(0, 125, 0, 125);
-}
-.btn-delete-map {
-  width: 2rem;
-  min-width: none !important;
 }
 .map-display {
   width: 6rem;

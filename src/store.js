@@ -110,9 +110,16 @@ const toCamelCase = (text) => {
 };
 const debounceMapName = (state, potentialDuplicate) => {
   const similarMapNames = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
-    return map.selectedMapName === potentialDuplicate;
+    let selectedMapName = map.selectedMapName;
+    let mapParts = selectedMapName.split('-');
+    // if the last part is a number we know to remove it fopr rendering the image
+    if (!isNaN(mapParts[mapParts.length - 1])) {
+      mapParts = mapParts.slice(0, [mapParts.length - 1]);
+      selectedMapName = mapParts.join('-');
+    }
+    return selectedMapName === potentialDuplicate;
   });
-  return `${potentialDuplicate}-${similarMapNames.length}`;   
+  return similarMapNames?.length > 0 ? `${potentialDuplicate}-${similarMapNames.length}` : potentialDuplicate;   
 }
 
 export default new Vuex.Store({
@@ -335,11 +342,7 @@ export default new Vuex.Store({
       clearClientMaps(state) {
           state.clientControlOptions.selectedMapsAndState = [];
       },
-      addNewPlayerRound(state, data) {
-          // const similarMapNames = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
-          //     return map.selectedMapName === data.selectedMapName;
-          // });            
-          // data.id = `${data.selectedMapName}-${similarMapNames.length}`;            
+      addNewPlayerRound(state, data) {        
           data.id = debounceMapName(state, data.selectedMapName);
           if (state.mapPickAndBanOverlayControlOptions.adminOptions.length === 0) {
               data.mapState = "current";
@@ -400,10 +403,15 @@ export default new Vuex.Store({
         state.mapPickAndBanOverlayControlOptions.adminOptions = [];
       },
       updateMapSelected: (state, data) => {
-        const foundReplaceMap = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
+        // check to see if the same map has been selected, rename it if so
+        const newMapName = debounceMapName(state, data.selectedMap);
+        const mapToChange = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
           return map.id === data.mapToReplace;
         });
-        console.log(`foudn the master map to replace ${foundReplaceMap}`, foundReplaceMap);
+        if (mapToChange.length === 1) {
+          mapToChange[0].id = newMapName;
+          mapToChange[0].selectedMapName = newMapName;
+        }
       }
     },
     actions: {
