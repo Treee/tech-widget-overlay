@@ -104,6 +104,7 @@ export default {
       });
     },
     clearRounds() {
+      this.$store.dispatch("clearRounds", { });
     },
     toggleRoundOverlayVisibility() {},
     loadCMData() {

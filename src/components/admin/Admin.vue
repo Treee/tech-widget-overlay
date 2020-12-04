@@ -3,7 +3,7 @@
     <div class="card-holder-left card-centered">
       <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
       <RoundOverlay />
-      <RoundDisplayCard />
+      <RoundDisplayCard/>
     </div>
     <div class="card-holder-right card-centered">
       <AdminTechUpgradeOverlay

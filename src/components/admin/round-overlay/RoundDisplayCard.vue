@@ -11,6 +11,7 @@
         <div class="column-contents">
           <md-field v-if="showPlayerDropdown()">            
             <md-select
+              v-on:md-selected="homeMapSelected()"
               placeholder="Home Map"
               v-model="map.homePlayer"
               :name="map.id+'-home'"
@@ -117,11 +118,6 @@ import { mapState } from "vuex";
 
 export default {
   name: "RoundDisplayCard",
-  data() {
-    return {
-      localRounds: this.rounds
-    };
-  },
   computed: {
     ...mapState({
       rounds: (state) => state.mapPickAndBanOverlayControlOptions.adminOptions,
@@ -140,6 +136,9 @@ export default {
       this.$store.dispatch("deleteRound", {
         mapIdToDelete: mapId,
       });
+    },
+    homeMapSelected() {
+      console.log("rounds", this.rounds);
     },
     winnerSelected(winner, mapId) {
       let nextMapState = "current";

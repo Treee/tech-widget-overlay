@@ -110,7 +110,7 @@ const toCamelCase = (text) => {
 };
 
 export default new Vuex.Store({
-    strict: true,
+    // strict: true,
     state: {
       roundOverlay: {
         roundMode: 0,
@@ -382,6 +382,9 @@ export default new Vuex.Store({
       },
       updateRoundType: (state, data) => {
         state.roundOverlay.roundMode = data.roundMode;
+      },
+      clearAllRounds: (state) => {
+        state.mapPickAndBanOverlayControlOptions.adminOptions = [];
       }
     },
     actions: {
@@ -406,22 +409,25 @@ export default new Vuex.Store({
           }
       },
       addNewPlayerRound(store, payload) {            
-          store.commit("addNewPlayerRound", payload);            
-      },
-      syncTeamNames(store, payload) {
-          store.commit("syncTeamNames", payload);
+        store.commit("addNewPlayerRound", payload);            
       },
       saveRoundState(store, payload) {
-          store.commit("saveRoundState", payload);
+        store.commit("saveRoundState", payload);
       },
       deleteRound(store, payload) {
-          store.commit("deleteRound", payload);
+        store.commit("deleteRound", payload);
+      },
+      clearRounds(store, payload) {
+        store.commit("clearAllRounds", payload);
+      },
+      setRoundType(store, payload) {
+        store.commit("updateRoundType", payload);
+      },
+      syncTeamNames(store, payload) {
+        store.commit("syncTeamNames", payload);
       },
       updatePlayerCivs(store, payload) {
         store.commit("updateCivs", payload);
       },
-      setRoundType(store, payload) {
-        store.commit("updateRoundType", payload);
-      }
     }
 });
