@@ -150,7 +150,7 @@ export default {
     },
     getMapImage(mapId) {
       let map = this.toKabobCase(mapId);
-      if (map.split('-')[0] === '') {
+      if (map.split('-')[0] === 'unknown') {
         map = "unknown";
       }
       const mapFolder = this.$store.getters.isCustomMap(map)
