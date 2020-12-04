@@ -88,7 +88,7 @@
             </md-select>
           </md-field> 
         </div>
-        <md-menu md-direction="bottom-start">
+        <md-menu class="menu-map" :md-offset-x="127" :md-offset-y="-400">
           <div class="map-display" md-menu-trigger>
             <div class="image-container">
               <div
@@ -102,9 +102,51 @@
               <div class="map-name">{{getMapName(map.id)}}</div>
             </div>
           </div>
+          <md-menu-content class="menu-content-map">
+            <md-card-header>
+              <div class="md-title">Default Maps</div>      
+            </md-card-header>
+            <div class="map-menu-items">
+              <md-menu-item v-for="(defaultMap) in getDefaultMaps()" :key="defaultMap" :id="defaultMap" @click="selectMenuMap(defaultMap, map.id)">
+                <div class="map-display">
+                  <div class="image-container">
+                    <div
+                      class="map-frame"
+                      :style="getMapFrame"
+                    ></div>
+                    <div
+                      class="map-image"
+                      :style="getMapImage(defaultMap)"
+                    ></div>
+                    <div class="map-name">{{getMapName(defaultMap)}}</div>
+                  </div>
+                </div>
+              </md-menu-item>
+            </div>
+            <md-card-header>
+              <div class="md-title">Custom Maps</div>      
+            </md-card-header>
+            <div class="map-menu-items">
+              <md-menu-item v-for="(customMap) in getCustomMaps()" :key="customMap" :id="customMap" @click="selectMenuMap(customMap, map.id)">
+                <div class="map-display">
+                  <div class="image-container">
+                    <div
+                      class="map-frame"
+                      :style="getMapFrame"
+                    ></div>
+                    <div
+                      class="map-image"
+                      :style="getMapImage(customMap)"
+                    ></div>
+                    <div class="map-name">{{getMapName(customMap)}}</div>
+                  </div>
+                </div>
+              </md-menu-item>
+            </div>
+          </md-menu-content>
         </md-menu>
         <md-button
-          class="md-raised md-accent"
+          class="md-raised md-accent btn-delete-map"
           @click="deleteMap(map.id)">
           <md-icon>delete</md-icon>
         </md-button>
@@ -137,8 +179,11 @@ export default {
         mapIdToDelete: mapId,
       });
     },
-    homeMapSelected() {
-      console.log("rounds", this.rounds);
+    selectMenuMap(selectedMap, mapId) {
+      this.$store.dispatch("updateMapSelected", {
+        selectedMap,
+        mapToReplace: mapId
+      });      
     },
     winnerSelected(winner, mapId) {
       let nextMapState = "current";
@@ -175,6 +220,12 @@ export default {
     getCivs() {
       return this.$store.getters.getCivNames;
     },
+    getDefaultMaps() {
+      return this.$store.getters.getDefaultMaps;
+    },
+    getCustomMaps() {
+      return this.$store.getters.getCustomMaps;
+    },
     getMapName(mapId) {
       return this.$store.getters.getFormattedMapName(mapId);
     },
@@ -210,9 +261,43 @@ export default {
 .round-display .md-field label {
   top: initial;
 }
+.round-display .menu-map {
+  max-width: none;
+}
+.menu-content-map {
+  max-width: none;
+  width: 50vw;
+  max-height: 95vh;
+  height: 75vh;
+}
+.menu-content-map .md-list {
+  background-color: burlywood;
+  padding: 0;
+}
+.menu-content-map .md-title {
+  margin: 0;
+  text-align: center;
+  background-color: sandybrown;
+}
+.menu-content-map .md-list-item-default {
+  width: 8rem;
+}
+.menu-content-map .md-list-item-default:hover {
+  background-color: rgba(0, 125, 0, 125);
+}
+.btn-delete-map {
+  width: 2rem;
+  min-width: none !important;
+}
 .map-display {
   width: 6rem;
   height: 6rem;
+}
+.map-menu-items {
+  display: inline-flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 .image-container {
   width: inherit;

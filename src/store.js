@@ -108,6 +108,12 @@ const toCamelCase = (text) => {
     });
     return camelCase;
 };
+const debounceMapName = (state, potentialDuplicate) => {
+  const similarMapNames = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
+    return map.selectedMapName === potentialDuplicate;
+  });
+  return `${potentialDuplicate}-${similarMapNames.length}`;   
+}
 
 export default new Vuex.Store({
     // strict: true,
@@ -190,6 +196,12 @@ export default new Vuex.Store({
               players.push(state.mapPickAndBanOverlayControlOptions.team2Name);
           }
           return players;
+      },
+      getDefaultMaps: (state) => {
+          return state.defaultMaps;
+      },
+      getCustomMaps: (state) => {
+          return state.customMaps;
       },
       getAllMaps: (state) => {
           return state.defaultMaps.concat(state.customMaps);
@@ -324,10 +336,11 @@ export default new Vuex.Store({
           state.clientControlOptions.selectedMapsAndState = [];
       },
       addNewPlayerRound(state, data) {
-          const similarMapNames = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
-              return map.selectedMapName === data.selectedMapName;
-          });            
-          data.id = `${data.selectedMapName}-${similarMapNames.length}`;            
+          // const similarMapNames = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
+          //     return map.selectedMapName === data.selectedMapName;
+          // });            
+          // data.id = `${data.selectedMapName}-${similarMapNames.length}`;            
+          data.id = debounceMapName(state, data.selectedMapName);
           if (state.mapPickAndBanOverlayControlOptions.adminOptions.length === 0) {
               data.mapState = "current";
           }
@@ -385,6 +398,12 @@ export default new Vuex.Store({
       },
       clearAllRounds: (state) => {
         state.mapPickAndBanOverlayControlOptions.adminOptions = [];
+      },
+      updateMapSelected: (state, data) => {
+        const foundReplaceMap = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
+          return map.id === data.mapToReplace;
+        });
+        console.log(`foudn the master map to replace ${foundReplaceMap}`, foundReplaceMap);
       }
     },
     actions: {
@@ -428,6 +447,9 @@ export default new Vuex.Store({
       },
       updatePlayerCivs(store, payload) {
         store.commit("updateCivs", payload);
+      },
+      updateMapSelected(store, payload) {
+        store.commit("updateMapSelected", payload);
       },
     }
 });
