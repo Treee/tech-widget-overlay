@@ -13,8 +13,8 @@
             <md-select
               placeholder="Home Map"
               v-model="map.homePlayer"
-              :name="name+'-home'"
-              :id="name+'-home'">
+              :name="map.id+'-home'"
+              :id="map.id+'-home'">
               <md-option value></md-option>
               <md-option
                 v-for="(value, index) in getPlayers()"
@@ -27,9 +27,9 @@
             <md-select
               placeholder="Winner!!"
               v-model="map.winner"
-              :name="name+'-winner'"
-              :id="name+'-winner'"
-              v-on:md-selected="winnerSelected"
+              :name="map.id+'-winner'"
+              :id="map.id+'-winner'"
+              v-on:md-selected="winnerSelected(map.winner, map.id)"
             >
               <md-option value></md-option>
               <md-option
@@ -119,14 +119,7 @@ export default {
   name: "RoundDisplayCard",
   data() {
     return {
-      localRounds: [],
-      name: "",
-      homePlayer: "",
-      winnerSelected: "",
-      winner: "",
-      state: {},
-      teamOneCiv: "",
-      teamTwoCiv: ""
+      localRounds: this.rounds
     };
   },
   computed: {
@@ -147,6 +140,15 @@ export default {
       this.$store.dispatch("deleteRound", {
         mapIdToDelete: mapId,
       });
+    },
+    winnerSelected(winner, mapId) {
+      let nextMapState = "current";
+      if (winner !== "") {
+        nextMapState = "played";
+        // set next map state to current
+      }
+      console.log(mapId);
+      console.log(nextMapState);
     },
     getMapImage(mapId) {
       let map = this.toKabobCase(mapId);
