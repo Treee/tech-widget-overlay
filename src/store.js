@@ -345,7 +345,7 @@ export default new Vuex.Store({
       addNewPlayerRound(state, data) {        
           data.id = debounceMapName(state, data.selectedMapName);
           if (state.mapPickAndBanOverlayControlOptions.adminOptions.length === 0) {
-              data.mapState = "current";
+              data.state = "current";
           }
           state.mapPickAndBanOverlayControlOptions.adminOptions.push(data);
       },
@@ -359,19 +359,19 @@ export default new Vuex.Store({
               state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].winner = data.winner;
               state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamOneCiv = data.teamOneCiv;
               state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamTwoCiv = data.teamTwoCiv;
-              state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState = data.mapState;
+              state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].state = data.state;
               // this map was current, now played. next map is current if exists
-              if (data.mapState === "played") {
+              if (data.state === "played") {
                   const nextMapIndex = mapToUpdateIndex + 1;
                   if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
                       state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].homeMapPlayer = data.homeMap;
                       state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
                       state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
                       state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
-                      state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].mapState = "current";
+                      state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].state = "current";
                   }
               }
-              else if (previousState === "played" && data.mapState !== "played") {
+              else if (previousState === "played" && data.state !== "played") {
                   // set the next map to open
                   const nextMapIndex = mapToUpdateIndex + 1;
                   if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
@@ -379,7 +379,7 @@ export default new Vuex.Store({
                       state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
                       state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
                       state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
-                      state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].mapState = "open";
+                      state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].state = "open";
                   }
               }
           }
@@ -411,6 +411,22 @@ export default new Vuex.Store({
         if (mapToChange.length === 1) {
           mapToChange[0].id = newMapName;
           mapToChange[0].selectedMapName = newMapName;
+        }
+      },
+      setWinnerModifyMapState: (state, data) => {
+        const currentMapIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+          return map.id === data.mapIdToModify;
+        });
+        if (data.newMapState === "played") {
+          state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].state = data.newMapState;
+          if (state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1]) {
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = 'current';
+          }
+        } else if (data.newMapState === "current") {
+          state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].state = data.newMapState;
+          if (state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1]) {
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = 'open';
+          }
         }
       }
     },
@@ -459,5 +475,8 @@ export default new Vuex.Store({
       updateMapSelected(store, payload) {
         store.commit("updateMapSelected", payload);
       },
+      setWinnerModifyMapState(store, payload) {
+        store.commit("setWinnerModifyMapState", payload);
+      }
     }
 });

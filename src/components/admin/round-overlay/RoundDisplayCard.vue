@@ -9,43 +9,24 @@
       <div class="md-card-header md-subhead">Round {{index+1}}</div>
       <md-card-content class="row-contents">
         <div class="column-contents">
-          <md-field v-if="showPlayerDropdown()">            
-            <md-select
-              v-on:md-selected="homeMapSelected()"
-              placeholder="Home Map"
-              v-model="map.homePlayer"
-              :name="map.id+'-home'"
-              :id="map.id+'-home'">
-              <md-option value></md-option>
-              <md-option
-                v-for="(value, index) in getPlayers()"
-                :key="index"
-                :value="value"
-              >{{value}}</md-option>
-            </md-select>
-          </md-field>
-          <md-field v-if="showPlayerDropdown()">            
-            <md-select
-              placeholder="Winner!!"
-              v-model="map.winner"
-              :name="map.id+'-winner'"
-              :id="map.id+'-winner'"
-              v-on:md-selected="winnerSelected(map.winner, map.id)"
-            >
-              <md-option value></md-option>
-              <md-option
-                v-for="(value, index) in getPlayers()"
-                :key="index"
-                :value="value"
-              >{{value}}</md-option>
-            </md-select>
-          </md-field>
+          <div class="md-card-header md-subhead">Home Map</div>
+          <div v-if="showPlayerDropdown()">
+            <md-checkbox v-model="map.homePlayer" :value="teamOneName">{{teamOneName}}</md-checkbox>
+            <md-checkbox v-model="map.homePlayer" :value="teamTwoName">{{teamTwoName}}</md-checkbox>
+          </div>
+          <div v-if="showPlayerDropdown()">
+            <div class="md-card-header md-subhead">Winner</div>
+            <md-checkbox v-model="map.winner" :value="teamOneName" @change="winnerSelected(map.winner, map.id)">{{teamOneName}}</md-checkbox>
+            <md-checkbox v-model="map.winner" :value="teamTwoName" @change="winnerSelected(map.winner, map.id)">{{teamTwoName}}</md-checkbox>
+          </div>
         </div>
-        <div class="column-contents">             
+        <div class="column-contents">  
+          <div class="md-card-header md-subhead">Team One Civs</div>           
           <md-field>
             <md-select
               placeholder="Team One Civ"
               v-model="map.teamOneCiv"
+              :multiple="true"
               name="teamOneCiv"
               id="teamOneCiv"
             >
@@ -54,13 +35,16 @@
                 v-for="(value, index) in getCivs()"
                 :key="index"
                 :value="value"
+                :disabled="checkMaxCivsSelected(map.teamOneCiv, value)"
               >{{value}}</md-option>
             </md-select>
           </md-field>
+          <div class="md-card-header md-subhead">Team Two Civs</div>
           <md-field>            
             <md-select
               placeholder="Team Two Civ"
               v-model="map.teamTwoCiv"
+              :multiple="true"
               name="teamTwoCiv"
               id="teamTwoCiv"
             >
@@ -69,31 +53,23 @@
                 v-for="(value, index) in getCivs()"
                 :key="index"
                 :value="value"
+                :disabled="checkMaxCivsSelected(map.teamTwoCiv, value)"
               >{{value}}</md-option>
             </md-select>
           </md-field> 
         </div>
         <div class="column-contents">
-          <md-field>            
-            <md-select
-              placeholder="Map State"
-              v-model="map.state"
-              name="state"
-              id="state"
-            >
-              <md-option value="current">Current</md-option>
-              <md-option value="played">Played</md-option>
-              <md-option value="banned">Banned</md-option>
-              <md-option value="open">Open</md-option>
-            </md-select>
-          </md-field> 
+          <md-checkbox v-model="map.state" value="banned">Banned</md-checkbox>
+          <!-- <md-checkbox v-model="map.state" value="current">Current</md-checkbox>  
+          <md-checkbox v-model="map.state" value="open">Open</md-checkbox>  
+          <md-checkbox v-model="map.state" value="played">Played</md-checkbox>   -->
         </div>
         <md-menu class="menu-map" :md-offset-x="127" :md-offset-y="-400">
           <div class="map-display" md-menu-trigger>
             <div class="image-container">
               <div
                 class="map-frame"
-                :style="getMapFrame"
+                :style="getMapFrame(map.state)"
               ></div>
               <div
                 class="map-image"
@@ -112,7 +88,7 @@
                   <div class="image-container">
                     <div
                       class="map-frame"
-                      :style="getMapFrame"
+                      :style="getMapFrame(map.state)"
                     ></div>
                     <div
                       class="map-image"
@@ -132,7 +108,7 @@
                   <div class="image-container">
                     <div
                       class="map-frame"
-                      :style="getMapFrame"
+                      :style="getMapFrame(map.state)"
                     ></div>
                     <div
                       class="map-image"
@@ -162,15 +138,11 @@ export default {
   name: "RoundDisplayCard",
   computed: {
     ...mapState({
+      roundMode: (state) => state.roundOverlay.roundMode,
       rounds: (state) => state.mapPickAndBanOverlayControlOptions.adminOptions,
       teamOneName: (state) => state.roundOverlay.team1Name,
       teamTwoName: (state) => state.roundOverlay.team2Name,
-    }),    
-    getMapFrame() {
-      return {
-        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${this.getMapFrameImagePath()}")`,
-      };
-    }
+    })    
   },
   components: {},
   methods: {
@@ -183,16 +155,30 @@ export default {
       this.$store.dispatch("updateMapSelected", {
         selectedMap,
         mapToReplace: mapId
-      });      
+      });         
     },
     winnerSelected(winner, mapId) {
       let nextMapState = "current";
-      if (winner !== "") {
+      if (winner && winner !== "") {
         nextMapState = "played";
         // set next map state to current
       }
+      this.$store.dispatch("setWinnerModifyMapState", {
+        mapIdToModify: mapId,
+        newMapState: nextMapState
+      });
       console.log(mapId);
       console.log(nextMapState);
+    },
+    checkMaxCivsSelected(selectedCivs, currentCiv) {
+      // is this civ in the list of selected civs
+      const currentCivSelected = selectedCivs?.filter((civ) => {
+        return civ === currentCiv;
+      }).length > 0;
+      // are we at max civs selected?
+      const maxCivsSelected = selectedCivs?.length > this.roundMode;
+      // we want to disable any civ that is not already selected when hitting the max
+      return maxCivsSelected && !currentCivSelected;
     },
     getMapImage(mapId) {
       let map = this.toKabobCase(mapId);
@@ -232,17 +218,18 @@ export default {
     getMapName(mapId) {
       return this.$store.getters.getFormattedMapName(mapId);
     },
-    getMapFrameImagePath() {
+    getMapFrame(mapState) {
       let mapFrame = "frame.png";
-      if (this.mapState === "current") {
+      if (mapState === "current") {
         mapFrame = "frame-current.png";
-      } else if (this.mapState === "banned") {
+      } else if (mapState === "banned") {
         mapFrame = "frame-veto.png";
-      } else if (this.mapState === "played") {
+      } else if (mapState === "played") {
         mapFrame = "frame-previously-played.png";
       }
-      // this is here because for some reason the data state is not updating with the props state
-      return mapFrame;
+      return {
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${mapFrame}")`,
+      };
     },
     toKabobCase(text) {
       return text.toLowerCase().split(" ").join("-");
@@ -266,6 +253,13 @@ export default {
 }
 .round-display .menu-map {
   max-width: none;
+}
+.round-display .md-checkbox {
+  margin: .25rem;
+}
+.round-display .md-checkbox-label {
+  padding-left: .1rem;
+  padding-right: .1rem;
 }
 .menu-content-map {
   max-width: none;
