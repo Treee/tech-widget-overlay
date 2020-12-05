@@ -88,7 +88,7 @@
                   <div class="image-container">
                     <div
                       class="map-frame"
-                      :style="getMapFrame(map.state)"
+                      :style="getMapFrame('open')"
                     ></div>
                     <div
                       class="map-image"
@@ -108,7 +108,7 @@
                   <div class="image-container">
                     <div
                       class="map-frame"
-                      :style="getMapFrame(map.state)"
+                      :style="getMapFrame('open')"
                     ></div>
                     <div
                       class="map-image"
