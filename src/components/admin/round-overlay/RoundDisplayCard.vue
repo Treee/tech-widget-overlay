@@ -20,23 +20,62 @@
             <md-checkbox v-model="map.winner" :value="teamTwoName" @change="winnerSelected(map.winner, map.id)">{{teamTwoName}}</md-checkbox>
           </div>
         </div>
-        <div class="column-contents">  
-          <div class="md-card-header md-subhead">Team One Civs</div>           
+        <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-400">
+          <md-button md-menu-trigger>Team Picks</md-button>
+          <md-menu-content class="custom-menu-content">
+            <md-card-header>
+              <div class="md-title">Team One</div>      
+            </md-card-header>
+            <div class="civ-selection-list">
+              <md-menu-item v-for="(civName) in getCivs()" :key="civName" :id="civName" @click="selectTeamOneCivs(civName, map.id)">
+                <div class="civ-icon" :style="civIconStyle(civName)"/>
+                <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
+                <div class="civ-name">
+                  {{civName}}
+                </div>
+              </md-menu-item>
+            </div>
+            <md-card-header>
+              <div class="md-title">Team Two</div>      
+            </md-card-header>
+            <div class="civ-selection-list">
+              <md-menu-item v-for="(civName) in getCivs()" :key="civName+'1'" :id="civName" @click="selectTeamOneCivs(civName, map.id, map.teamTwoCiv)">
+                <div class="civ-icon" :style="civIconStyle(civName)"/>
+                <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
+                <div class="civ-name">
+                  {{civName}}
+                </div>
+              </md-menu-item>
+            </div>
+          </md-menu-content>
+        </md-menu>
+        <!-- <div class="column-contents">  
+          <div class="md-card-header md-subhead">Team One Civs</div>
           <md-field>
-            <md-select
+            <md-select              
               placeholder="Team One Civ"
+              class="civ-select"
               v-model="map.teamOneCiv"
               :multiple="true"
               name="teamOneCiv"
               id="teamOneCiv"
             >
-              <md-option value></md-option>
               <md-option
-                v-for="(value, index) in getCivs()"
+                class="civ-select-menu"
+                v-for="(civName, index) in getCivs()"
                 :key="index"
-                :value="value"
-                :disabled="checkMaxCivsSelected(map.teamOneCiv, value)"
-              >{{value}}</md-option>
+                :value="civName"
+                :disabled="checkMaxCivsSelected(map.teamOneCiv, civName)"
+              >
+              <div>
+                <div class="civ-icon" :style="civIconStyle(civName)">&nbsp;</div>
+                <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)">&nbsp;</div>
+                
+                <div class="civ-name">
+                  {{civName}}
+                </div>
+              </div>
+              </md-option>
             </md-select>
           </md-field>
           <div class="md-card-header md-subhead">Team Two Civs</div>
@@ -48,23 +87,32 @@
               name="teamTwoCiv"
               id="teamTwoCiv"
             >
-              <md-option value></md-option>
               <md-option
-                v-for="(value, index) in getCivs()"
+                class="civ-select-menu"
+                v-for="(civName, index) in getCivs()"
                 :key="index"
-                :value="value"
-                :disabled="checkMaxCivsSelected(map.teamTwoCiv, value)"
-              >{{value}}</md-option>
+                :value="civName"
+                :disabled="checkMaxCivsSelected(map.teamTwoCiv, civName)"
+              >
+                <div>
+                  <div class="civ-icon" :style="civIconStyle(civName)">&nbsp;</div>
+                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)">&nbsp;</div>
+                  
+                  <div class="civ-name">
+                    {{civName}}
+                  </div>
+                </div>
+              </md-option>
             </md-select>
           </md-field> 
-        </div>
+        </div> -->
         <div class="column-contents">
           <md-checkbox v-model="map.state" value="banned">Banned</md-checkbox>
           <!-- <md-checkbox v-model="map.state" value="current">Current</md-checkbox>  
           <md-checkbox v-model="map.state" value="open">Open</md-checkbox>  
           <md-checkbox v-model="map.state" value="played">Played</md-checkbox>   -->
         </div>
-        <md-menu class="menu-map" :md-offset-x="127" :md-offset-y="-400">
+        <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-400">
           <div class="map-display" md-menu-trigger>
             <div class="image-container">
               <div
@@ -78,7 +126,7 @@
               <div class="map-name">{{getMapName(map.id)}}</div>
             </div>
           </div>
-          <md-menu-content class="menu-content-map">
+          <md-menu-content class="custom-menu-content">
             <md-card-header>
               <div class="md-title">Default Maps</div>      
             </md-card-header>
@@ -170,6 +218,11 @@ export default {
       console.log(mapId);
       console.log(nextMapState);
     },
+    selectTeamOneCivs(selectedCivs, mapId, currentTeamCivSelection) {
+      console.log(selectedCivs);
+      console.log(mapId);
+      console.log(currentTeamCivSelection);
+    },
     checkMaxCivsSelected(selectedCivs, currentCiv) {
       // is this civ in the list of selected civs
       const currentCivSelected = selectedCivs?.filter((civ) => {
@@ -193,6 +246,20 @@ export default {
         : "default";
       return {
         background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`,
+      };
+    },
+    civIconStyle(civName) {
+      return {
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-icons/${civName.toLowerCase()}.png")`,
+        "background-size": "contain",
+        "background-repeat": "no-repeat"
+      };
+    },
+    uniqueUnitStyle(civName) {
+      return {
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${civName.toLowerCase()}.tp.png`,
+        "background-size": "cover",
+        "background-repeat": "no-repeat",
       };
     },
     showPlayerDropdown() {
@@ -251,7 +318,7 @@ export default {
 .round-display .md-field label {
   top: initial;
 }
-.round-display .menu-map {
+.round-display .custom-menu {
   max-width: none;
 }
 .round-display .md-checkbox {
@@ -261,25 +328,57 @@ export default {
   padding-left: .1rem;
   padding-right: .1rem;
 }
-.menu-content-map {
+.civ-selection-list {
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+.civ-selection-list .civ-name {
+  font-size: medium;
+}
+.custom-menu-content .unique-unit-container {
+  box-shadow: none;
+}
+.custom-menu-content .md-list-item {
+  display: inline-flex;
+  width: 5rem;
+}
+.custom-menu-content .map-menu-items .md-list-item {
+  display: inline-flex;
+  width: 8rem;
+}
+.custom-menu-content .md-list-item-content {
+  display: inline-flex;
+  flex-flow: column;
+}
+.custom-menu-content .md-list-item-content>.md-checkbox:first-child {
+  margin: 0;
+}
+.custom-menu-content .civ-icon {
+  position: relative;
+}
+.custom-menu-content .civ-unique-unit {
+  position: absolute;
+}
+.custom-menu-content {
   max-width: none;
   width: 50vw;
   max-height: 95vh;
-  height: 75vh;
+  /* height: 75vh; */
 }
-.menu-content-map .md-list {
+.custom-menu-content .md-list {
   background-color: burlywood;
   padding: 0;
 }
-.menu-content-map .md-title {
+.custom-menu-content .md-title {
   margin: 0;
   text-align: center;
   background-color: sandybrown;
 }
-.menu-content-map .md-list-item-default {
+.custom-menu-content .md-list-item-default {
   width: 8rem;
 }
-.menu-content-map .md-list-item-default:hover {
+.custom-menu-content .md-list-item-default:hover {
   background-color: rgba(0, 125, 0, 125);
 }
 .map-display {
