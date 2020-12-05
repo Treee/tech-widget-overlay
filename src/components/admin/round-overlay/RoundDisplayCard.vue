@@ -364,7 +364,6 @@ export default {
   max-width: none;
   width: 50vw;
   max-height: 95vh;
-  /* height: 75vh; */
 }
 .custom-menu-content .md-list {
   background-color: burlywood;
