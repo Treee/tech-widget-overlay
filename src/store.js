@@ -428,6 +428,24 @@ export default new Vuex.Store({
             state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = 'open';
           }
         }
+      },
+      setSelectedCivsForTeam: (state, data) => {
+        const currentMapIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+          return map.id === data.mapIdToModify;
+        });
+        if (data.team === 'team1') {
+          if (!state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv){
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv = [data.selectedCiv];
+          }else {
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv.push(data.selectedCiv);
+          }          
+        } else if (data.team === 'team2') {
+          if (!state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv){
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv = [data.selectedCiv];
+          }else {
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv.push(data.selectedCiv);
+          } 
+        }
       }
     },
     actions: {
@@ -477,6 +495,9 @@ export default new Vuex.Store({
       },
       setWinnerModifyMapState(store, payload) {
         store.commit("setWinnerModifyMapState", payload);
+      },
+      setSelectedCivsForTeam(store, payload) {
+        store.commit("setSelectedCivsForTeam", payload);
       }
     }
 });

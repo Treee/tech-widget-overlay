@@ -27,7 +27,7 @@
               <div class="md-title">Team One</div>      
             </md-card-header>
             <div class="civ-selection-list">
-              <md-menu-item v-for="(civName) in getCivs()" :key="civName" :id="civName" @click="selectTeamOneCivs(civName, map.id)">
+              <md-menu-item v-for="(civName) in getCivs()" :key="civName" :id="civName" @click="selectTeamCivs(civName, map.id, 'team1')">
                 <div class="civ-icon" :style="civIconStyle(civName)"/>
                 <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
                 <div class="civ-name">
@@ -39,7 +39,7 @@
               <div class="md-title">Team Two</div>      
             </md-card-header>
             <div class="civ-selection-list">
-              <md-menu-item v-for="(civName) in getCivs()" :key="civName+'1'" :id="civName" @click="selectTeamOneCivs(civName, map.id, map.teamTwoCiv)">
+              <md-menu-item v-for="(civName) in getCivs()" :key="civName+'1'" :id="civName" @click="selectTeamCivs(civName, map.id, 'team2')">
                 <div class="civ-icon" :style="civIconStyle(civName)"/>
                 <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
                 <div class="civ-name">
@@ -49,69 +49,7 @@
             </div>
           </md-menu-content>
         </md-menu>
-        <!-- <div class="column-contents">  
-          <div class="md-card-header md-subhead">Team One Civs</div>
-          <md-field>
-            <md-select              
-              placeholder="Team One Civ"
-              class="civ-select"
-              v-model="map.teamOneCiv"
-              :multiple="true"
-              name="teamOneCiv"
-              id="teamOneCiv"
-            >
-              <md-option
-                class="civ-select-menu"
-                v-for="(civName, index) in getCivs()"
-                :key="index"
-                :value="civName"
-                :disabled="checkMaxCivsSelected(map.teamOneCiv, civName)"
-              >
-              <div>
-                <div class="civ-icon" :style="civIconStyle(civName)">&nbsp;</div>
-                <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)">&nbsp;</div>
-                
-                <div class="civ-name">
-                  {{civName}}
-                </div>
-              </div>
-              </md-option>
-            </md-select>
-          </md-field>
-          <div class="md-card-header md-subhead">Team Two Civs</div>
-          <md-field>            
-            <md-select
-              placeholder="Team Two Civ"
-              v-model="map.teamTwoCiv"
-              :multiple="true"
-              name="teamTwoCiv"
-              id="teamTwoCiv"
-            >
-              <md-option
-                class="civ-select-menu"
-                v-for="(civName, index) in getCivs()"
-                :key="index"
-                :value="civName"
-                :disabled="checkMaxCivsSelected(map.teamTwoCiv, civName)"
-              >
-                <div>
-                  <div class="civ-icon" :style="civIconStyle(civName)">&nbsp;</div>
-                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)">&nbsp;</div>
-                  
-                  <div class="civ-name">
-                    {{civName}}
-                  </div>
-                </div>
-              </md-option>
-            </md-select>
-          </md-field> 
-        </div> -->
-        <div class="column-contents">
-          <md-checkbox v-model="map.state" value="banned">Banned</md-checkbox>
-          <!-- <md-checkbox v-model="map.state" value="current">Current</md-checkbox>  
-          <md-checkbox v-model="map.state" value="open">Open</md-checkbox>  
-          <md-checkbox v-model="map.state" value="played">Played</md-checkbox>   -->
-        </div>
+        <md-checkbox v-model="map.state" value="banned">Banned</md-checkbox>
         <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-400">
           <div class="map-display" md-menu-trigger>
             <div class="image-container">
@@ -215,13 +153,16 @@ export default {
         mapIdToModify: mapId,
         newMapState: nextMapState
       });
-      console.log(mapId);
-      console.log(nextMapState);
     },
-    selectTeamOneCivs(selectedCivs, mapId, currentTeamCivSelection) {
-      console.log(selectedCivs);
+    selectTeamCivs(selectedCiv, mapId, teamCivs) {
+      this.$store.dispatch("setSelectedCivsForTeam", {
+        mapIdToModify: mapId,
+        selectedCiv: selectedCiv,
+        team: teamCivs
+      });
+      console.log(selectedCiv);
       console.log(mapId);
-      console.log(currentTeamCivSelection);
+      console.log(teamCivs);
     },
     checkMaxCivsSelected(selectedCivs, currentCiv) {
       // is this civ in the list of selected civs
