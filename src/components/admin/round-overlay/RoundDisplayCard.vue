@@ -20,7 +20,7 @@
             <md-checkbox v-model="map.winner" :value="teamTwoName" @change="winnerSelected(map.winner, map.id)">{{teamTwoName}}</md-checkbox>
           </div>
         </div>
-        <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-400" :mdCloseOnClick="false" :mdCloseOnSelect="false">
+        <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-200" :mdCloseOnClick="false" :mdCloseOnSelect="false">
           <md-button md-menu-trigger>Team Picks</md-button>
           <md-menu-content class="custom-menu-content">
             <md-card-header>
@@ -317,8 +317,8 @@ export default {
 }
 .custom-menu-content {
   max-width: none;
-  width: 50vw;
-  max-height: 95vh;
+  width: 25vw;
+  max-height: 80vh;
 }
 .custom-menu-content .md-list {
   background-color: burlywood;
