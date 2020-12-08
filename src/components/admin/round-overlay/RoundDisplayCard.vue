@@ -41,12 +41,14 @@
         </div>
         <md-menu
           class="custom-menu"
-          :md-offset-x="127"
-          :md-offset-y="-200"
+          :md-offset-x="1"
           :mdCloseOnClick="false"
           :mdCloseOnSelect="false"
         >
-          <md-button md-menu-trigger>Team Picks</md-button>
+          <md-button
+            class="md-raised"
+            md-menu-trigger
+          >Team Picks</md-button>
           <md-menu-content class="custom-menu-content">
             <md-card-header>
               <div class="md-title">Team One</div>
@@ -60,7 +62,7 @@
               >
                 <div
                   class="civ-icon-group"
-                  :class="{'active' : isCivSelected(map.teamOneCiv, draftCiv.civ)}"
+                  :class="{'active' : isCivSelected(map.teamOneCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamOneCiv, draftCiv.civ)}"
                 >
                   <div
                     class="civ-icon"
@@ -88,7 +90,7 @@
               >
                 <div
                   class="civ-icon-group"
-                  :class="{'active' : isCivSelected(map.teamTwoCiv, draftCiv.civ)}"
+                  :class="{'active' : isCivSelected(map.teamTwoCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamTwoCiv, draftCiv.civ)}"
                 >
                   <div
                     class="civ-icon"
@@ -205,7 +207,8 @@
         roundMode: (state) => state.roundOverlay.roundMode,
         rounds: (state) => state.mapPickAndBanOverlayControlOptions.adminOptions,
         teamOneName: (state) => state.roundOverlay.team1Name,
-        teamOneCivDraft: (state) => state.roundOverlay.teamOneCivDraft,
+        teamOneCivDraft: (state) =>
+          state.roundOverlay.teamOneCivDraft || this.getCivs(),
         teamTwoCivDraft: (state) => state.roundOverlay.teamTwoCivDraft,
         teamTwoName: (state) => state.roundOverlay.team2Name,
       }),
@@ -251,6 +254,13 @@
         return (
           chosenCivilizations?.filter((chosenCiv) => {
             return chosenCiv === civToCheck;
+          }).length > 0
+        );
+      },
+      isCivDisabled(chosenCivilizations, civToCheck) {
+        return (
+          chosenCivilizations?.filter((chosenCiv) => {
+            return chosenCiv !== civToCheck;
           }).length > 0
         );
       },
@@ -397,7 +407,7 @@
   }
   .custom-menu-content {
     max-width: none;
-    width: 25vw;
+    width: 50vw;
     max-height: 80vh;
   }
   .custom-menu-content .md-list {

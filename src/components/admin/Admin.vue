@@ -3,24 +3,14 @@
     <div class="card-holder-left card-centered">
       <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
       <RoundOverlay />
-      <RoundDisplayCard/>
-    </div>
-    <div class="card-holder-right card-centered">
       <AdminTechUpgradeOverlay
         v-on:techOverlayShow="techOverlayHandler"
         v-on:techOverlayClearAll="techClearAllHandler"
       />
     </div>
-    <!-- <div class="md-layout md-gutter md-alignment-top-center">
-      <div class="md-layout-item md-size-50"></div>
-      <div class="md-layout-item md-size-45">
-        <NewRoundModal
-          v-on:mapOverlayShowBubble="mapOverlayShow"
-          v-on:mapOverlayHideBubble="mapOverlayHide"
-        />
-      </div>
-    </div>-->
-    <!-- <MapListDisplay v-on:scoreboardOverlayBubbleUp="scoreboardMapChange" /> -->
+    <div class="card-holder-right card-centered">
+      <RoundDisplayCard />
+    </div>
     <div class="my-footer">
       <div>
         Created by
@@ -32,9 +22,7 @@
         Age of Empires II © Microsoft Corporation.
         <b>AoE Tech/Map Overlay for Age of Empires II</b> was created under Microsoft's
         "
-        <a
-          href="https://www.xbox.com/en-us/developers/rules"
-        >Game Content Usage Rules</a>"
+        <a href="https://www.xbox.com/en-us/developers/rules">Game Content Usage Rules</a>"
         using assets from Age of Empires II, and it is not endorsed by or affiliated with Microsoft.
       </div>
     </div>
@@ -42,142 +30,142 @@
 </template>
 
 <script>
-import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
-// import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
-// import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
-import PlayerCivDisplayControls from "./scoreboard-overlay/PlayerCivDisplayControls.vue";
-import RoundOverlay from "./round-overlay/RoundOverlay.vue";
-import RoundDisplayCard from "./round-overlay/RoundDisplayCard.vue";
+  import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
+  // import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
+  // import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
+  import PlayerCivDisplayControls from "./scoreboard-overlay/PlayerCivDisplayControls.vue";
+  import RoundOverlay from "./round-overlay/RoundOverlay.vue";
+  import RoundDisplayCard from "./round-overlay/RoundDisplayCard.vue";
 
-import adminOverlayWebSocket from "../../client";
-import { SocketEnums } from "../../socket-enums";
-export default {
-  name: "Admin",
-  props: {
-    clientId: String
-  },
-  components: {
-    AdminTechUpgradeOverlay,
-    // NewRoundModal,
-    // MapListDisplay,
-    PlayerCivDisplayControls,
-    RoundOverlay,
-    RoundDisplayCard
-  },
-  created: function() {
-    this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {
-      // this function would normally handle messages from the sebsocket server.
-      // The admin widget is purely one way outbound so this is empty
-    });
-  },
-  methods: {
-    techOverlayHandler() {
-      const data = this.$store.getters.getTechOverlayData;
-      this.adminClient.sendMessage(SocketEnums.AdminShow, { ...data });
+  import adminOverlayWebSocket from "../../client";
+  import { SocketEnums } from "../../socket-enums";
+  export default {
+    name: "Admin",
+    props: {
+      clientId: String,
     },
-    techClearAllHandler() {
-      this.adminClient.sendMessage(SocketEnums.AdminHide, {});
+    components: {
+      AdminTechUpgradeOverlay,
+      // NewRoundModal,
+      // MapListDisplay,
+      PlayerCivDisplayControls,
+      RoundOverlay,
+      RoundDisplayCard,
     },
-    mapOverlayShow() {
-      this.adminClient.sendMessage(SocketEnums.AdminShowMaps, {
-        mapData: this.$store.getters.getMapData,
-        players: this.$store.getters.getPlayerNames
+    created: function () {
+      this.adminClient = adminOverlayWebSocket.startClient(this.clientId, () => {
+        // this function would normally handle messages from the sebsocket server.
+        // The admin widget is purely one way outbound so this is empty
       });
     },
-    mapOverlayHide() {
-      this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
+    methods: {
+      techOverlayHandler() {
+        const data = this.$store.getters.getTechOverlayData;
+        this.adminClient.sendMessage(SocketEnums.AdminShow, { ...data });
+      },
+      techClearAllHandler() {
+        this.adminClient.sendMessage(SocketEnums.AdminHide, {});
+      },
+      mapOverlayShow() {
+        this.adminClient.sendMessage(SocketEnums.AdminShowMaps, {
+          mapData: this.$store.getters.getMapData,
+          players: this.$store.getters.getPlayerNames,
+        });
+      },
+      mapOverlayHide() {
+        this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
+      },
+      miscOverlayBroadcast() {
+        const data = this.$store.getters.getMiscOverlayData;
+        this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
+      },
+      scoreboardMapChange() {
+        const data = {
+          showCurrentMapName: this.$store.getters.getMiscOverlayData
+            .showCurrentMapName,
+          currentMap: this.$store.getters.getMiscOverlayData.currentMap,
+        };
+        this.adminClient.sendMessage(SocketEnums.AdminShowDock, {
+          ...data,
+        });
+      },
     },
-    miscOverlayBroadcast() {
-      const data = this.$store.getters.getMiscOverlayData;
-      this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
-    },
-    scoreboardMapChange() {
-      const data = {
-        showCurrentMapName: this.$store.getters.getMiscOverlayData
-          .showCurrentMapName,
-        currentMap: this.$store.getters.getMiscOverlayData.currentMap
-      };
-      this.adminClient.sendMessage(SocketEnums.AdminShowDock, {
-        ...data
-      });
-    }
-  }
-};
+  };
 </script>
 
 <style language="scss">
-.admin-page {
-  user-select: none;
-  background-color: burlywood;
-  height: 100vh;
-  /* overflow: hidden; */
-  display: inline-flex;
-  flex-direction: row;
-  align-items: start;
-}
-.my-footer {
-  text-shadow: none;
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-}
-.column-contents {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-}
-.row-contents {
-  display: inline-flex;
-  align-items: center;
-  width: 100%;
-  justify-content: space-evenly;
-}
-.width-100p {
-  width: 100%;
-}
-.width-50p {
-  width: 50%;
-}
-.card-holder-left {
-  display: inline-flex;
-  width: 50%;
-  align-items: center;
-  flex-direction: column;
-}
-.card-holder-right {
-  display: inline-flex;
-  width: 50%;
-  align-items: center;
-}
-.card-centered {
-  justify-content: center;
-}
-.card-style {
-  width: 99%;
-  background-color: burlywood !important;
-  margin: 0.25rem;
-}
-.card-section {
-  display: inline-flex;
-  flex-direction: column;
-}
-.md-card-header {
-  padding: 0rem;
-}
-.md-title {
-  margin: 0rem;
-}
-.md-card-content {
-  padding: 0rem;
-}
-.md-card-content:last-of-type {
-  padding-bottom: 0.25rem;
-}
-.md-switch {
-  margin: 0.5rem;
-}
-.md-switch .md-switch-label {
-  padding-left: 0.25rem;
-}
+  .admin-page {
+    user-select: none;
+    background-color: burlywood;
+    height: 100vh;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: start;
+  }
+  .my-footer {
+    text-shadow: none;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+  .column-contents {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .row-contents {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .width-100p {
+    width: 100%;
+  }
+  .width-50p {
+    width: 50%;
+  }
+  .card-holder-left {
+    display: inline-flex;
+    width: 50%;
+    align-items: center;
+    flex-direction: column;
+  }
+  .card-holder-right {
+    display: inline-flex;
+    width: 50%;
+    align-items: center;
+  }
+  .card-centered {
+    justify-content: center;
+  }
+  .card-style {
+    width: 99%;
+    background-color: burlywood !important;
+    margin: 0.25rem;
+  }
+  .card-section {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  .md-card-header {
+    padding: 0rem;
+  }
+  .md-title {
+    margin: 0rem;
+  }
+  .md-card-content {
+    padding: 0rem;
+  }
+  .md-card-content:last-of-type {
+    padding-bottom: 0.25rem;
+  }
+  .md-switch {
+    margin: 0.5rem;
+  }
+  .md-switch .md-switch-label {
+    padding-left: 0.25rem;
+  }
 </style>
