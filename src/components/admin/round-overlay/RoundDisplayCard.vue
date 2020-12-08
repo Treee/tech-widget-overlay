@@ -28,10 +28,12 @@
             </md-card-header>
             <div class="civ-selection-list">
               <md-menu-item v-for="(civName) in getCivs()" :key="civName" :id="civName" @click="selectTeamCivs(civName, map.id, 'team1')">
-                <div class="civ-icon" :style="civIconStyle(civName)"/>
-                <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
-                <div class="civ-name">
-                  {{civName}}
+                <div class="civ-icon-group" :class="{'active' : isCivSelected(map.teamOneCiv, civName)}">
+                  <div class="civ-icon" :style="civIconStyle(civName)"/>
+                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
+                  <div class="civ-name">
+                    {{civName}}
+                  </div>
                 </div>
               </md-menu-item>
             </div>
@@ -40,10 +42,12 @@
             </md-card-header>
             <div class="civ-selection-list">
               <md-menu-item v-for="(civName) in getCivs()" :key="civName+'1'" :id="civName" @click="selectTeamCivs(civName, map.id, 'team2')">
-                <div class="civ-icon" :style="civIconStyle(civName)"/>
-                <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
-                <div class="civ-name">
-                  {{civName}}
+                <div class="civ-icon-group" :class="{'active' : isCivSelected(map.teamTwoCiv, civName)}">
+                  <div class="civ-icon" :style="civIconStyle(civName)"/>
+                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
+                  <div class="civ-name">
+                    {{civName}}
+                  </div>
                 </div>
               </md-menu-item>
             </div>
@@ -159,7 +163,13 @@ export default {
         mapIdToModify: mapId,
         selectedCiv: selectedCiv,
         team: teamCivs
-      });   
+      });      
+    },
+    isCivSelected(chosenCivilizations, civToCheck) {
+      return chosenCivilizations?.filter((chosenCiv) => {
+        // console.log(`${chosenCiv} === ${civToCheck}`);
+        return chosenCiv === civToCheck;
+      }).length > 0;
     },
     checkMaxCivsSelected(selectedCivs, currentCiv) {
       // is this civ in the list of selected civs
@@ -281,6 +291,9 @@ export default {
   display: inline-flex;
   width: 5rem;
 }
+.custom-menu-content .md-list-item .active{
+  background-color: rgba(0, 125,0, 125);
+}
 .custom-menu-content .map-menu-items .md-list-item {
   display: inline-flex;
   width: 8rem;
@@ -317,6 +330,10 @@ export default {
 }
 .custom-menu-content .md-list-item-default:hover {
   background-color: rgba(0, 125, 0, 125);
+}
+.civ-icon-group {
+  display: inline-flex;
+  flex-flow: column;
 }
 .map-display {
   width: 6rem;
