@@ -27,12 +27,12 @@
               <div class="md-title">Team One</div>      
             </md-card-header>
             <div class="civ-selection-list">
-              <md-menu-item v-for="(civName) in getCivs()" :key="civName" :id="civName" @click="selectTeamCivs(civName, map.id, 'team1')">
-                <div class="civ-icon-group" :class="{'active' : isCivSelected(map.teamOneCiv, civName)}">
-                  <div class="civ-icon" :style="civIconStyle(civName)"/>
-                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
+              <md-menu-item v-for="(draftCiv) in teamOneCivDraft" :key="draftCiv.civ" :id="draftCiv.civ" @click="selectTeamCivs(draftCiv.civ, map.id, 'team1')">
+                <div class="civ-icon-group" :class="{'active' : isCivSelected(map.teamOneCiv, draftCiv.civ)}">
+                  <div class="civ-icon" :style="civIconStyle(draftCiv.civ)"/>
+                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(draftCiv.civ)"/>                  
                   <div class="civ-name">
-                    {{civName}}
+                    {{getMapName(draftCiv.civ)}}
                   </div>
                 </div>
               </md-menu-item>
@@ -41,12 +41,12 @@
               <div class="md-title">Team Two</div>      
             </md-card-header>
             <div class="civ-selection-list">
-              <md-menu-item v-for="(civName) in getCivs()" :key="civName+'1'" :id="civName" @click="selectTeamCivs(civName, map.id, 'team2')">
-                <div class="civ-icon-group" :class="{'active' : isCivSelected(map.teamTwoCiv, civName)}">
-                  <div class="civ-icon" :style="civIconStyle(civName)"/>
-                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(civName)"/>                  
+              <md-menu-item v-for="(draftCiv) in teamTwoCivDraft" :key="draftCiv.civ+'1'" :id="draftCiv.civ" @click="selectTeamCivs(draftCiv.civ, map.id, 'team2')">
+                <div class="civ-icon-group" :class="{'active' : isCivSelected(map.teamTwoCiv, draftCiv.civ)}">
+                  <div class="civ-icon" :style="civIconStyle(draftCiv.civ)"/>
+                  <div class="civ-unique-unit unique-unit-container" :style="uniqueUnitStyle(draftCiv.civ)"/>                  
                   <div class="civ-name">
-                    {{civName}}
+                    {{getMapName(draftCiv.civ)}}
                   </div>
                 </div>
               </md-menu-item>
@@ -131,8 +131,10 @@ export default {
       roundMode: (state) => state.roundOverlay.roundMode,
       rounds: (state) => state.mapPickAndBanOverlayControlOptions.adminOptions,
       teamOneName: (state) => state.roundOverlay.team1Name,
+      teamOneCivDraft: (state) => state.roundOverlay.teamOneCivDraft,
+      teamTwoCivDraft: (state) => state.roundOverlay.teamTwoCivDraft,
       teamTwoName: (state) => state.roundOverlay.team2Name,
-    })    
+    })
   },
   components: {},
   methods: {
@@ -159,15 +161,17 @@ export default {
       });
     },
     selectTeamCivs(selectedCiv, mapId, teamCivs) {
-      this.$store.dispatch("setSelectedCivsForTeam", {
-        mapIdToModify: mapId,
-        selectedCiv: selectedCiv,
-        team: teamCivs
-      });      
+      const teamCivDraft = this.$store.getters.getTeamSelectedCivDraft(mapId, teamCivs);
+      if (!this.checkMaxCivsSelected(teamCivDraft, selectedCiv)) {
+        this.$store.dispatch("setSelectedCivsForTeam", {
+          mapIdToModify: mapId,
+          selectedCiv: selectedCiv,
+          team: teamCivs
+        });      
+      }
     },
     isCivSelected(chosenCivilizations, civToCheck) {
       return chosenCivilizations?.filter((chosenCiv) => {
-        // console.log(`${chosenCiv} === ${civToCheck}`);
         return chosenCiv === civToCheck;
       }).length > 0;
     },
@@ -198,14 +202,14 @@ export default {
     },
     civIconStyle(civName) {
       return {
-        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-icons/${civName.toLowerCase()}.png")`,
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-icons/${civName?.toLowerCase()}.png")`,
         "background-size": "contain",
         "background-repeat": "no-repeat"
       };
     },
     uniqueUnitStyle(civName) {
       return {
-        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${civName.toLowerCase()}.tp.png`,
+        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${civName?.toLowerCase()}.tp.png`,
         "background-size": "cover",
         "background-repeat": "no-repeat",
       };
@@ -221,7 +225,7 @@ export default {
     getPlayers() {
       return [this.teamOneName || 'Team One', this.teamTwoName || 'Team Two'];
     },
-    getCivs() {
+    getCivs() {      
       return this.$store.getters.getCivNames;
     },
     getDefaultMaps() {
@@ -334,6 +338,7 @@ export default {
 .civ-icon-group {
   display: inline-flex;
   flex-flow: column;
+  align-items: center;
 }
 .map-display {
   width: 6rem;

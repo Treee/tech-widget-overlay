@@ -112,13 +112,22 @@ export default {
         // console.log("draftData", draftData);
         this.team1Name = draftData.draft.playerOne.name || "";
         this.team2Name = draftData.draft.playerTwo.name || "";
+        const teamOneCivDraft = draftData.draft.playerOne.civs;
+        const teamTwoCivDraft = draftData.draft.playerTwo.civs;
         this.updateTeamNames(this.team1Name, this.team2Name);
+        this.updateTeamCivDrafts(teamOneCivDraft, teamTwoCivDraft);
       });
     },
     updateTeamNames(teamOne, teamTwo) {
       this.$store.dispatch("syncTeamNames", {
         team1Name: teamOne,
         team2Name: teamTwo
+      });
+    },
+    updateTeamCivDrafts(teamOneCivDraft, teamTwoCivDraft) {
+      this.$store.dispatch("updateTeamCivDrafts", {
+        teamOneCivDraft,
+        teamTwoCivDraft
       });
     }
   }

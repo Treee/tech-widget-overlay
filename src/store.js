@@ -271,6 +271,19 @@ export default new Vuex.Store({
       },
       getClientPlayers: (state) => {
           return state.clientControlOptions.players;
+      },
+      getTeamSelectedCivDraft: (state) => (mapId, team) => {
+        if (team === 'team1') {
+          const foundIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+            return map.id === mapId;
+          });
+          return state.mapPickAndBanOverlayControlOptions.adminOptions[foundIndex].teamOneCiv;
+        } else if (team === 'team2') {
+          const foundIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+            return map.id === mapId;
+          });
+          return state.mapPickAndBanOverlayControlOptions.adminOptions[foundIndex].teamTwoCiv;
+        }
       }
       // Compute derived state based on the current state. More like computed property.
     },
@@ -435,8 +448,6 @@ export default new Vuex.Store({
         });
         if (data.team === 'team1') {
           if (!state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv){
-            // state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv = [data.selectedCiv];
-            // state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv = [data.selectedCiv];
             Vue.set(state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex], 'teamOneCiv', [data.selectedCiv]);
           }else {
             const duplicateCivIndex = state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv.findIndex((civName)=> {
@@ -451,7 +462,6 @@ export default new Vuex.Store({
           }          
         } else if (data.team === 'team2') {
           if (!state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv){
-            // state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv = [data.selectedCiv];
             Vue.set(state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex], 'teamTwoCiv', [data.selectedCiv]);
           }else {            
             const duplicateCivIndex = state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv.findIndex((civName)=> {
@@ -465,6 +475,10 @@ export default new Vuex.Store({
             }
           } 
         }
+      },
+      updateTeamCivDrafts: (state, payload) => {
+        state.roundOverlay.teamOneCivDraft = payload.teamOneCivDraft;
+        state.roundOverlay.teamTwoCivDraft = payload.teamTwoCivDraft;
       }
     },
     actions: {
@@ -517,6 +531,9 @@ export default new Vuex.Store({
       },
       setSelectedCivsForTeam(store, payload) {
         store.commit("setSelectedCivsForTeam", payload);
+      },
+      updateTeamCivDrafts(store, payload) {
+        store.commit("updateTeamCivDrafts", payload);
       }
     }
 });
