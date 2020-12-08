@@ -20,7 +20,7 @@
             <md-checkbox v-model="map.winner" :value="teamTwoName" @change="winnerSelected(map.winner, map.id)">{{teamTwoName}}</md-checkbox>
           </div>
         </div>
-        <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-400">
+        <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-400" :mdCloseOnClick="false" :mdCloseOnSelect="false">
           <md-button md-menu-trigger>Team Picks</md-button>
           <md-menu-content class="custom-menu-content">
             <md-card-header>
@@ -159,10 +159,7 @@ export default {
         mapIdToModify: mapId,
         selectedCiv: selectedCiv,
         team: teamCivs
-      });
-      console.log(selectedCiv);
-      console.log(mapId);
-      console.log(teamCivs);
+      });   
     },
     checkMaxCivsSelected(selectedCivs, currentCiv) {
       // is this civ in the list of selected civs

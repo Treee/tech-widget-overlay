@@ -437,14 +437,32 @@ export default new Vuex.Store({
           if (!state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv){
             state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv = [data.selectedCiv];
           }else {
-            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv.push(data.selectedCiv);
+            const duplicateCivIndex = state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv.findIndex((civName)=> {
+              return civName === data.selectedCiv;
+            });
+            if (duplicateCivIndex > -1) {
+              // remove it from the list
+              state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv.splice(duplicateCivIndex, 1)
+            }else {
+              state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv.push(data.selectedCiv);
+            }
           }          
+          console.log("team1", state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamOneCiv);
         } else if (data.team === 'team2') {
           if (!state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv){
             state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv = [data.selectedCiv];
-          }else {
-            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv.push(data.selectedCiv);
+          }else {            
+            const duplicateCivIndex = state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv.findIndex((civName)=> {
+              return civName === data.selectedCiv;
+            });
+            if (duplicateCivIndex > -1) {
+              // remove it from the list
+              state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv.splice(duplicateCivIndex, 1)
+            }else {
+              state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv.push(data.selectedCiv);
+            }
           } 
+          console.log("team1", state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].teamTwoCiv);
         }
       }
     },
