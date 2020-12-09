@@ -159,6 +159,8 @@ export default new Vuex.Store({
           civ1: "",
           civ2: "",
           sound: true,
+          autohide: true,
+          autoHideDelay: 5000,
           tech: true,
           blacksmith: false,
           university: false,

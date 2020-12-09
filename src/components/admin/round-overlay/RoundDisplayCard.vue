@@ -119,6 +119,7 @@
           <md-button
             :disabled="isRoundControlDisabled(map.state)"
             class="md-raised md-icon-button show-tech-button"
+            @click="showOverlayClick(map)"
           >
             <md-icon>science</md-icon>
           </md-button>
@@ -264,6 +265,9 @@
             team: teamCivs,
           });
         }
+      },
+      showOverlayClick(mapInfo) {        
+        this.$emit("roundTech", mapInfo);
       },
       isCivSelected(chosenCivilizations, civToCheck) {
         return (

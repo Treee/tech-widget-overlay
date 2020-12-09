@@ -9,7 +9,7 @@
       />
     </div>
     <div class="card-holder-right card-centered">
-      <RoundDisplayCard />
+      <RoundDisplayCard v-on:roundTech="roundTechShow" />
     </div>
     <div class="my-footer">
       <div>
@@ -21,8 +21,7 @@
       <div>
         Age of Empires II © Microsoft Corporation.
         <b>AoE Tech/Map Overlay for Age of Empires II</b> was created under Microsoft's
-        "
-        <a href="https://www.xbox.com/en-us/developers/rules">Game Content Usage Rules</a>"
+        "<a href="https://www.xbox.com/en-us/developers/rules">Game Content Usage Rules</a>"
         using assets from Age of Empires II, and it is not endorsed by or affiliated with Microsoft.
       </div>
     </div>
@@ -62,11 +61,25 @@
       techClearAllHandler() {
         this.adminClient.sendMessage(SocketEnums.AdminHide, {});
       },
+      roundTechShow(roundData) {
+        const overlayData = this.$store.getters.getRoundOverlayData;
+        const techOverlayData = this.$store.getters.getTechOverlayData;
+        const data = {
+          roundMode: overlayData.roundMode,
+          roundOverlayVisible: overlayData.roundOverlayVisible,
+          team1Name: overlayData.team1Name,
+          team2Name: overlayData.team2Name,
+          team1RoundDraft: roundData.teamOneCiv,
+          team2RoundDraft: roundData.teamTwoCiv,
+          autoHide: techOverlayData.autoHide,
+          autoHideDelay: techOverlayData.autoHideDelay
+        };
+        this.adminClient.sendMessage(SocketEnums.AdminShow, data);
+      },
       roundOverlayShow() {
         const data = this.$store.getters.getRoundOverlayData;
         const data1 = this.$store.state.mapPickAndBanOverlayControlOptions
           .adminOptions;
-        console.log(data1);
         this.adminClient.sendMessage(SocketEnums.AdminShowMaps, {
           roundMode: data.roundMode,
           roundOverlayVisible: data.roundOverlayVisible,
