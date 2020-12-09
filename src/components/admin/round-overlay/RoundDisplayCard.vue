@@ -19,10 +19,12 @@
             <md-checkbox
               v-model="map.homePlayer"
               :value="teamOneName"
+              :disabled="isRoundControlDisabled(map.state)"
             >{{teamOneName}}</md-checkbox>
             <md-checkbox
               v-model="map.homePlayer"
               :value="teamTwoName"
+              :disabled="isRoundControlDisabled(map.state)"
             >{{teamTwoName}}</md-checkbox>
           </div>
           <div v-if="showPlayerDropdown()">
@@ -30,11 +32,13 @@
             <md-checkbox
               v-model="map.winner"
               :value="teamOneName"
+              :disabled="isRoundControlDisabled(map.state)"
               @change="winnerSelected(map.winner, map.id)"
             >{{teamOneName}}</md-checkbox>
             <md-checkbox
               v-model="map.winner"
               :value="teamTwoName"
+              :disabled="isRoundControlDisabled(map.state)"
               @change="winnerSelected(map.winner, map.id)"
             >{{teamTwoName}}</md-checkbox>
           </div>
@@ -48,6 +52,7 @@
           >
             <md-button
               md-menu-trigger
+              :disabled="isRoundControlDisabled(map.state)"
               class="md-raised md-primary md-icon-button show-tech-button"
             >
               <md-icon>groups</md-icon>
@@ -111,7 +116,10 @@
               </div>
             </md-menu-content>
           </md-menu>
-          <md-button class="md-raised md-icon-button show-tech-button">
+          <md-button
+            :disabled="isRoundControlDisabled(map.state)"
+            class="md-raised md-icon-button show-tech-button"
+          >
             <md-icon>science</md-icon>
           </md-button>
         </div>
@@ -266,6 +274,9 @@
       },
       isCivDisabled(chosenCivilizations) {
         return chosenCivilizations?.length > this.roundMode;
+      },
+      isRoundControlDisabled(mapState) {
+        return mapState === "banned";
       },
       checkMaxCivsSelected(selectedCivs, currentCiv) {
         // is this civ in the list of selected civs

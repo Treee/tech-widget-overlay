@@ -121,7 +121,7 @@
       addRound() {
         this.$store.dispatch("addNewPlayerRound", {
           selectedMapName: "unknown",
-          mapState: "open",
+          state: "open",
         });
       },
       clearRounds() {

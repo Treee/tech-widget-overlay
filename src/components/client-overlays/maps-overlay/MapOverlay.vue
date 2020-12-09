@@ -24,7 +24,7 @@
       v-for="map in selectedMapsAndState"
       :key="map.id"
       :name="map.selectedMapName"
-      :state="map.mapState"
+      :state="map.state"
       :home-map-player="map.homeMapPlayer || ''"
       :winner="map.winner || ''"
       :teamOneCiv="map.teamOneCiv"
