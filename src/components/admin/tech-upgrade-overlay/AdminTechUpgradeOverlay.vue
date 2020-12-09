@@ -18,54 +18,66 @@
       >Show Overlay</md-button>
       <md-switch
         v-model="sound"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Sound</md-switch>
       <md-switch
+        v-model="autohide"
+        @change="valueChanged"
+        class="md-primary large-font"
+      >Auto Hide</md-switch>
+      <md-switch
         v-model="tech"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Tech</md-switch>
       <md-switch
         v-model="blacksmith"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Blacksmith</md-switch>
       <md-switch
         v-model="university"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >University</md-switch>
       <md-switch
         v-model="monastary"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Monastary</md-switch>
       <md-switch
         v-model="dock"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Dock</md-switch>
       <md-switch
         v-model="barracks"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Barracks</md-switch>
       <md-switch
         v-model="archeryRange"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Archery Range</md-switch>
       <md-switch
         v-model="stable"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Stable</md-switch>
       <md-switch
         v-model="siegeWorkshop"
-        v-on:change="valueChanged"
+        @change="valueChanged"
         class="md-primary large-font"
       >Siege Workshop</md-switch>
+      <md-field class="tech-field">
+        <label>Auto Hide Delay (ms)</label>
+        <md-input
+          v-model="autoHideDelay"
+          type="number"
+        ></md-input>
+      </md-field>
     </md-card-content>
     <md-card-content>
       <md-menu
@@ -115,6 +127,8 @@
     data() {
       return {
         sound: this.controlOptions?.sound || true,
+        autohide: this.controlOptions?.autohide || true,
+        autoHideDelay: this.controlOptions?.autoHideDelay || 5000,
         tech: this.controlOptions?.tech || true,
         blacksmith: this.controlOptions?.blacksmith,
         university: this.controlOptions?.university,
@@ -222,7 +236,9 @@
     display: inline-flex;
     opacity: 0.5;
   }
-
+  .tech-field {
+    width: 20%;
+  }
   .civ-tech-icon {
     width: 6rem;
     height: 6rem;

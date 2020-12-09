@@ -2,7 +2,7 @@
   <div class="admin-page">
     <div class="card-holder-left card-centered">
       <PlayerCivDisplayControls v-on:miscOverlayEmit="miscOverlayBroadcast" />
-      <RoundOverlay />
+      <RoundOverlay v-on:roundOverlay="roundOverlayShow" />
       <AdminTechUpgradeOverlay
         v-on:techOverlayShow="techOverlayHandler"
         v-on:techOverlayClearAll="techClearAllHandler"
@@ -31,8 +31,6 @@
 
 <script>
   import AdminTechUpgradeOverlay from "./tech-upgrade-overlay/AdminTechUpgradeOverlay.vue";
-  // import NewRoundModal from "./map-pick-ban-overlay/NewRoundModal.vue";
-  // import MapListDisplay from "./map-pick-ban-overlay/MapListDisplay.vue";
   import PlayerCivDisplayControls from "./scoreboard-overlay/PlayerCivDisplayControls.vue";
   import RoundOverlay from "./round-overlay/RoundOverlay.vue";
   import RoundDisplayCard from "./round-overlay/RoundDisplayCard.vue";
@@ -46,8 +44,6 @@
     },
     components: {
       AdminTechUpgradeOverlay,
-      // NewRoundModal,
-      // MapListDisplay,
       PlayerCivDisplayControls,
       RoundOverlay,
       RoundDisplayCard,
@@ -66,10 +62,17 @@
       techClearAllHandler() {
         this.adminClient.sendMessage(SocketEnums.AdminHide, {});
       },
-      mapOverlayShow() {
+      roundOverlayShow() {
+        const data = this.$store.getters.getRoundOverlayData;
+        const data1 = this.$store.state.mapPickAndBanOverlayControlOptions
+          .adminOptions;
+        console.log(data1);
         this.adminClient.sendMessage(SocketEnums.AdminShowMaps, {
-          mapData: this.$store.getters.getMapData,
-          players: this.$store.getters.getPlayerNames,
+          roundMode: data.roundMode,
+          roundOverlayVisible: data.roundOverlayVisible,
+          team1Name: data.team1Name,
+          team2Name: data.team2Name,
+          mapData: data1,
         });
       },
       mapOverlayHide() {

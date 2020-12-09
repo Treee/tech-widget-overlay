@@ -1,5 +1,8 @@
 <template>
-  <md-card md-with-hover class="card-style card-rounds column-contents">
+  <md-card
+    md-with-hover
+    class="card-style card-rounds column-contents"
+  >
     <div class="rounds-left">
       <md-card-header>
         <div class="md-title">Round Info</div>
@@ -38,29 +41,47 @@
         <div class="md-subhead">Add/Clear All/CM Info</div>
       </md-card-header>
       <md-card-content>
-        <md-button class="md-raised md-accent" @click="clearRounds();">Clear Rounds</md-button>
-        <md-button class="md-raised" @click="addRound();">Add Round</md-button>
+        <md-button
+          class="md-raised md-accent"
+          @click="clearRounds();"
+        >Clear Rounds</md-button>
+        <md-button
+          class="md-raised"
+          @click="addRound();"
+        >Add Round</md-button>
         <md-switch
           v-model="roundOverlayVisible"
           class="md-primary large-font"
-          @click="toggleRoundOverlayVisibility"
+          @change="toggleRoundOverlayVisibility"
         >Show Rounds</md-switch>
         <br />
         <md-field>
           <label>Draft Session Id</label>
-          <md-input v-model="cmDraftId" type="password"></md-input>
+          <md-input
+            v-model="cmDraftId"
+            type="password"
+          ></md-input>
         </md-field>
-        <md-button class="md-raised" @click="loadCMData">Load CM</md-button>
+        <md-button
+          class="md-raised"
+          @click="loadCMData"
+        >Load CM</md-button>
       </md-card-content>
       <md-card-content style="width:35%;">
         <md-field>
           <label>Team 1</label>
-          <md-input v-model="team1Name" @blur="updateTeamNames(team1Name, team2Name)"></md-input>
+          <md-input
+            v-model="team1Name"
+            @blur="updateTeamNames(team1Name, team2Name)"
+          ></md-input>
         </md-field>
         <br />
         <md-field>
           <label>Team 2</label>
-          <md-input v-model="team2Name" @blur="updateTeamNames(team1Name, team2Name)"></md-input>
+          <md-input
+            v-model="team2Name"
+            @blur="updateTeamNames(team1Name, team2Name)"
+          ></md-input>
         </md-field>
       </md-card-content>
     </div>
@@ -68,105 +89,110 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+  import { mapState } from "vuex";
 
-export default {
-  name: "RoundOverlay",
-  data() {
-    return {
-      roundMode: 0,
-      roundOverlayVisible: false,
-      cmDraftId: "5bc51522b1368b6070a3d033",
-      team1Name: "",
-      team2Name: ""
-    };
-  },
-  computed: {
-    ...mapState({
-      controlOptions: state => state.mapPickAndBanOverlayControlOptions
-    })
-  },
-  components: {},
-  methods: {
-    selectRoundMode(roundType) {
-      this.roundMode = roundType;
-      this.$store.dispatch("setRoundType", {
-        roundMode: this.roundMode
-      });
+  export default {
+    name: "RoundOverlay",
+    data() {
+      return {
+        roundMode: 0,
+        roundOverlayVisible: false,
+        cmDraftId: "5bc51522b1368b6070a3d033",
+        team1Name: "",
+        team2Name: "",
+      };
     },
-    isRoundModeSelected(roundType) {
-      return this.roundMode === roundType;
+    computed: {
+      ...mapState({
+        controlOptions: (state) => state.mapPickAndBanOverlayControlOptions,
+      }),
     },
-    addRound() {
-      this.$store.dispatch("addNewPlayerRound", {
-        selectedMapName: 'unknown',
-        mapState: "open",
-      });
+    components: {},
+    methods: {
+      selectRoundMode(roundType) {
+        this.roundMode = roundType;
+        this.$store.dispatch("setRoundType", {
+          roundMode: this.roundMode,
+        });
+      },
+      isRoundModeSelected(roundType) {
+        return this.roundMode === roundType;
+      },
+      addRound() {
+        this.$store.dispatch("addNewPlayerRound", {
+          selectedMapName: "unknown",
+          mapState: "open",
+        });
+      },
+      clearRounds() {
+        this.$store.dispatch("clearRounds", {});
+      },
+      toggleRoundOverlayVisibility() {
+        this.$store.dispatch("updateRoundVisibility", {
+          roundOverlayVisible: this.roundOverlayVisible,
+        });
+        this.$emit("roundOverlay");
+      },
+      loadCMData() {
+        this.$store.getters.getCMInfo(this.cmDraftId).then((draftData) => {
+          // console.log("draftData", draftData);
+          this.team1Name = draftData.draft.playerOne.name || "";
+          this.team2Name = draftData.draft.playerTwo.name || "";
+          const teamOneCivDraft = draftData.draft.playerOne.civs;
+          const teamTwoCivDraft = draftData.draft.playerTwo.civs;
+          this.updateTeamNames(this.team1Name, this.team2Name);
+          this.updateTeamCivDrafts(teamOneCivDraft, teamTwoCivDraft);
+        });
+      },
+      updateTeamNames(teamOne, teamTwo) {
+        this.$store.dispatch("syncTeamNames", {
+          team1Name: teamOne,
+          team2Name: teamTwo,
+        });
+      },
+      updateTeamCivDrafts(teamOneCivDraft, teamTwoCivDraft) {
+        this.$store.dispatch("updateTeamCivDrafts", {
+          teamOneCivDraft,
+          teamTwoCivDraft,
+        });
+      },
     },
-    clearRounds() {
-      this.$store.dispatch("clearRounds", { });
-    },
-    toggleRoundOverlayVisibility() {},
-    loadCMData() {
-      this.$store.getters.getCMInfo(this.cmDraftId).then(draftData => {
-        // console.log("draftData", draftData);
-        this.team1Name = draftData.draft.playerOne.name || "";
-        this.team2Name = draftData.draft.playerTwo.name || "";
-        const teamOneCivDraft = draftData.draft.playerOne.civs;
-        const teamTwoCivDraft = draftData.draft.playerTwo.civs;
-        this.updateTeamNames(this.team1Name, this.team2Name);
-        this.updateTeamCivDrafts(teamOneCivDraft, teamTwoCivDraft);
-      });
-    },
-    updateTeamNames(teamOne, teamTwo) {
-      this.$store.dispatch("syncTeamNames", {
-        team1Name: teamOne,
-        team2Name: teamTwo
-      });
-    },
-    updateTeamCivDrafts(teamOneCivDraft, teamTwoCivDraft) {
-      this.$store.dispatch("updateTeamCivDrafts", {
-        teamOneCivDraft,
-        teamTwoCivDraft
-      });
-    }
-  }
-};
+  };
 </script>
 
 <style language="scss">
-.rounds-left {
-  display: inline-flex;
-  align-items: center;
-}
-.rounds-right {
-  display: inline-flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-}
-.card-rounds .md-field {
-  display: inline-flex;
-  width: 70%;
-  margin: 0.25rem;
-}
-.md-raised.active-round {
-  background-color: grey !important;
-}
-.vs1 {
-  background-color: cornflowerblue !important;
-  border: 1px solid black;
-}
-.vs2 {
-  background-color: hotpink !important;
-  border: 1px solid black;
-}
-.vs3 {
-  background-color: greenyellow !important;
-  border: 1px solid black;
-}
-.vs4 {
-  background-color: gold !important;
-  border: 1px solid black;
-}
+  .rounds-left {
+    display: inline-flex;
+    align-items: center;
+  }
+  .rounds-right {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+  .card-rounds .md-field {
+    display: inline-flex;
+    width: 70%;
+    margin: 0.25rem;
+  }
+  .md-raised.active-round {
+    background-color: grey !important;
+  }
+  .vs1 {
+    background-color: cornflowerblue !important;
+    border: 1px solid black;
+  }
+  .vs2 {
+    background-color: hotpink !important;
+    border: 1px solid black;
+  }
+  .vs3 {
+    background-color: greenyellow !important;
+    border: 1px solid black;
+  }
+  .vs4 {
+    background-color: gold !important;
+    border: 1px solid black;
+  }
 </style>

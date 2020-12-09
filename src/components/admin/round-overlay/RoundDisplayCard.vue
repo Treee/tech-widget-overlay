@@ -39,75 +39,82 @@
             >{{teamTwoName}}</md-checkbox>
           </div>
         </div>
-        <md-menu
-          class="custom-menu"
-          :md-offset-x="1"
-          :mdCloseOnClick="false"
-          :mdCloseOnSelect="false"
-        >
-          <md-button
-            class="md-raised"
-            md-menu-trigger
-          >Team Picks</md-button>
-          <md-menu-content class="custom-menu-content">
-            <md-card-header>
-              <div class="md-title">Team One</div>
-            </md-card-header>
-            <div class="civ-selection-list">
-              <md-menu-item
-                v-for="(draftCiv) in teamOneCivDraft"
-                :key="draftCiv.civ"
-                :id="draftCiv.civ"
-                @click="selectTeamCivs(draftCiv.civ, map.id, 'team1')"
-              >
-                <div
-                  class="civ-icon-group"
-                  :class="{'active' : isCivSelected(map.teamOneCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamOneCiv, draftCiv.civ)}"
+        <div class="column-contents">
+          <md-menu
+            class="custom-menu"
+            :md-offset-x="1"
+            :mdCloseOnClick="false"
+            :mdCloseOnSelect="false"
+          >
+            <md-button
+              md-menu-trigger
+              class="md-raised md-primary md-icon-button show-tech-button"
+            >
+              <md-icon>groups</md-icon>
+            </md-button>
+            <md-menu-content class="custom-menu-content">
+              <md-card-header>
+                <div class="md-title">Team One</div>
+              </md-card-header>
+              <div class="civ-selection-list">
+                <md-menu-item
+                  v-for="(draftCiv) in teamOneCivDraft"
+                  :key="draftCiv.civ"
+                  :id="draftCiv.civ"
+                  @click="selectTeamCivs(draftCiv.civ, map.id, 'team1')"
                 >
                   <div
-                    class="civ-icon"
-                    :style="civIconStyle(draftCiv.civ)"
-                  />
-                  <div
-                    class="civ-unique-unit unique-unit-container"
-                    :style="uniqueUnitStyle(draftCiv.civ)"
-                  />
-                  <div class="civ-name">
-                    {{getMapName(draftCiv.civ)}}
+                    class="civ-icon-group"
+                    :class="{'active' : isCivSelected(map.teamOneCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamOneCiv)}"
+                  >
+                    <div
+                      class="civ-icon"
+                      :style="civIconStyle(draftCiv.civ)"
+                    />
+                    <div
+                      class="civ-unique-unit unique-unit-container"
+                      :style="uniqueUnitStyle(draftCiv.civ)"
+                    />
+                    <div class="civ-name">
+                      {{getMapName(draftCiv.civ)}}
+                    </div>
                   </div>
-                </div>
-              </md-menu-item>
-            </div>
-            <md-card-header>
-              <div class="md-title">Team Two</div>
-            </md-card-header>
-            <div class="civ-selection-list">
-              <md-menu-item
-                v-for="(draftCiv) in teamTwoCivDraft"
-                :key="draftCiv.civ+'1'"
-                :id="draftCiv.civ"
-                @click="selectTeamCivs(draftCiv.civ, map.id, 'team2')"
-              >
-                <div
-                  class="civ-icon-group"
-                  :class="{'active' : isCivSelected(map.teamTwoCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamTwoCiv, draftCiv.civ)}"
+                </md-menu-item>
+              </div>
+              <md-card-header>
+                <div class="md-title">Team Two</div>
+              </md-card-header>
+              <div class="civ-selection-list">
+                <md-menu-item
+                  v-for="(draftCiv) in teamTwoCivDraft"
+                  :key="draftCiv.civ+'1'"
+                  :id="draftCiv.civ"
+                  @click="selectTeamCivs(draftCiv.civ, map.id, 'team2')"
                 >
                   <div
-                    class="civ-icon"
-                    :style="civIconStyle(draftCiv.civ)"
-                  />
-                  <div
-                    class="civ-unique-unit unique-unit-container"
-                    :style="uniqueUnitStyle(draftCiv.civ)"
-                  />
-                  <div class="civ-name">
-                    {{getMapName(draftCiv.civ)}}
+                    class="civ-icon-group"
+                    :class="{'active' : isCivSelected(map.teamTwoCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamTwoCiv)}"
+                  >
+                    <div
+                      class="civ-icon"
+                      :style="civIconStyle(draftCiv.civ)"
+                    />
+                    <div
+                      class="civ-unique-unit unique-unit-container"
+                      :style="uniqueUnitStyle(draftCiv.civ)"
+                    />
+                    <div class="civ-name">
+                      {{getMapName(draftCiv.civ)}}
+                    </div>
                   </div>
-                </div>
-              </md-menu-item>
-            </div>
-          </md-menu-content>
-        </md-menu>
+                </md-menu-item>
+              </div>
+            </md-menu-content>
+          </md-menu>
+          <md-button class="md-raised md-icon-button show-tech-button">
+            <md-icon>science</md-icon>
+          </md-button>
+        </div>
         <md-checkbox
           v-model="map.state"
           value="banned"
@@ -257,12 +264,8 @@
           }).length > 0
         );
       },
-      isCivDisabled(chosenCivilizations, civToCheck) {
-        return (
-          chosenCivilizations?.filter((chosenCiv) => {
-            return chosenCiv !== civToCheck;
-          }).length > 0
-        );
+      isCivDisabled(chosenCivilizations) {
+        return chosenCivilizations?.length > this.roundMode;
       },
       checkMaxCivsSelected(selectedCivs, currentCiv) {
         // is this civ in the list of selected civs
@@ -424,6 +427,9 @@
   }
   .custom-menu-content .md-list-item-default:hover {
     background-color: rgba(0, 125, 0, 125);
+  }
+  .show-tech-button {
+    margin: 0.25rem;
   }
   .civ-icon-group {
     display: inline-flex;

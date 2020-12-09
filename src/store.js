@@ -127,6 +127,7 @@ export default new Vuex.Store({
     state: {
       roundOverlay: {
         roundMode: 0,
+        roundOverlayVisible: false,
         team1Name: "",
         team2Name: ""
       },
@@ -184,6 +185,9 @@ export default new Vuex.Store({
       customMapPrefixes: customMapPrefixes
     },
     getters: {
+      getRoundOverlayData: (state) => {
+        return state.roundOverlay;
+      },
       getCivDescription: (state) => (civName) => {
         if (civName === "") {
           return "";
@@ -479,6 +483,9 @@ export default new Vuex.Store({
       updateTeamCivDrafts: (state, payload) => {
         state.roundOverlay.teamOneCivDraft = payload.teamOneCivDraft;
         state.roundOverlay.teamTwoCivDraft = payload.teamTwoCivDraft;
+      },
+      updateRoundVisibility: (state, payload) => {
+        state.roundOverlay.roundOverlayVisible = payload.roundOverlayVisible;
       }
     },
     actions: {
@@ -513,6 +520,9 @@ export default new Vuex.Store({
       },
       clearRounds(store, payload) {
         store.commit("clearAllRounds", payload);
+      },
+      updateRoundVisibility(store, payload) {
+        store.commit("updateRoundVisibility", payload)
       },
       setRoundType(store, payload) {
         store.commit("updateRoundType", payload);
