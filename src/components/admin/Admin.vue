@@ -65,14 +65,17 @@
         const overlayData = this.$store.getters.getRoundOverlayData;
         const techOverlayData = this.$store.getters.getTechOverlayData;
         const data = {
-          roundMode: overlayData.roundMode,
-          roundOverlayVisible: overlayData.roundOverlayVisible,
-          team1Name: overlayData.team1Name,
-          team2Name: overlayData.team2Name,
-          team1RoundDraft: roundData.teamOneCiv,
-          team2RoundDraft: roundData.teamTwoCiv,
-          autoHide: techOverlayData.autoHide,
-          autoHideDelay: techOverlayData.autoHideDelay
+          roundData: {
+            roundMode: overlayData.roundMode,
+            roundOverlayVisible: overlayData.roundOverlayVisible,
+            team1Name: overlayData.team1Name,
+            team2Name: overlayData.team2Name,
+            team1RoundDraft: roundData.teamOneCiv,
+            team2RoundDraft: roundData.teamTwoCiv,
+          },
+          techOverlayData: {
+            ...techOverlayData,
+          },
         };
         this.adminClient.sendMessage(SocketEnums.AdminShow, data);
       },

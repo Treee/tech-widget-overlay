@@ -159,8 +159,8 @@ export default new Vuex.Store({
           civ1: "",
           civ2: "",
           sound: true,
-          autohide: true,
-          autoHideDelay: 5000,
+          autoHide: true,
+          autoHideDelay: 10000,
           tech: true,
           blacksmith: false,
           university: false,
@@ -194,6 +194,9 @@ export default new Vuex.Store({
         if (civName === "") {
           return "";
         }else {
+          console.log('civ name', civName);
+          console.log('civ dataString', state.dataString);
+          console.log('civ civHelpTexts', state.civHelpTexts[civName]);
           return state.dataString[state.civHelpTexts[civName]] || "";
         }
       },
@@ -290,7 +293,7 @@ export default new Vuex.Store({
           });
           return state.mapPickAndBanOverlayControlOptions.adminOptions[foundIndex].teamTwoCiv;
         }
-      }
+      },
       // Compute derived state based on the current state. More like computed property.
     },
     mutations: {
@@ -306,11 +309,16 @@ export default new Vuex.Store({
       setDataStrings(state, dataStrings) {
           state.dataString = dataStrings;
       },
-      updateCivs(state, { civ1, civ2 }) {
-          state.techUpgradeOverlayControlOptions.civ1 = civ1;
-          state.miscOverlayControlOptions.civ1 = civ1;
-          state.techUpgradeOverlayControlOptions.civ2 = civ2;
-          state.miscOverlayControlOptions.civ2 = civ2;
+      updateTeam1Civ(state, civ) {
+        console.log(`updating team 1 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
+          state.techUpgradeOverlayControlOptions.civ1 = civ;
+          state.miscOverlayControlOptions.civ1 = civ;
+          state.clearAllCivsClicked = false;
+      },
+      updateTeam2Civ(state, civ) {
+        console.log(`updating team 2 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
+          state.techUpgradeOverlayControlOptions.civ2 = civ;
+          state.miscOverlayControlOptions.civ2 = civ;
           state.clearAllCivsClicked = false;
       },
       clearCivs(state) {
@@ -323,8 +331,10 @@ export default new Vuex.Store({
       preTransitionMapOverlay(state) {
           state.clearAllMapsClicked = true;
       },
-      updateTechUpgradeOverlayControlOptions(state, data) {
+      updateTechOverlayControls(state, data) {
           state.techUpgradeOverlayControlOptions.sound = data.sound;
+          state.techUpgradeOverlayControlOptions.autoHide = data.autoHide;
+          state.techUpgradeOverlayControlOptions.autoHideDelay = data.autoHideDelay;
           state.techUpgradeOverlayControlOptions.tech = data.tech;
           state.techUpgradeOverlayControlOptions.blacksmith = data.blacksmith;
           state.techUpgradeOverlayControlOptions.university = data.university;
@@ -491,6 +501,16 @@ export default new Vuex.Store({
       }
     },
     actions: {
+      preTransitionCivOverlay(store, payload) {
+        if (payload.delay) {
+          setTimeout(function() {
+            console.log('pretransition');
+            store.commit("preTransitionCivOverlay");
+          }, payload.delay);
+        } else {
+          store.commit("preTransitionCivOverlay");
+        }
+      },
       clearCivs(store, payload) {
           if (payload.delayMs) {
               store.commit("preTransitionCivOverlay");
@@ -532,8 +552,11 @@ export default new Vuex.Store({
       syncTeamNames(store, payload) {
         store.commit("syncTeamNames", payload);
       },
-      updatePlayerCivs(store, payload) {
-        store.commit("updateCivs", payload);
+      updateTeam1Civ(store, payload) {
+        store.commit("updateTeam1Civ", payload);
+      },
+      updateTeam2Civ(store, payload) {
+        store.commit("updateTeam2Civ", payload);
       },
       updateMapSelected(store, payload) {
         store.commit("updateMapSelected", payload);
@@ -546,6 +569,9 @@ export default new Vuex.Store({
       },
       updateTeamCivDrafts(store, payload) {
         store.commit("updateTeamCivDrafts", payload);
+      },
+      updateTechOverlayControls(store, payload) {
+        store.commit("updateTechOverlayControls", payload);
       }
     }
 });

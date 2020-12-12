@@ -75,6 +75,7 @@
         <label>Auto Hide Delay (ms)</label>
         <md-input
           v-model="autoHideDelay"
+          @change="valueChanged"
           type="number"
         ></md-input>
       </md-field>
@@ -128,7 +129,7 @@
       return {
         sound: this.controlOptions?.sound || true,
         autohide: this.controlOptions?.autohide || true,
-        autoHideDelay: this.controlOptions?.autoHideDelay || 5000,
+        autoHideDelay: this.controlOptions?.autoHideDelay || 5,
         tech: this.controlOptions?.tech || true,
         blacksmith: this.controlOptions?.blacksmith,
         university: this.controlOptions?.university,
@@ -167,7 +168,7 @@
         return camelCase;
       },
       valueChanged() {
-        this.$store.commit("updateTechUpgradeOverlayControlOptions", {
+        this.$store.commit("updateTechOverlayControls", {
           ...this.$data,
         });
       },

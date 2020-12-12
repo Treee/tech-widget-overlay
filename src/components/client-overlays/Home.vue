@@ -23,10 +23,20 @@
         const messageType = parsed.type;
         const data = parsed.data;
         if (messageType === SocketEnums.AdminShow) {
-          this.$store.dispatch("updatePlayerCivs", { civ1: data.civ1, civ2: data.civ2 });
+          console.log("admin show");
+          this.shuffleCivilizationDrafts(
+            "1",
+            data.roundData.team1RoundDraft,
+            data.techOverlayData.autoHideDelay * 1000
+          );
+          this.shuffleCivilizationDrafts(
+            "2",
+            data.roundData.team2RoundDraft,
+            data.techOverlayData.autoHideDelay * 1000
+          );
           // this.$store.commit("updateCivs", { civ1: data.civ1, civ2: data.civ2 });
-          this.$store.commit("updateTechUpgradeOverlayControlOptions", {
-            ...data,
+          this.$store.commit("updateTechOverlayControls", {
+            ...data.techOverlayData,
           });
         }
         if (messageType === SocketEnums.AdminHide) {
@@ -45,6 +55,22 @@
           this.$store.commit("updateScoreboardMapName", data);
         }
         console.log("client handling message", data);
+      },
+      shuffleCivilizationDrafts(teamNumber, playerPicks, shuffleDelay) {
+        const self = this;
+        const dispatchPath =
+          teamNumber === "1" ? "updateTeam1Civ" : "updateTeam2Civ";
+        for (let index = 0; index < playerPicks?.length; index++) {
+          setTimeout(function () {
+            const formattedName = self.$store.getters.getFormattedMapName(
+              playerPicks[index]
+            );
+            self.$store.dispatch(dispatchPath, formattedName);
+            self.$store.dispatch("preTransitionCivOverlay", {
+              delay: shuffleDelay - 2000,
+            });
+          }, shuffleDelay * index);
+        }
       },
     },
     created: function () {
