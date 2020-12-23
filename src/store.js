@@ -190,6 +190,11 @@ export default new Vuex.Store({
       getRoundOverlayData: (state) => {
         return state.roundOverlay;
       },
+      getCurrentRoundData: (state) => {
+        return state.mapPickAndBanOverlayControlOptions.adminOptions.find((map) => {
+          return map.state === 'current';
+        });
+      },
       getCivDescription: (state) => (civName) => {
         if (civName === "") {
           return "";
@@ -458,6 +463,22 @@ export default new Vuex.Store({
           }
         }
       },
+      setMapStateModifyState: (state, data) => {
+        const currentMapIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+          return map.id === data.mapIdToModify;
+        });
+        if (data.newMapState === "open") {
+          state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].state = "current";
+          if (state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1]) {
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = data.newMapState;
+          }
+        } else if (data.newMapState === "current"){
+          state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].state = "banned";
+          if (state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1]) {
+            state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = data.newMapState;
+          }
+        }
+      },
       setSelectedCivsForTeam: (state, data) => {
         const currentMapIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
           return map.id === data.mapIdToModify;
@@ -563,6 +584,9 @@ export default new Vuex.Store({
       },
       setWinnerModifyMapState(store, payload) {
         store.commit("setWinnerModifyMapState", payload);
+      },
+      setMapStateModifyState(store, payload) {
+        store.commit("setMapStateModifyState", payload);
       },
       setSelectedCivsForTeam(store, payload) {
         store.commit("setSelectedCivsForTeam", payload);

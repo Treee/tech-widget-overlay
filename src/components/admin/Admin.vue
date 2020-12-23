@@ -96,6 +96,8 @@
       },
       miscOverlayBroadcast() {
         const data = this.$store.getters.getMiscOverlayData;
+        const data1 = this.$store.getters.getCurrentRoundData;
+        console.log(data1);
         this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
       },
       scoreboardMapChange() {

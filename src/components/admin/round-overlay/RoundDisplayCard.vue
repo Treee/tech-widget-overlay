@@ -127,6 +127,7 @@
         <md-checkbox
           v-model="map.state"
           value="banned"
+          @change="mapBanToggle(map.state, map.id)"
         >Banned</md-checkbox>
         <md-menu
           class="custom-menu"
@@ -253,6 +254,18 @@
           newMapState: nextMapState,
         });
       },
+      mapBanToggle(isBanned, mapId) {
+        let nextMapState = "current";
+        if (!isBanned) {
+          nextMapState = "open";
+          // set next map state to current
+        }
+        this.$store.dispatch("setMapStateModifyState", {
+          mapIdToModify: mapId,
+          newMapState: nextMapState,
+        });
+        console.log("mapid", mapId);
+      },
       selectTeamCivs(selectedCiv, mapId, teamCivs) {
         const teamCivDraft = this.$store.getters.getTeamSelectedCivDraft(
           mapId,
@@ -266,7 +279,7 @@
           });
         }
       },
-      showOverlayClick(mapInfo) {        
+      showOverlayClick(mapInfo) {
         this.$emit("roundTech", mapInfo);
       },
       isCivSelected(chosenCivilizations, civToCheck) {
