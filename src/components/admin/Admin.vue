@@ -77,7 +77,7 @@
             ...techOverlayData,
           },
         };
-        this.adminClient.sendMessage(SocketEnums.AdminShow, data);
+        this.adminClient.sendMessage(SocketEnums.AdminShowPlayerPicks, data);
       },
       roundOverlayShow() {
         const data = this.$store.getters.getRoundOverlayData;

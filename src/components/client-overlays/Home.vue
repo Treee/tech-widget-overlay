@@ -52,7 +52,6 @@
             data.autoHideDelay * 1000
           );
         }
-
         if (messageType === SocketEnums.AdminHide) {
           this.$store.dispatch("clearCivs", { delayMs: 2000 });
         }
@@ -63,12 +62,12 @@
           this.$store.dispatch("clearMaps", { delayMs: 2000 });
         }
         if (messageType === SocketEnums.AdminShowCiv) {
-          this.$store.dispatch("updateScoreboardClientControls", data);
+          this.$store.commit("updateMiscOverlayControlOptions", data);
         }
         if (messageType === SocketEnums.AdminShowDock) {
           this.$store.commit("updateScoreboardMapName", data);
         }
-        // console.log("client handling message", data);
+        console.log("client handling message", data);
       },
       shuffleCivilizationDrafts(teamNumber, playerPicks, shuffleDelay) {
         const self = this;
@@ -86,13 +85,13 @@
           }, shuffleDelay * index);
         }
       },
-      created: function () {
-        this.client = clientOverlayWebSocket.startClient(
-          this.clientId,
-          this.handleSocketMessage
-        );
-        // console.log("App created", this.clientId);
-      },
+    },
+    created: function () {
+      this.client = clientOverlayWebSocket.startClient(
+        this.clientId,
+        this.handleSocketMessage
+      );
+      // console.log("App created", this.clientId);
     },
   };
 </script>
