@@ -34,7 +34,6 @@
             data.roundData.team2RoundDraft,
             data.techOverlayData.autoHideDelay * 1000
           );
-          // this.$store.commit("updateCivs", { civ1: data.civ1, civ2: data.civ2 });
           this.$store.commit("updateTechOverlayControls", {
             ...data.techOverlayData,
           });
@@ -43,12 +42,12 @@
           // console.log("blah blah", data);
           this.shuffleCivilizationDrafts(
             "1",
-            [data.civ1],
+            data.civ1,
             data.autoHideDelay * 1000
           );
           this.shuffleCivilizationDrafts(
             "2",
-            [data.civ2],
+            data.civ2,
             data.autoHideDelay * 1000
           );
         }
@@ -62,7 +61,7 @@
           this.$store.dispatch("clearMaps", { delayMs: 2000 });
         }
         if (messageType === SocketEnums.AdminShowCiv) {
-          this.$store.commit("updateMiscOverlayControlOptions", data);
+          this.$store.commit("updateScoreboardClientControls", data);
         }
         if (messageType === SocketEnums.AdminShowDock) {
           this.$store.commit("updateScoreboardMapName", data);
@@ -73,12 +72,25 @@
         const self = this;
         const dispatchPath =
           teamNumber === "1" ? "updateTeam1Civ" : "updateTeam2Civ";
-        for (let index = 0; index < playerPicks?.length; index++) {
+        let numPicks = playerPicks?.length || 0;
+        let bypassMiscUpdate = false;
+        let bypassTechUpdate = false;
+        if (typeof playerPicks === String) {
+          numPicks = 1;
+          bypassMiscUpdate = true;
+        } else {
+          bypassTechUpdate = true;
+        }
+        for (let index = 0; index < numPicks; index++) {
           setTimeout(function () {
             const formattedName = self.$store.getters.getFormattedMapName(
               playerPicks[index]
             );
-            self.$store.dispatch(dispatchPath, formattedName);
+            self.$store.dispatch(dispatchPath, {
+              formattedName,
+              bypassMiscUpdate,
+              bypassTechUpdate,
+            });
             self.$store.dispatch("preTransitionCivOverlay", {
               delay: shuffleDelay - 2000,
             });

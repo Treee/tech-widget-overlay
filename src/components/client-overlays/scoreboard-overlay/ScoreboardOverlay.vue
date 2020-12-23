@@ -1,6 +1,6 @@
 <template>
   <div class="score-board-overlay-container">
-    <div class="score-board-overlay"></div>
+    <!-- <div class="score-board-overlay"></div> -->
     <PlayerPositions />
     <PlayersCivDisplay
       :isCivDisplayVisible="miscOverlayOptions.isCivDisplayVisible"

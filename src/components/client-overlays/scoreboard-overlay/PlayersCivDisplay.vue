@@ -1,5 +1,8 @@
 <template>
-  <div v-if="isCivDisplayVisible">
+  <div
+    class="client-player-display"
+    v-if="isCivDisplayVisible"
+  >
     <div
       class="team-container"
       :style="customPositionAndWidth(civ1X, civ1Y, civ1Width)"
@@ -100,6 +103,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 4rem;
   }
 
   .team-container {

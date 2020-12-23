@@ -237,6 +237,9 @@ export default new Vuex.Store({
     },
     getFormattedMapName: (state) => (rawMapName) => {
         let mapName = "";
+        if (typeof rawMapName === 'object') {
+          rawMapName = rawMapName[0];
+        }
         const mapNameParts = rawMapName.split("-");
         if (mapNameParts.length === 1) {
             // single word map name, not custom
@@ -319,17 +322,21 @@ export default new Vuex.Store({
     setDataStrings(state, dataStrings) {
         state.dataString = dataStrings;
     },
-    updateTeam1Civ(state, civ) {
-      console.log(`updating team 1 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
-        state.techUpgradeOverlayControlOptions.civ1 = civ;
-        state.miscOverlayControlOptions.civ1 = civ;
-        state.clearAllCivsClicked = false;
+    updateTeam1Civ(state, data) {
+      // console.log(`updating team 1 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${data}`);
+      state.techUpgradeOverlayControlOptions.civ1 = data.formattedName;
+      if (data.bypassMiscUpdate) {
+        state.miscOverlayControlOptions.civ1 = data.formattedName;
+      }
+      state.clearAllCivsClicked = false;
     },
-    updateTeam2Civ(state, civ) {
-      console.log(`updating team 2 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
-        state.techUpgradeOverlayControlOptions.civ2 = civ;
-        state.miscOverlayControlOptions.civ2 = civ;
-        state.clearAllCivsClicked = false;
+    updateTeam2Civ(state, data) {
+      // console.log(`updating team 2 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
+      state.techUpgradeOverlayControlOptions.civ2 = data.formattedName;
+      if (data.bypassMiscUpdate) {
+        state.miscOverlayControlOptions.civ2 = data.formattedName;
+      }
+      state.clearAllCivsClicked = false;
     },
     clearCivs(state) {
         state.techUpgradeOverlayControlOptions.civ1 = "";
@@ -344,8 +351,8 @@ export default new Vuex.Store({
     updateTechOverlayControls(state, data) {
         state.techUpgradeOverlayControlOptions.sound = data.sound;
         state.techUpgradeOverlayControlOptions.autoHide = data.autoHide;
-        state.techUpgradeOverlayControlOptions.civ1 = data.civ1;
-        state.techUpgradeOverlayControlOptions.civ2 = data.civ2;
+        state.techUpgradeOverlayControlOptions.civ1 = [data.civ1];
+        state.techUpgradeOverlayControlOptions.civ2 = [data.civ2];
         state.techUpgradeOverlayControlOptions.autoHideDelay = data.autoHideDelay;
         state.techUpgradeOverlayControlOptions.tech = data.tech;
         state.techUpgradeOverlayControlOptions.blacksmith = data.blacksmith;
