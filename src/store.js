@@ -123,7 +123,7 @@ const debounceMapName = (state, potentialDuplicate) => {
 }
 
 export default new Vuex.Store({
-  // strict: true,
+    // strict: true,
   state: {
     roundOverlay: {
       roundMode: 0,
@@ -138,49 +138,49 @@ export default new Vuex.Store({
     clearAllCivsClicked: false,
     clearAllMapsClicked: false,
     clientControlOptions: {
-      selectedMapsAndState: [],
-      players: []
+        selectedMapsAndState: [],
+        players: []
     },
     miscOverlayControlOptions: {
-      civ1: "",
-      civ2: "",
-      isCivDisplayVisible: false,
-      showTeamColors: false,
-      showCurrentMapName: false,
-      currentMap: "",
-      civ1X: "0",
-      civ1Y: "0",
-      civ1Width: "0",
-      civ2X: "0",
-      civ2Y: "0",
-      civ2Width: "0"
+        civ1: [],
+        civ2: [],
+        isCivDisplayVisible: false,
+        showTeamColors: false,
+        showCurrentMapName: false,
+        currentMap: "",
+        civ1X: "0",
+        civ1Y: "0",
+        civ1Width: "0",
+        civ2X: "0",
+        civ2Y: "0",
+        civ2Width: "0"
     },
     techUpgradeOverlayControlOptions: {
-      civ1: "",
-      civ2: "",
-      sound: false,
-      autoHide: true,
-      autoHideDelay: 12000,
-      tech: true,
-      blacksmith: false,
-      university: false,
-      monastary: false,
-      dock: false,
-      barracks: false,
-      archeryRange: false,
-      stable: false,
-      siegeWorkshop: false,
+        civ1: "",
+        civ2: "",
+        sound: false,
+        autoHide: true,
+        autoHideDelay: 12000,
+        tech: true,
+        blacksmith: false,
+        university: false,
+        monastary: false,
+        dock: false,
+        barracks: false,
+        archeryRange: false,
+        stable: false,
+        siegeWorkshop: false,
     },
     mapPickAndBanOverlayControlOptions: {
-      mapOverlayVisible: false,
-      selectedMapName: "",
-      numMapsToGenerate: 1,
-      numBans: 1,
-      team1Name: "",
-      team2Name: "",
-      adminOptions: [],
-      selectedMaps: [],
-      mapStates: [],
+        mapOverlayVisible: false,
+        selectedMapName: "",
+        numMapsToGenerate: 1,
+        numBans: 1,
+        team1Name: "",
+        team2Name: "",
+        adminOptions: [],
+        selectedMaps: [],
+        mapStates: [],
     },
     defaultMaps: defaultMaps,
     customMaps: customMaps,
@@ -190,10 +190,20 @@ export default new Vuex.Store({
     getRoundOverlayData: (state) => {
       return state.roundOverlay;
     },
+    getCurrentRoundData: (state) => {
+      const currentRound = state.mapPickAndBanOverlayControlOptions.adminOptions.find((map) => {
+        return map.state === 'current';
+      });
+      const roundOverlay = state.roundOverlay;
+      return {
+        currentRound,
+        roundMode: roundOverlay.roundMode
+      };
+    },
     getCivDescription: (state) => (civName) => {
       if (civName === "") {
         return "";
-      } else {
+      }else {
         // console.log('civ name', civName);
         // console.log('civ dataString', state.dataString);
         // console.log('civ civHelpTexts', state.civHelpTexts[civName]);
@@ -201,85 +211,88 @@ export default new Vuex.Store({
       }
     },
     getCivNames: (state) => {
-      return Object.keys(state.civNames);
+        return Object.keys(state.civNames);
     },
     getPlayerNames: (state) => {
-      const players = [];
-      if (state.mapPickAndBanOverlayControlOptions.team1Name !== "") {
-        players.push(state.mapPickAndBanOverlayControlOptions.team1Name);
-      }
-      if (state.mapPickAndBanOverlayControlOptions.team2Name) {
-        players.push(state.mapPickAndBanOverlayControlOptions.team2Name);
-      }
-      return players;
+        const players = [];
+        if (state.mapPickAndBanOverlayControlOptions.team1Name !== "") {
+            players.push(state.mapPickAndBanOverlayControlOptions.team1Name);
+        }
+        if (state.mapPickAndBanOverlayControlOptions.team2Name) {
+            players.push(state.mapPickAndBanOverlayControlOptions.team2Name);
+        }
+        return players;
     },
     getDefaultMaps: (state) => {
-      return state.defaultMaps;
+        return state.defaultMaps;
     },
     getCustomMaps: (state) => {
-      return state.customMaps;
+        return state.customMaps;
     },
     getAllMaps: (state) => {
-      return state.defaultMaps.concat(state.customMaps);
+        return state.defaultMaps.concat(state.customMaps);
     },
     getCustomPrefixes: (state) => {
-      return state.customMapPrefixes;
+        return state.customMapPrefixes;
     },
     getFormattedMapName: (state) => (rawMapName) => {
-      let mapName = "";
-      const mapNameParts = rawMapName.split("-");
-      if (mapNameParts.length === 1) {
-        // single word map name, not custom
-        mapName = toCamelCase(rawMapName);
-      } else {
-        const customMapPrefix =
-          state.customMapPrefixes.find(prefix => {
-            return prefix === mapNameParts[0];
-          }) || "";
-        if (customMapPrefix === "") {
-          // multi word map name, not custom
-          mapName = toCamelCase(rawMapName);
-        } else {
-          // multi word map name, is custom
-          mapName = `${mapNameParts[0].toUpperCase()} ${toCamelCase(
-            rawMapName.substring(mapNameParts[0].length + 1)
-          )}`;
+        let mapName = "";
+        if (typeof rawMapName === 'object') {
+          rawMapName = rawMapName[0];
         }
-      }
-      // toCamelCase
-      return mapName.trim();
+        const mapNameParts = rawMapName.split("-");
+        if (mapNameParts.length === 1) {
+            // single word map name, not custom
+            mapName = toCamelCase(rawMapName);
+        } else {
+            const customMapPrefix =
+                state.customMapPrefixes.find(prefix => {
+                    return prefix === mapNameParts[0];
+                }) || "";
+            if (customMapPrefix === "") {
+                // multi word map name, not custom
+                mapName = toCamelCase(rawMapName);
+            } else {
+                // multi word map name, is custom
+                mapName = `${mapNameParts[0].toUpperCase()} ${toCamelCase(
+                    rawMapName.substring(mapNameParts[0].length + 1)
+                )}`;
+            }
+        }
+        // toCamelCase
+        return mapName.trim();
     },
     getMapData: (state) => {
-      return state.mapPickAndBanOverlayControlOptions.adminOptions;
+        return state.mapPickAndBanOverlayControlOptions.adminOptions;
     },
     isCustomMap: (state) => (map) => {
-      return state.customMaps.some(customMap => {
-        return map === customMap;
-      });
+        return state.customMaps.some(customMap => {
+            return map === customMap;
+        });
     },
     isPlayerOne: (state) => (playerName) => {
-      return state.techUpgradeOverlayControlOptions.civ1 === playerName;
+        return state.techUpgradeOverlayControlOptions.civ1 === playerName;
     },
     isPlayerTwo: (state) => (playerName) => {
-      return state.techUpgradeOverlayControlOptions.civ2 === playerName;
+        return state.techUpgradeOverlayControlOptions.civ2 === playerName;
     },
     getMiscOverlayData: (state) => {
-      return { ...state.miscOverlayControlOptions };
+        return { ...state.miscOverlayControlOptions };
     },
     getTechOverlayData: (state) => {
-      return state.techUpgradeOverlayControlOptions;
+        return state.techUpgradeOverlayControlOptions;
     },
     getMapStateForMap: (state) => (map) => {
-      const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
-        return mapState.name === map;
-      });
-      return state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex];
+        const mapIndex = state.mapPickAndBanOverlayControlOptions.mapStates.findIndex((mapState) => {
+            return mapState.name === map;
+        });
+        return state.mapPickAndBanOverlayControlOptions.mapStates[mapIndex];
     },
     getCMInfo: () => (profileId) => {
-      return AoE2Api.getAoECMInfo(profileId);
+        return AoE2Api.getAoECMInfo(profileId);
     },
     getClientPlayers: (state) => {
-      return state.clientControlOptions.players;
+        return state.clientControlOptions.players;
     },
     getTeamSelectedCivDraft: (state) => (mapId, team) => {
       if (team === 'team1') {
@@ -298,134 +311,154 @@ export default new Vuex.Store({
   },
   mutations: {
     setAgeNames(state, ages) {
-      state.ageNames = ages;
+        state.ageNames = ages;
     },
     setCivHelpTexts(state, helpTexts) {
-      state.civHelpTexts = helpTexts;
+        state.civHelpTexts = helpTexts;
     },
     setCivNames(state, civNames) {
-      state.civNames = civNames;
+        state.civNames = civNames;
     },
     setDataStrings(state, dataStrings) {
-      state.dataString = dataStrings;
+        state.dataString = dataStrings;
     },
-    updateTeam1Civ(state, civ) {
-      console.log(`updating team 1 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
-      state.techUpgradeOverlayControlOptions.civ1 = civ;
-      state.miscOverlayControlOptions.civ1 = civ;
+    updateTeam1Civ(state, data) {
+      // console.log(`updating team 1 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${data}`);
+      state.techUpgradeOverlayControlOptions.civ1 = data.formattedName;
+      if (data.bypassMiscUpdate) {
+        state.miscOverlayControlOptions.civ1 = data.formattedName;
+      }
       state.clearAllCivsClicked = false;
     },
-    updateTeam2Civ(state, civ) {
-      console.log(`updating team 2 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
-      state.techUpgradeOverlayControlOptions.civ2 = civ;
-      state.miscOverlayControlOptions.civ2 = civ;
+    updateTeam2Civ(state, data) {
+      // console.log(`updating team 2 civ from ${state.techUpgradeOverlayControlOptions.civ1} to ${civ}`);
+      state.techUpgradeOverlayControlOptions.civ2 = data.formattedName;
+      if (data.bypassMiscUpdate) {
+        state.miscOverlayControlOptions.civ2 = data.formattedName;
+      }
       state.clearAllCivsClicked = false;
     },
     clearCivs(state) {
-      state.techUpgradeOverlayControlOptions.civ1 = "";
-      state.techUpgradeOverlayControlOptions.civ2 = "";
+        state.techUpgradeOverlayControlOptions.civ1 = "";
+        state.techUpgradeOverlayControlOptions.civ2 = "";
     },
     preTransitionCivOverlay(state) {
-      state.clearAllCivsClicked = true;
+        state.clearAllCivsClicked = true;
     },
     preTransitionMapOverlay(state) {
-      state.clearAllMapsClicked = true;
+        state.clearAllMapsClicked = true;
     },
     updateTechOverlayControls(state, data) {
-      state.techUpgradeOverlayControlOptions.sound = data.sound;
-      state.techUpgradeOverlayControlOptions.civ1 = data.civ1;
-      state.techUpgradeOverlayControlOptions.civ2 = data.civ2;
-      state.techUpgradeOverlayControlOptions.autoHide = data.autoHide;
-      state.techUpgradeOverlayControlOptions.autoHideDelay = data.autoHideDelay;
-      state.techUpgradeOverlayControlOptions.tech = data.tech;
-      state.techUpgradeOverlayControlOptions.blacksmith = data.blacksmith;
-      state.techUpgradeOverlayControlOptions.university = data.university;
-      state.techUpgradeOverlayControlOptions.monastary = data.monastary;
-      state.techUpgradeOverlayControlOptions.dock = data.dock;
-      state.techUpgradeOverlayControlOptions.barracks = data.barracks;
-      state.techUpgradeOverlayControlOptions.archeryRange = data.archeryRange;
-      state.techUpgradeOverlayControlOptions.stable = data.stable;
-      state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
+        state.techUpgradeOverlayControlOptions.sound = data.sound;
+        state.techUpgradeOverlayControlOptions.autoHide = data.autoHide;
+        state.techUpgradeOverlayControlOptions.civ1 = [data.civ1];
+        state.techUpgradeOverlayControlOptions.civ2 = [data.civ2];
+        state.techUpgradeOverlayControlOptions.autoHideDelay = data.autoHideDelay;
+        state.techUpgradeOverlayControlOptions.tech = data.tech;
+        state.techUpgradeOverlayControlOptions.blacksmith = data.blacksmith;
+        state.techUpgradeOverlayControlOptions.univ1ersity = data.university;
+        state.techUpgradeOverlayControlOptions.monastary = data.monastary;
+        state.techUpgradeOverlayControlOptions.dock = data.dock;
+        state.techUpgradeOverlayControlOptions.barracks = data.barracks;
+        state.techUpgradeOverlayControlOptions.archeryRange = data.archeryRange;
+        state.techUpgradeOverlayControlOptions.stable = data.stable;
+        state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
     },
     updateMiscOverlayControlOptions(state, data) {
-      state.miscOverlayControlOptions.civ1 = data.civ1 || state.techUpgradeOverlayControlOptions.civ1 || "";
-      state.miscOverlayControlOptions.civ2 = data.civ2 || state.techUpgradeOverlayControlOptions.civ2 || "";
-      state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
-      state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
-      state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
-      state.miscOverlayControlOptions.currentMap = data.currentMap || state.miscOverlayControlOptions.currentMap || "";
-      state.miscOverlayControlOptions.civ1X = data.civ1X || state.miscOverlayControlOptions.civ1X;
-      state.miscOverlayControlOptions.civ1Y = data.civ1Y || state.miscOverlayControlOptions.civ1Y;
-      state.miscOverlayControlOptions.civ1Width = data.civ1Width || state.miscOverlayControlOptions.civ1Width;
-      state.miscOverlayControlOptions.civ2X = data.civ2X || state.miscOverlayControlOptions.civ2X;
-      state.miscOverlayControlOptions.civ2Y = data.civ2Y || state.miscOverlayControlOptions.civ2Y;
-      state.miscOverlayControlOptions.civ2Width = data.civ2Width || state.miscOverlayControlOptions.civ2Width;
+        state.miscOverlayControlOptions.civ1 = data.teamOneCiv || [];
+        state.miscOverlayControlOptions.civ2 = data.teamTwoCiv || [];
+        state.miscOverlayControlOptions.roundMode = data.roundMode || 0;
+        state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
+        state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
+        state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
+        state.miscOverlayControlOptions.currentMap = data.currentMap || state.miscOverlayControlOptions.currentMap || "";
+        state.miscOverlayControlOptions.civ1X = data.civ1X || state.miscOverlayControlOptions.civ1X;
+        state.miscOverlayControlOptions.civ1Y = data.civ1Y || state.miscOverlayControlOptions.civ1Y;
+        state.miscOverlayControlOptions.civ1Width = data.civ1Width || state.miscOverlayControlOptions.civ1Width;
+        state.miscOverlayControlOptions.civ2X = data.civ2X || state.miscOverlayControlOptions.civ2X;
+        state.miscOverlayControlOptions.civ2Y = data.civ2Y || state.miscOverlayControlOptions.civ2Y;
+        state.miscOverlayControlOptions.civ2Width = data.civ2Width || state.miscOverlayControlOptions.civ2Width;
+    },
+    updateScoreboardClientControls(state, data) {
+        state.miscOverlayControlOptions.civ1 = data?.currentRound?.teamOneCiv || [];
+        state.miscOverlayControlOptions.civ2 = data?.currentRound?.teamTwoCiv || [];
+        state.miscOverlayControlOptions.roundMode = data?.roundMode || 0;
+        state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
+        state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
+        state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
+        state.miscOverlayControlOptions.currentMap = data?.currentRound?.selectedMapName || state.miscOverlayControlOptions.currentMap || "";
+        state.miscOverlayControlOptions.civ1X = data.civ1X || state.miscOverlayControlOptions.civ1X;
+        state.miscOverlayControlOptions.civ1Y = data.civ1Y || state.miscOverlayControlOptions.civ1Y;
+        state.miscOverlayControlOptions.civ1Width = data.civ1Width || state.miscOverlayControlOptions.civ1Width;
+        state.miscOverlayControlOptions.civ2X = data.civ2X || state.miscOverlayControlOptions.civ2X;
+        state.miscOverlayControlOptions.civ2Y = data.civ2Y || state.miscOverlayControlOptions.civ2Y;
+        state.miscOverlayControlOptions.civ2Width = data.civ2Width || state.miscOverlayControlOptions.civ2Width;
     },
     updateScoreboardMapName(state, data) {
-      state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
-      state.miscOverlayControlOptions.currentMap = data.currentMap;
+        state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
+        state.miscOverlayControlOptions.currentMap = data.currentMap;
     },
     updateClientSideMapsAndState(state, data) {
-      state.clientControlOptions.selectedMapsAndState = data.mapData;
-      state.clientControlOptions.players = data.players;
-      state.clearAllMapsClicked = false;
+        state.clientControlOptions.selectedMapsAndState = data.mapData;
+        state.clientControlOptions.players = data.players;
+        state.clearAllMapsClicked = false;
     },
     clearClientMaps(state) {
-      state.clientControlOptions.selectedMapsAndState = [];
+        state.clientControlOptions.selectedMapsAndState = [];
     },
-    addNewPlayerRound(state, data) {
-      data.id = debounceMapName(state, data.selectedMapName);
-      if (state.mapPickAndBanOverlayControlOptions.adminOptions.length === 0) {
-        data.state = "current";
-      }
-      state.mapPickAndBanOverlayControlOptions.adminOptions.push(data);
+    addNewPlayerRound(state, data) {        
+        data.id = debounceMapName(state, data.selectedMapName);
+        if (state.mapPickAndBanOverlayControlOptions.adminOptions.length === 0) {
+            data.state = "current";
+        }
+        state.mapPickAndBanOverlayControlOptions.adminOptions.push(data);
     },
     saveRoundState(state, data) {
-      const mapToUpdateIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
-        return map.id === data.mapIdToUpdate;
-      });
-      if (mapToUpdateIndex > -1) {
-        const previousState = state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState;
-        state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].homeMapPlayer = data.homeMap;
-        state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].winner = data.winner;
-        state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamOneCiv = data.teamOneCiv;
-        state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamTwoCiv = data.teamTwoCiv;
-        state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].state = data.state;
-        // this map was current, now played. next map is current if exists
-        if (data.state === "played") {
-          const nextMapIndex = mapToUpdateIndex + 1;
-          if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].homeMapPlayer = data.homeMap;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].state = "current";
-          }
+        const mapToUpdateIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+            return map.id === data.mapIdToUpdate;
+        });
+        if (mapToUpdateIndex > -1) {
+            const previousState = state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].mapState;
+            state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].homeMapPlayer = data.homeMap;
+            state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].winner = data.winner;
+            state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamOneCiv = data.teamOneCiv;
+            state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].teamTwoCiv = data.teamTwoCiv;
+            state.mapPickAndBanOverlayControlOptions.adminOptions[mapToUpdateIndex].state = data.state;
+            // this map was current, now played. next map is current if exists
+            if (data.state === "played") {
+                const nextMapIndex = mapToUpdateIndex + 1;
+                if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].homeMapPlayer = data.homeMap;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].state = "current";
+                }
+            }
+            else if (previousState === "played" && data.state !== "played") {
+                // set the next map to open
+                const nextMapIndex = mapToUpdateIndex + 1;
+                if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].homeMapPlayer = data.homeMap;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
+                    state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].state = "open";
+                }
+            }
         }
-        else if (previousState === "played" && data.state !== "played") {
-          // set the next map to open
-          const nextMapIndex = mapToUpdateIndex + 1;
-          if (state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex]) {
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].homeMapPlayer = data.homeMap;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].winner = data.winner;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamOneCiv = data.teamOneCiv;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].teamTwoCiv = data.teamTwoCiv;
-            state.mapPickAndBanOverlayControlOptions.adminOptions[nextMapIndex].state = "open";
-          }
-        }
-      }
     },
     deleteRound(state, data) {
-      state.mapPickAndBanOverlayControlOptions.adminOptions = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
-        return map.id !== data.mapIdToDelete;
-      });
-    },
+        state.mapPickAndBanOverlayControlOptions.adminOptions = state.mapPickAndBanOverlayControlOptions.adminOptions.filter((map) => {
+            return map.id !== data.mapIdToDelete;
+        });
+    },        
     syncTeamNames: (state, data) => {
-      state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
-      state.mapPickAndBanOverlayControlOptions.team2Name = data.team2Name;
+        state.mapPickAndBanOverlayControlOptions.team1Name = data.team1Name;
+        state.mapPickAndBanOverlayControlOptions.team2Name = data.team2Name;
 
-      state.roundOverlay.team1Name = data.team1Name;
-      state.roundOverlay.team2Name = data.team2Name;
+        state.roundOverlay.team1Name = data.team1Name;
+        state.roundOverlay.team2Name = data.team2Name;
     },
     updateRoundType: (state, data) => {
       state.roundOverlay.roundMode = data.roundMode;
@@ -445,7 +478,7 @@ export default new Vuex.Store({
       }
     },
     setWinnerModifyMapState: (state, data) => {
-      const currentMapIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+       const currentMapIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
         return map.id === data.mapIdToModify;
       });
       if (data.newMapState === "played") {
@@ -457,6 +490,22 @@ export default new Vuex.Store({
         state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].state = data.newMapState;
         if (state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1]) {
           state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = 'open';
+        }
+      }
+    },
+    setMapStateModifyState: (state, data) => {
+      const currentMapIndex = state.mapPickAndBanOverlayControlOptions.adminOptions.findIndex((map) => {
+        return map.id === data.mapIdToModify;
+      });
+      if (data.newMapState === "open") {
+        state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].state = "current";
+        if (state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1]) {
+          state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = data.newMapState;
+        }
+      } else if (data.newMapState === "current"){
+        state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex].state = "banned";
+        if (state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1]) {
+          state.mapPickAndBanOverlayControlOptions.adminOptions[currentMapIndex + 1].state = data.newMapState;
         }
       }
     },
@@ -566,6 +615,9 @@ export default new Vuex.Store({
     setWinnerModifyMapState(store, payload) {
       store.commit("setWinnerModifyMapState", payload);
     },
+    setMapStateModifyState(store, payload) {
+      store.commit("setMapStateModifyState", payload);
+    },
     setSelectedCivsForTeam(store, payload) {
       store.commit("setSelectedCivsForTeam", payload);
     },
@@ -574,6 +626,12 @@ export default new Vuex.Store({
     },
     updateTechOverlayControls(store, payload) {
       store.commit("updateTechOverlayControls", payload);
+    },
+    updateScoreboardOverlayControls(store, payload) {
+      store.commit("updateMiscOverlayControlOptions", payload);
+    },
+    updateScoreboardClientControls(store, payload) {
+      store.commit("updateScoreboardClientControls", payload);
     }
   }
 });

@@ -1,5 +1,8 @@
 <template>
-  <md-card md-with-hover class="card-style row-contents">
+  <md-card
+    md-with-hover
+    class="card-style row-contents"
+  >
     <div class="scoreboard-card-content">
       <md-card-header>
         <div class="md-title">Scoreboard</div>
@@ -111,52 +114,52 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+  import { mapState } from "vuex";
 
-export default {
-  name: "PlayerCivDisplayControls",
-  data() {
-    return {
-      civ1X: "37",
-      civ1Y: "6.5",
-      civ1Width: "25.5",
-      civ2X: "57",
-      civ2Y: "6.5",
-      civ2Width: "25.5",
-      isCivDisplayVisible: this.controlOptions?.isCivDisplayVisible || false,
-      showTeamColors: this.controlOptions?.showTeamColors || false,
-      showCurrentMapName: this.controlOptions?.showCurrentMapName || false
-    };
-  },
-  computed: {
-    ...mapState({
-      controlOptions: state => state.miscOverlayControlOptions
-    })
-  },
-  methods: {
-    valueChanged() {
-      this.$store.commit("updateMiscOverlayControlOptions", {
-        ...this.$data
-      });
-      this.$emit("miscOverlayEmit", { ...this.$data });
-    }
-  }
-};
+  export default {
+    name: "PlayerCivDisplayControls",
+    data() {
+      return {
+        civ1X: "37",
+        civ1Y: "6.5",
+        civ1Width: "25.5",
+        civ2X: "57",
+        civ2Y: "6.5",
+        civ2Width: "25.5",
+        isCivDisplayVisible: this.controlOptions?.isCivDisplayVisible || false,
+        showTeamColors: this.controlOptions?.showTeamColors || false,
+        showCurrentMapName: this.controlOptions?.showCurrentMapName || false,
+      };
+    },
+    computed: {
+      ...mapState({
+        controlOptions: (state) => state.miscOverlayControlOptions,
+      }),
+    },
+    methods: {
+      valueChanged() {
+        this.$store.dispatch("updateScoreboardOverlayControls", {
+          ...this.$data,
+        });
+        this.$emit("miscOverlayEmit", { ...this.$data });
+      },
+    },
+  };
 </script> 
 
 <style language="scss">
-.input-percent.md-field {
-  display: inline-flex;
-  margin: 0.25rem;
-}
-.card-switch {
-  margin: 0.25rem;
-}
-.scoreboard-card-content {
-  display: inline-flex;
-  align-items: center;
-}
-.scoreboard-card-content .column-contents {
-  align-items: initial;
-}
+  .input-percent.md-field {
+    display: inline-flex;
+    margin: 0.25rem;
+  }
+  .card-switch {
+    margin: 0.25rem;
+  }
+  .scoreboard-card-content {
+    display: inline-flex;
+    align-items: center;
+  }
+  .scoreboard-card-content .column-contents {
+    align-items: initial;
+  }
 </style>
