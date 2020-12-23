@@ -72,7 +72,7 @@
         class="md-primary large-font"
       >Siege Workshop</md-switch>
       <md-field class="tech-field">
-        <label>Auto Hide Delay (ms)</label>
+        <label>Auto Hide Delay (s)</label>
         <md-input
           v-model="autoHideDelay"
           @change="valueChanged"
