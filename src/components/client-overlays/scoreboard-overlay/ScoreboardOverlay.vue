@@ -1,7 +1,7 @@
 <template>
   <div class="score-board-overlay-container">
     <div class="score-board-overlay"></div>
-    <PlayerPositions :showTeamColors="miscOverlayOptions.showTeamColors" />
+    <PlayerPositions />
     <PlayersCivDisplay
       :isCivDisplayVisible="miscOverlayOptions.isCivDisplayVisible"
       :civ1="miscOverlayOptions.civ1"

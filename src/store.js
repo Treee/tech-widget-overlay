@@ -191,9 +191,14 @@ export default new Vuex.Store({
         return state.roundOverlay;
       },
       getCurrentRoundData: (state) => {
-        return state.mapPickAndBanOverlayControlOptions.adminOptions.find((map) => {
+        const currentRound = state.mapPickAndBanOverlayControlOptions.adminOptions.find((map) => {
           return map.state === 'current';
         });
+        const roundOverlay = state.roundOverlay;
+        return {
+          currentRound,
+          roundMode: roundOverlay.roundMode
+        };
       },
       getCivDescription: (state) => (civName) => {
         if (civName === "") {
@@ -353,10 +358,26 @@ export default new Vuex.Store({
       updateMiscOverlayControlOptions(state, data) {
           state.miscOverlayControlOptions.civ1 = data.teamOneCiv || [];
           state.miscOverlayControlOptions.civ2 = data.teamTwoCiv || [];
+          state.miscOverlayControlOptions.roundMode = data.roundMode || 0;
           state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
           state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
           state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
           state.miscOverlayControlOptions.currentMap = data.currentMap || state.miscOverlayControlOptions.currentMap || "";
+          state.miscOverlayControlOptions.civ1X = data.civ1X || state.miscOverlayControlOptions.civ1X;
+          state.miscOverlayControlOptions.civ1Y = data.civ1Y || state.miscOverlayControlOptions.civ1Y;
+          state.miscOverlayControlOptions.civ1Width = data.civ1Width || state.miscOverlayControlOptions.civ1Width;
+          state.miscOverlayControlOptions.civ2X = data.civ2X || state.miscOverlayControlOptions.civ2X;
+          state.miscOverlayControlOptions.civ2Y = data.civ2Y || state.miscOverlayControlOptions.civ2Y;
+          state.miscOverlayControlOptions.civ2Width = data.civ2Width || state.miscOverlayControlOptions.civ2Width;
+      },
+      updateScoreboardClientControls(state, data) {
+          state.miscOverlayControlOptions.civ1 = data?.currentRound?.teamOneCiv || [];
+          state.miscOverlayControlOptions.civ2 = data?.currentRound?.teamTwoCiv || [];
+          state.miscOverlayControlOptions.roundMode = data?.roundMode || 0;
+          state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
+          state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
+          state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
+          state.miscOverlayControlOptions.currentMap = data?.currentRound?.selectedMapName || state.miscOverlayControlOptions.currentMap || "";
           state.miscOverlayControlOptions.civ1X = data.civ1X || state.miscOverlayControlOptions.civ1X;
           state.miscOverlayControlOptions.civ1Y = data.civ1Y || state.miscOverlayControlOptions.civ1Y;
           state.miscOverlayControlOptions.civ1Width = data.civ1Width || state.miscOverlayControlOptions.civ1Width;
@@ -599,6 +620,9 @@ export default new Vuex.Store({
       },
       updateScoreboardOverlayControls(store, payload) {
         store.commit("updateMiscOverlayControlOptions", payload);
+      },
+      updateScoreboardClientControls(store, payload) {
+        store.commit("updateScoreboardClientControls", payload);
       }
     }
 });

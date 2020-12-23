@@ -49,12 +49,12 @@
           this.$store.dispatch("clearMaps", { delayMs: 2000 });
         }
         if (messageType === SocketEnums.AdminShowCiv) {
-          this.$store.dispatch("updateScoreboardOverlayControls", data);
+          this.$store.dispatch("updateScoreboardClientControls", data);
         }
         if (messageType === SocketEnums.AdminShowDock) {
           this.$store.commit("updateScoreboardMapName", data);
         }
-        console.log("client handling message", data);
+        // console.log("client handling message", data);
       },
       shuffleCivilizationDrafts(teamNumber, playerPicks, shuffleDelay) {
         const self = this;
