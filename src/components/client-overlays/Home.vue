@@ -22,8 +22,8 @@
         const parsed = JSON.parse(event.data);
         const messageType = parsed.type;
         const data = parsed.data;
-        if (messageType === SocketEnums.AdminShow) {
-          console.log("admin show");
+        if (messageType === SocketEnums.AdminShowPlayerPicks) {
+          // console.log("round tech show");
           this.shuffleCivilizationDrafts(
             "1",
             data.roundData.team1RoundDraft,
@@ -39,6 +39,20 @@
             ...data.techOverlayData,
           });
         }
+        if (messageType === SocketEnums.AdminShow) {
+          // console.log("blah blah", data);
+          this.shuffleCivilizationDrafts(
+            "1",
+            [data.civ1],
+            data.autoHideDelay * 1000
+          );
+          this.shuffleCivilizationDrafts(
+            "2",
+            [data.civ2],
+            data.autoHideDelay * 1000
+          );
+        }
+
         if (messageType === SocketEnums.AdminHide) {
           this.$store.dispatch("clearCivs", { delayMs: 2000 });
         }
@@ -72,13 +86,13 @@
           }, shuffleDelay * index);
         }
       },
-    },
-    created: function () {
-      this.client = clientOverlayWebSocket.startClient(
-        this.clientId,
-        this.handleSocketMessage
-      );
-      // console.log("App created", this.clientId);
+      created: function () {
+        this.client = clientOverlayWebSocket.startClient(
+          this.clientId,
+          this.handleSocketMessage
+        );
+        // console.log("App created", this.clientId);
+      },
     },
   };
 </script>
