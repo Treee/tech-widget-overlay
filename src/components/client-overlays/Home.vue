@@ -49,7 +49,7 @@
           this.$store.dispatch("clearMaps", { delayMs: 2000 });
         }
         if (messageType === SocketEnums.AdminShowCiv) {
-          this.$store.commit("updateMiscOverlayControlOptions", data);
+          this.$store.dispatch("updateScoreboardOverlayControls", data);
         }
         if (messageType === SocketEnums.AdminShowDock) {
           this.$store.commit("updateScoreboardMapName", data);

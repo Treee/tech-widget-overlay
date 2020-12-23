@@ -97,8 +97,11 @@
       miscOverlayBroadcast() {
         const data = this.$store.getters.getMiscOverlayData;
         const data1 = this.$store.getters.getCurrentRoundData;
-        console.log(data1);
-        this.adminClient.sendMessage(SocketEnums.AdminShowCiv, { ...data });
+        // console.log(data1);
+        this.adminClient.sendMessage(SocketEnums.AdminShowCiv, {
+          ...data,
+          ...data1,
+        });
       },
       scoreboardMapChange() {
         const data = {

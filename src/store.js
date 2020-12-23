@@ -142,8 +142,8 @@ export default new Vuex.Store({
           players: []
       },
       miscOverlayControlOptions: {
-          civ1: "",
-          civ2: "",
+          civ1: [],
+          civ2: [],
           isCivDisplayVisible: false,
           showTeamColors: false,
           showCurrentMapName: false,
@@ -351,8 +351,8 @@ export default new Vuex.Store({
           state.techUpgradeOverlayControlOptions.siegeWorkshop = data.siegeWorkshop;
       },
       updateMiscOverlayControlOptions(state, data) {
-          state.miscOverlayControlOptions.civ1 = data.civ1 || state.techUpgradeOverlayControlOptions.civ1 || "";
-          state.miscOverlayControlOptions.civ2 = data.civ2 || state.techUpgradeOverlayControlOptions.civ2 || "";
+          state.miscOverlayControlOptions.civ1 = data.teamOneCiv || [];
+          state.miscOverlayControlOptions.civ2 = data.teamTwoCiv || [];
           state.miscOverlayControlOptions.isCivDisplayVisible = data.isCivDisplayVisible;
           state.miscOverlayControlOptions.showTeamColors = data.showTeamColors;
           state.miscOverlayControlOptions.showCurrentMapName = data.showCurrentMapName;
@@ -596,6 +596,9 @@ export default new Vuex.Store({
       },
       updateTechOverlayControls(store, payload) {
         store.commit("updateTechOverlayControls", payload);
+      },
+      updateScoreboardOverlayControls(store, payload) {
+        store.commit("updateMiscOverlayControlOptions", payload);
       }
     }
 });
