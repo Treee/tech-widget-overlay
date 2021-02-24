@@ -1,31 +1,13 @@
 <template>
-  <div
-    class="tech-overlay-placeholder"
-    v-if="this.civName !== ''"
-  >
-    <div
-      class="div-background mask-img-vertical"
-      :class="getOverlayStyle"
-    >
-      <div
-        class="div-wrapper"
-        :style="this.backgroundStyle()"
-      >
+  <div class="tech-overlay-placeholder" v-if="this.civName !== ''">
+    <div class="div-background mask-img-vertical" :class="getOverlayStyle">
+      <div class="div-wrapper" :style="this.backgroundStyle()">
         <div class="civ-icon-and-name">
-          <div
-            class="civ-icon"
-            :style="this.civIconStyle()"
-          />
+          <div class="civ-icon" :style="this.civIconStyle()" />
           <div class="civ-name">{{ civName }}</div>
-          <div
-            class="civ-icon"
-            :style="this.civIconStyle()"
-          />
+          <div class="civ-icon" :style="this.civIconStyle()" />
         </div>
-        <div
-          class="civ-desc"
-          v-html="getDescription()"
-        />
+        <div class="civ-desc" v-html="getDescription()" />
         <div class="civ-unique-unit-wrapper">
           <div
             class="civ-unique-unit unique-unit-container"
@@ -50,6 +32,7 @@
       civName: String,
       civDescription: String,
       playSound: Boolean,
+      playSoundOrder: Number,
     },
     computed: {
       getAudioPath() {
@@ -67,9 +50,11 @@
         this.civName !== "" &&
         !this.$store.state.clearAllCivsClicked
       ) {
-        var civAudio = new Audio(this.getAudioPath);
-        civAudio.volume = 0.25;
-        civAudio.play();
+        setTimeout(() => {
+          var civAudio = new Audio(this.getAudioPath);
+          civAudio.volume = 0.25;
+          civAudio.play();
+        }, this.playSoundOrder * 2000);
       }
     },
     methods: {
