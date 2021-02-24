@@ -21,7 +21,9 @@
       <div>
         Age of Empires II © Microsoft Corporation.
         <b>AoE Tech/Map Overlay for Age of Empires II</b> was created under
-        Microsoft's "<a href="https://www.xbox.com/en-us/developers/rules">Game Content Usage Rules</a>" using assets from Age of Empires II, and it is not endorsed by or
+        Microsoft's "<a href="https://www.xbox.com/en-us/developers/rules"
+          >Game Content Usage Rules</a
+        >" using assets from Age of Empires II, and it is not endorsed by or
         affiliated with Microsoft.
       </div>
     </div>
@@ -125,7 +127,7 @@
     width: 100%;
     display: inline-flex;
     flex-direction: row;
-    align-items: start;
+    align-items: flex-start;
   }
   .my-footer {
     text-shadow: none;
