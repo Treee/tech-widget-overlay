@@ -2,22 +2,26 @@
   <div class="client-maps md-layout md-alignment-top-center">
     <div
       class="client-map-display fade-in-map"
-      :class="{'fade-in-map': players[0] && players[0] !== '' || players[1] && players[1] !== '', 'fade-out-map': this.$store.state.clearAllMapsClicked}"
+      :class="{
+        'fade-in-map':
+          (players[0] && players[0] !== '') ||
+          (players[1] && players[1] !== ''),
+        'fade-out-map': this.$store.state.clearAllMapsClicked,
+      }"
     >
       <div class="client-image-container"></div>
       <div
         class="yellow-flag-banner player-flag"
         v-if="players[0] && players[0] !== ''"
       >
-        <div class="flag-text-no-icon">{{players[0] || ''}}</div>
+        <div class="flag-text-no-icon">{{ players[0] || "" }}</div>
       </div>
       <div
         class="purple-flag-banner player-flag"
         v-if="players[1] && players[1] !== ''"
       >
-        <div class="flag-text-no-icon">{{players[1] || ''}}</div>
+        <div class="flag-text-no-icon">{{ players[1] || "" }}</div>
       </div>
-
     </div>
     <ClientMapDisplay
       class="md-layout-item"
@@ -25,7 +29,7 @@
       :key="map.id"
       :name="map.selectedMapName"
       :state="map.state"
-      :home-map-player="map.homeMapPlayer || ''"
+      :home-map-player="map.homePlayer || ''"
       :winner="map.winner || ''"
       :teamOneCiv="map.teamOneCiv"
       :teamTwoCiv="map.teamTwoCiv"

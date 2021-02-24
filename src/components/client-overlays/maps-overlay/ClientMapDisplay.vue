@@ -1,50 +1,56 @@
 <template>
   <div
     class="client-map-display"
-    :class="{'fade-in-map': this.name !== '', 'fade-out-map': this.$store.state.clearAllMapsClicked}"
+    :class="{
+      'fade-in-map': this.name !== '',
+      'fade-out-map': this.$store.state.clearAllMapsClicked,
+    }"
   >
     <div class="client-image-container">
-      <div
-        class="client-map-frame"
-        :style="getMapFrame"
-      ></div>
-      <div
-        class="client-map-image"
-        :style="getMapImage"
-      ></div>
+      <div class="client-map-frame" :style="getMapFrame"></div>
+      <div class="client-map-image" :style="getMapImage"></div>
       <div class="column-list">
         <div
           class="client-map-name"
-          :class="{'white-text': this.useWhiteText()}"
-        >{{this.$store.getters.getFormattedMapName(name)}}</div>
+          :class="{ 'white-text': this.useWhiteText() }"
+        >
+          {{ this.$store.getters.getFormattedMapName(name) }}
+        </div>
         <div
           class="home-map yellow-flag-banner flags-under-maps"
           v-if="this.homeMapPlayer !== ''"
         >
-          <div class="flag-text">{{this.homeMapPlayer}}</div>
+          <div class="flag-text">{{ this.homeMapPlayer }}</div>
           <md-icon class="home-icon">home</md-icon>
         </div>
         <div
           :class="[
             teamOne === winner ? 'green-flag-banner' : 'red-flag-banner',
-            'flags-under-maps'
+            'flags-under-maps',
           ]"
           v-if="this.winner !== ''"
         >
-          <div class="flag-text">{{this.teamOneCiv}}</div>
-          <div :class="teamOne === winner ? 'winner-icon' : 'defeated-icon'"></div>
+          <div class="flag-text">
+            {{ this.toCommaSeparatedString(this.teamOneCiv) }}
+          </div>
+          <div
+            :class="teamOne === winner ? 'winner-icon' : 'defeated-icon'"
+          ></div>
         </div>
         <div
           :class="[
             teamTwo === winner ? 'green-flag-banner' : 'red-flag-banner',
-            'flags-under-maps'
+            'flags-under-maps',
           ]"
           v-if="this.winner !== ''"
         >
-          <div class="flag-text">{{this.teamTwoCiv}}</div>
-          <div :class="teamTwo === winner ? 'winner-icon' : 'defeated-icon'"></div>
+          <div class="flag-text">
+            {{ this.toCommaSeparatedString(this.teamTwoCiv) }}
+          </div>
+          <div
+            :class="teamTwo === winner ? 'winner-icon' : 'defeated-icon'"
+          ></div>
         </div>
-
       </div>
     </div>
   </div>
@@ -58,8 +64,8 @@
       state: String,
       homeMapPlayer: String,
       winner: String,
-      teamOneCiv: String,
-      teamTwoCiv: String,
+      teamOneCiv: Array,
+      teamTwoCiv: Array,
       teamOne: String,
       teamTwo: String,
     },
@@ -90,6 +96,13 @@
           mapFrame = "frame-previously-played.png";
         }
         return mapFrame;
+      },
+      toCommaSeparatedString(arrayText) {
+        if (arrayText) {
+          return arrayText.join(", ");
+        } else {
+          return "";
+        }
       },
       toKabobCase(text) {
         return text.toLowerCase().split(" ").join("-");
