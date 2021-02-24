@@ -66,7 +66,7 @@
         if (messageType === SocketEnums.AdminShowDock) {
           this.$store.commit("updateScoreboardMapName", data);
         }
-        console.log("client handling message", data);
+        console.log(`Message Type: ${messageType}`, data);
       },
       shuffleCivilizationDrafts(teamNumber, playerPicks, shuffleDelay) {
         const self = this;

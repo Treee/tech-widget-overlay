@@ -138,8 +138,10 @@ export default new Vuex.Store({
     clearAllCivsClicked: false,
     clearAllMapsClicked: false,
     clientControlOptions: {
-        selectedMapsAndState: [],
-        players: []
+      roundMode: 0,
+      roundOverlayVisible: false,
+      selectedMapsAndState: [],
+      players: []
     },
     miscOverlayControlOptions: {
         civ1: [],
@@ -399,12 +401,15 @@ export default new Vuex.Store({
         state.miscOverlayControlOptions.currentMap = data.currentMap;
     },
     updateClientSideMapsAndState(state, data) {
-        state.clientControlOptions.selectedMapsAndState = data.mapData;
-        state.clientControlOptions.players = data.players;
-        state.clearAllMapsClicked = false;
+      state.clientControlOptions.roundMode = data.roundMode;
+      state.clientControlOptions.roundOverlayVisible = data.roundOverlayVisible;
+      state.clientControlOptions.selectedMapsAndState = data.mapData;
+      state.clientControlOptions.players = [data.team1Name, data.team2Name];
+      state.clearAllMapsClicked = false;
     },
     clearClientMaps(state) {
-        state.clientControlOptions.selectedMapsAndState = [];
+      state.clientControlOptions.roundOverlayVisible = false;
+      state.clientControlOptions.selectedMapsAndState = [];
     },
     addNewPlayerRound(state, data) {        
         data.id = debounceMapName(state, data.selectedMapName);

@@ -85,13 +85,18 @@
         const data = this.$store.getters.getRoundOverlayData;
         const data1 = this.$store.state.mapPickAndBanOverlayControlOptions
           .adminOptions;
-        this.adminClient.sendMessage(SocketEnums.AdminShowMaps, {
-          roundMode: data.roundMode,
-          roundOverlayVisible: data.roundOverlayVisible,
-          team1Name: data.team1Name,
-          team2Name: data.team2Name,
-          mapData: data1,
-        });
+
+        if (data.roundOverlayVisible) {
+          this.adminClient.sendMessage(SocketEnums.AdminShowMaps, {
+            roundMode: data.roundMode,
+            roundOverlayVisible: data.roundOverlayVisible,
+            team1Name: data.team1Name,
+            team2Name: data.team2Name,
+            mapData: data1,
+          });
+        } else {
+          this.mapOverlayHide();
+        }
       },
       mapOverlayHide() {
         this.adminClient.sendMessage(SocketEnums.AdminHideMaps, {});
