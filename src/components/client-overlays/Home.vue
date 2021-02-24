@@ -40,6 +40,9 @@
         }
         if (messageType === SocketEnums.AdminShow) {
           // console.log("blah blah", data);
+          this.$store.commit("updateTechOverlayControls", {
+            ...data.techOverlayData,
+          });
           this.shuffleCivilizationDrafts(
             "1",
             data.civ1,
