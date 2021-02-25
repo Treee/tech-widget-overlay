@@ -96,7 +96,7 @@ const customMaps = [
   "msm-lowland"
 ];
 
-const customMapPrefixes = ["wc", "boa2", "rbw", "rbw2", "hc3", "msm"];
+const customMapPrefixes = ["wc", "boa2", "rbw", "rbw2", "hc4", "msm"];
 
 const toCamelCase = (text) => {
   let camelCase = "";
