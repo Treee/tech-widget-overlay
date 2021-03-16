@@ -1,17 +1,10 @@
 <template>
-  <md-card
-    md-with-hover
-    class="card-style round-display"
-  >
+  <md-card md-with-hover class="card-style round-display">
     <md-card-header>
       <div class="md-title">Rounds</div>
     </md-card-header>
-    <div
-      v-for="(map,index) in rounds"
-      :key="map.id"
-      :id="map.id"
-    >
-      <div class="md-card-header md-subhead">Round {{index+1}}</div>
+    <div v-for="(map, index) in rounds" :key="map.id" :id="map.id">
+      <div class="md-card-header md-subhead">Round {{ index + 1 }}</div>
       <md-card-content class="row-contents">
         <div class="column-contents">
           <div class="md-card-header md-subhead">Home Map</div>
@@ -20,12 +13,14 @@
               v-model="map.homePlayer"
               :value="teamOneName"
               :disabled="isRoundControlDisabled(map.state)"
-            >{{teamOneName}}</md-checkbox>
+              >{{ teamOneName }}</md-checkbox
+            >
             <md-checkbox
               v-model="map.homePlayer"
               :value="teamTwoName"
               :disabled="isRoundControlDisabled(map.state)"
-            >{{teamTwoName}}</md-checkbox>
+              >{{ teamTwoName }}</md-checkbox
+            >
           </div>
           <div v-if="showPlayerDropdown()">
             <div class="md-card-header md-subhead">Winner</div>
@@ -34,13 +29,15 @@
               :value="teamOneName"
               :disabled="isRoundControlDisabled(map.state)"
               @change="winnerSelected(map.winner, map.id)"
-            >{{teamOneName}}</md-checkbox>
+              >{{ teamOneName }}</md-checkbox
+            >
             <md-checkbox
               v-model="map.winner"
               :value="teamTwoName"
               :disabled="isRoundControlDisabled(map.state)"
               @change="winnerSelected(map.winner, map.id)"
-            >{{teamTwoName}}</md-checkbox>
+              >{{ teamTwoName }}</md-checkbox
+            >
           </div>
         </div>
         <div class="column-contents">
@@ -63,25 +60,25 @@
               </md-card-header>
               <div class="civ-selection-list">
                 <md-menu-item
-                  v-for="(draftCiv) in teamOneCivDraft"
+                  v-for="draftCiv in teamOneCivDraft"
                   :key="draftCiv.civ"
                   :id="draftCiv.civ"
                   @click="selectTeamCivs(draftCiv.civ, map.id, 'team1')"
                 >
                   <div
                     class="civ-icon-group"
-                    :class="{'active' : isCivSelected(map.teamOneCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamOneCiv)}"
+                    :class="{
+                      active: isCivSelected(map.teamOneCiv, draftCiv.civ),
+                      faded: isCivDisabled(map.teamOneCiv),
+                    }"
                   >
-                    <div
-                      class="civ-icon"
-                      :style="civIconStyle(draftCiv.civ)"
-                    />
+                    <div class="civ-icon" :style="civIconStyle(draftCiv.civ)" />
                     <div
                       class="civ-unique-unit unique-unit-container"
                       :style="uniqueUnitStyle(draftCiv.civ)"
                     />
                     <div class="civ-name">
-                      {{getMapName(draftCiv.civ)}}
+                      {{ getMapName(draftCiv.civ) }}
                     </div>
                   </div>
                 </md-menu-item>
@@ -91,25 +88,25 @@
               </md-card-header>
               <div class="civ-selection-list">
                 <md-menu-item
-                  v-for="(draftCiv) in teamTwoCivDraft"
-                  :key="draftCiv.civ+'1'"
+                  v-for="draftCiv in teamTwoCivDraft"
+                  :key="draftCiv.civ + '1'"
                   :id="draftCiv.civ"
                   @click="selectTeamCivs(draftCiv.civ, map.id, 'team2')"
                 >
                   <div
                     class="civ-icon-group"
-                    :class="{'active' : isCivSelected(map.teamTwoCiv, draftCiv.civ), 'faded' : isCivDisabled(map.teamTwoCiv)}"
+                    :class="{
+                      active: isCivSelected(map.teamTwoCiv, draftCiv.civ),
+                      faded: isCivDisabled(map.teamTwoCiv),
+                    }"
                   >
-                    <div
-                      class="civ-icon"
-                      :style="civIconStyle(draftCiv.civ)"
-                    />
+                    <div class="civ-icon" :style="civIconStyle(draftCiv.civ)" />
                     <div
                       class="civ-unique-unit unique-unit-container"
                       :style="uniqueUnitStyle(draftCiv.civ)"
                     />
                     <div class="civ-name">
-                      {{getMapName(draftCiv.civ)}}
+                      {{ getMapName(draftCiv.civ) }}
                     </div>
                   </div>
                 </md-menu-item>
@@ -128,26 +125,14 @@
           v-model="map.state"
           value="banned"
           @change="mapBanToggle(map.state, map.id)"
-        >Banned</md-checkbox>
-        <md-menu
-          class="custom-menu"
-          :md-offset-x="127"
-          :md-offset-y="-400"
+          >Banned</md-checkbox
         >
-          <div
-            class="map-display"
-            md-menu-trigger
-          >
+        <md-menu class="custom-menu" :md-offset-x="127" :md-offset-y="-400">
+          <div class="map-display" md-menu-trigger>
             <div class="image-container">
-              <div
-                class="map-frame"
-                :style="getMapFrame(map.state)"
-              ></div>
-              <div
-                class="map-image"
-                :style="getMapImage(map.id)"
-              ></div>
-              <div class="map-name">{{getMapName(map.id)}}</div>
+              <div class="map-frame" :style="getMapFrame(map.state)"></div>
+              <div class="map-image" :style="getMapImage(map.id)"></div>
+              <div class="map-name">{{ getMapName(map.id) }}</div>
             </div>
           </div>
           <md-menu-content class="custom-menu-content">
@@ -156,22 +141,19 @@
             </md-card-header>
             <div class="map-menu-items">
               <md-menu-item
-                v-for="(defaultMap) in getDefaultMaps()"
+                v-for="defaultMap in getDefaultMaps()"
                 :key="defaultMap"
                 :id="defaultMap"
                 @click="selectMenuMap(defaultMap, map.id)"
               >
                 <div class="map-display">
                   <div class="image-container">
-                    <div
-                      class="map-frame"
-                      :style="getMapFrame('open')"
-                    ></div>
+                    <div class="map-frame" :style="getMapFrame('open')"></div>
                     <div
                       class="map-image"
                       :style="getMapImage(defaultMap)"
                     ></div>
-                    <div class="map-name">{{getMapName(defaultMap)}}</div>
+                    <div class="map-name">{{ getMapName(defaultMap) }}</div>
                   </div>
                 </div>
               </md-menu-item>
@@ -181,22 +163,19 @@
             </md-card-header>
             <div class="map-menu-items">
               <md-menu-item
-                v-for="(customMap) in getCustomMaps()"
+                v-for="customMap in getCustomMaps()"
                 :key="customMap"
                 :id="customMap"
                 @click="selectMenuMap(customMap, map.id)"
               >
                 <div class="map-display">
                   <div class="image-container">
-                    <div
-                      class="map-frame"
-                      :style="getMapFrame('open')"
-                    ></div>
+                    <div class="map-frame" :style="getMapFrame('open')"></div>
                     <div
                       class="map-image"
                       :style="getMapImage(customMap)"
                     ></div>
-                    <div class="map-name">{{getMapName(customMap)}}</div>
+                    <div class="map-name">{{ getMapName(customMap) }}</div>
                   </div>
                 </div>
               </md-menu-item>
