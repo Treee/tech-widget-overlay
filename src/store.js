@@ -347,14 +347,17 @@ export default new Vuex.Store({
     preTransitionCivOverlay(state) {
         state.clearAllCivsClicked = true;
     },
+    resetTransitionCivOverlay(state) {
+      state.clearAllCivsClicked = false;
+    },
     preTransitionMapOverlay(state) {
         state.clearAllMapsClicked = true;
     },
     updateTechOverlayControls(state, data) {
         state.techUpgradeOverlayControlOptions.sound = data.sound;
         state.techUpgradeOverlayControlOptions.autoHide = data.autoHide;
-        state.techUpgradeOverlayControlOptions.civ1 = [data.civ1];
-        state.techUpgradeOverlayControlOptions.civ2 = [data.civ2];
+        state.techUpgradeOverlayControlOptions.civ1 = data.team1RoundDraft;
+        state.techUpgradeOverlayControlOptions.civ2 = data.team2RoundDraft;
         state.techUpgradeOverlayControlOptions.autoHideDelay = data.autoHideDelay;
         state.techUpgradeOverlayControlOptions.tech = data.tech;
         state.techUpgradeOverlayControlOptions.blacksmith = data.blacksmith;
@@ -557,6 +560,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    resetTransitionCivOverlay(store, payload) {
+      if (payload.delay) {
+        setTimeout(function () {
+          console.log('resetTransitionCivOverlay');
+          store.commit("resetTransitionCivOverlay");
+        }, payload.delay);
+      } else {
+        store.commit("resetTransitionCivOverlay");
+      }      
+    },
     preTransitionCivOverlay(store, payload) {
       if (payload.delay) {
         setTimeout(function () {

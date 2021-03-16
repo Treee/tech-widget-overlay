@@ -71,10 +71,15 @@
     },
     computed: {
       getMapImage() {
-        const map = this.toKabobCase(this.name);
+        let map = this.toKabobCase(this.name);
         const mapFolder = this.$store.getters.isCustomMap(map)
           ? "custom"
           : "default";
+        const mapParts = map.split("-");
+        if (!isNaN(parseInt(mapParts[mapParts.length - 1]))) {
+          // we have a duplicate map, trim the last part
+          map = mapParts.slice(0, mapParts.length - 1).join("-");
+        }
         return {
           background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`,
         };

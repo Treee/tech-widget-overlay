@@ -8,10 +8,7 @@
       :civ2-description="this.$store.getters.getCivDescription(civ2)"
       :playSound="sound"
     />
-    <MapOverlay
-      :selected-maps-and-state="selectedMaps"
-      :players="players"
-    />
+    <MapOverlay :selected-maps-and-state="selectedMaps" :players="players" />
     <AnimatedGroupOverlay v-if="false" />
 
     <!-- <object

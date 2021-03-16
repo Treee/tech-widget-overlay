@@ -7,7 +7,7 @@
           <div class="civ-name">{{ civName }}</div>
           <div class="civ-icon" :style="this.civIconStyle()" />
         </div>
-        <div class="civ-desc" v-html="getDescription()" />
+        <div class="civ-desc" v-html="this.getDescription()" />
         <div class="civ-unique-unit-wrapper">
           <div
             class="civ-unique-unit unique-unit-container"
@@ -39,6 +39,9 @@
         return `https://treee.github.io/tech-widget-overlay/assets/sounds/${this.civName}.mp3`;
       },
       getOverlayStyle() {
+        console.log(
+          `getOverlayStyle ${this.civName} : ${this.$store.state.clearAllCivsClicked}`
+        );
         return this.civName === "" || this.$store.state.clearAllCivsClicked
           ? "civ-tech-animation-leave-active"
           : "civ-tech-animation-enter-active";
@@ -59,25 +62,31 @@
     },
     methods: {
       backgroundStyle() {
-        return {
-          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-emblems/${this.civName.toLowerCase()}.png")`,
-          "background-size": "contain",
-        };
+        if (this.civName) {
+          return {
+            background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-emblems/${this.civName.toLowerCase()}.png")`,
+            "background-size": "contain",
+          };
+        }
       },
       civIconStyle() {
-        return {
-          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-icons/${this.civName.toLowerCase()}.png")`,
-          "background-size": "contain",
-          "background-repeat": "no-repeat",
-        };
+        if (this.civName) {
+          return {
+            background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-icons/${this.civName.toLowerCase()}.png")`,
+            "background-size": "contain",
+            "background-repeat": "no-repeat",
+          };
+        }
       },
       uniqueUnitStyle(flipped) {
-        return {
-          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${this.civName.toLowerCase()}.png")`,
-          "background-size": "contain",
-          "background-repeat": "no-repeat",
-          transform: flipped ? "scaleX(1)" : "scaleX(-1)",
-        };
+        if (this.civName) {
+          return {
+            background: `url("https://treee.github.io/tech-widget-overlay/assets/images/civ-unique-units/${this.civName.toLowerCase()}.png")`,
+            "background-size": "contain",
+            "background-repeat": "no-repeat",
+            transform: flipped ? "scaleX(1)" : "scaleX(-1)",
+          };
+        }
       },
       getDescription() {
         return this.$store.getters.getCivDescription(this.civName);

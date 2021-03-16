@@ -23,16 +23,16 @@
         const messageType = parsed.type;
         const data = parsed.data;
         if (messageType === SocketEnums.AdminShowPlayerPicks) {
-          // console.log("round tech show");
+          console.log("round tech show");
           this.shuffleCivilizationDrafts(
             "1",
             data.roundData.team1RoundDraft,
-            data.techOverlayData.autoHideDelay * 1000
+            data.techOverlayData.autoHideDelay
           );
           this.shuffleCivilizationDrafts(
             "2",
             data.roundData.team2RoundDraft,
-            data.techOverlayData.autoHideDelay * 1000
+            data.techOverlayData.autoHideDelay
           );
           this.$store.commit("updateTechOverlayControls", {
             ...data.techOverlayData,
