@@ -9,7 +9,10 @@
       />
     </div>
     <div class="card-holder-right card-centered">
-      <RoundDisplayCard v-on:roundTech="roundTechShow" />
+      <RoundDisplayCard
+        v-on:roundTech="roundTechShow"
+        v-on:updateRoundOverlay="roundOverlayShow"
+      />
     </div>
     <div class="my-footer">
       <div>

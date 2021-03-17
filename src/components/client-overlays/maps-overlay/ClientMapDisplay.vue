@@ -7,7 +7,7 @@
     }"
   >
     <div class="client-image-container">
-      <div class="client-map-frame" :style="getMapFrame"></div>
+      <!-- <div class="client-map-frame" :style="getMapFrame"></div> -->
       <div class="client-map-image" :style="getMapImage"></div>
       <div class="column-list">
         <div
@@ -85,21 +85,26 @@
         };
       },
       getMapFrame() {
-        return {
-          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/${this.getMapFrameImagePath()}")`,
-        };
+        if (this.state === "banned") {
+          return {
+            background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/veto.png")`,
+          };
+        }
+        return "";
       },
     },
     methods: {
       getMapFrameImagePath() {
         let mapFrame = "frame.png";
-        if (this.state === "current") {
-          mapFrame = "frame-current.png";
-        } else if (this.state === "banned") {
-          mapFrame = "frame-veto.png";
-        } else if (this.state === "played") {
-          mapFrame = "frame-previously-played.png";
+        // if (this.state === "current") {
+        //   mapFrame = "frame-current.png";
+        // } else
+        if (this.state === "banned") {
+          mapFrame = "veto.png";
         }
+        // else if (this.state === "played") {
+        //   mapFrame = "frame-previously-played.png";
+        // }
         return mapFrame;
       },
       toCommaSeparatedString(arrayText) {
@@ -240,12 +245,13 @@
 
   .client-map-name {
     z-index: 2;
-    font-size: larger;
+    font-size: x-large;
     display: inline-flex;
     height: fit-content;
+    transform: rotate(315deg);
     position: relative;
-    top: 87%;
-    align-self: center;
+    top: 5%;
+    left: -12%;
   }
 
   .white-text {

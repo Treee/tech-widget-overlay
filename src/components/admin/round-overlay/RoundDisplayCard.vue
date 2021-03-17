@@ -215,6 +215,7 @@
         this.$store.dispatch("deleteRound", {
           mapIdToDelete: mapId,
         });
+        this.$emit("updateRoundOverlay");
       },
       selectMenuMap(selectedMap, mapId) {
         this.$store.dispatch("updateMapSelected", {
@@ -232,6 +233,7 @@
           mapIdToModify: mapId,
           newMapState: nextMapState,
         });
+        this.$emit("updateRoundOverlay");
       },
       mapBanToggle(isBanned, mapId) {
         let nextMapState = "current";
@@ -243,7 +245,8 @@
           mapIdToModify: mapId,
           newMapState: nextMapState,
         });
-        console.log("mapid", mapId);
+        // console.log("mapid", mapId);
+        this.$emit("updateRoundOverlay");
       },
       selectTeamCivs(selectedCiv, mapId, teamCivs) {
         const teamCivDraft = this.$store.getters.getTeamSelectedCivDraft(

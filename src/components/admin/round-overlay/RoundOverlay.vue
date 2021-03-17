@@ -2,7 +2,6 @@
   <md-card md-with-hover class="card-style card-rounds column-contents">
     <div class="rounds-left">
       <md-card-header>
-        <div class="md-title">Round Info</div>
         <div class="md-subhead">Match Mode</div>
       </md-card-header>
       <md-card-content>
