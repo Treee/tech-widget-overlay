@@ -88,7 +88,8 @@
         console.log("get map frame");
         if (this.state === "banned") {
           return {
-            background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/veto.png")`,
+            background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/veto.png") no-repeat`,
+            "background-size": "contain",
           };
         }
         return "";
@@ -216,9 +217,9 @@
   .client-map-frame {
     width: inherit;
     height: inherit;
-    background-size: cover !important;
     position: absolute;
     z-index: 2;
+    transform: scale(0.75);
   }
 
   .client-map-image {
