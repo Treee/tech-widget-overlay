@@ -7,7 +7,7 @@
     }"
   >
     <div class="client-image-container">
-      <!-- <div class="client-map-frame" :style="getMapFrame"></div> -->
+      <div class="client-map-frame" :style="getMapFrame"></div>
       <div class="client-map-image" :style="getMapImage"></div>
       <div class="column-list">
         <div
@@ -85,6 +85,7 @@
         };
       },
       getMapFrame() {
+        console.log("get map frame");
         if (this.state === "banned") {
           return {
             background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/veto.png")`,
@@ -94,19 +95,6 @@
       },
     },
     methods: {
-      getMapFrameImagePath() {
-        let mapFrame = "frame.png";
-        // if (this.state === "current") {
-        //   mapFrame = "frame-current.png";
-        // } else
-        if (this.state === "banned") {
-          mapFrame = "veto.png";
-        }
-        // else if (this.state === "played") {
-        //   mapFrame = "frame-previously-played.png";
-        // }
-        return mapFrame;
-      },
       toCommaSeparatedString(arrayText) {
         if (arrayText) {
           return arrayText.join(", ");
