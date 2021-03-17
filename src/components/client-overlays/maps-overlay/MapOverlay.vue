@@ -1,8 +1,8 @@
 <template>
-  <div class="client-maps md-layout md-alignment-top-center">
+  <div class="client-maps md-layout">
     <ClientMapDisplay
       class="md-layout-item"
-      v-for="map in selectedMapsAndState"
+      v-for="(map, index) in selectedMapsAndState"
       :key="map.id"
       :name="map.selectedMapName"
       :state="map.state"
@@ -12,6 +12,7 @@
       :teamTwoCiv="map.teamTwoCiv"
       :teamOne="players[0] || ''"
       :teamTwo="players[1] || ''"
+      :pointer="pickPointerdirection(index)"
     />
   </div>
 </template>
@@ -27,6 +28,19 @@
     },
     components: {
       ClientMapDisplay,
+    },
+    methods: {
+      pickPointerdirection(index) {
+        const totalMaps = this.selectedMapsAndState.length;
+        console.log(Math.floor(totalMaps / 2));
+        if (index < Math.floor(totalMaps / 2)) {
+          return "pointer-left";
+        } else if (index === Math.floor(totalMaps / 2)) {
+          return "pointer-both";
+        } else {
+          return "pointer-right";
+        }
+      },
     },
   };
 </script>

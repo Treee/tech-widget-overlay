@@ -1,58 +1,33 @@
 <template>
   <div
-    class="client-map-display"
     :class="{
       'fade-in-map': this.name !== '',
       'fade-out-map': this.$store.state.clearAllMapsClicked,
     }"
   >
-    <div class="client-image-container">
-      <div class="client-map-frame" :style="getMapFrame"></div>
-      <div class="client-map-image" :style="getMapImage"></div>
-      <div class="column-list">
-        <div
-          class="client-map-name"
-          :class="{ 'white-text': this.useWhiteText() }"
-        >
-          {{ this.$store.getters.getFormattedMapName(name) }}
-        </div>
-        <div
-          class="home-map yellow-flag-banner flags-under-maps"
-          v-if="this.homeMapPlayer !== ''"
-        >
-          <div class="flag-text">{{ this.homeMapPlayer }}</div>
-          <md-icon class="home-icon">home</md-icon>
-        </div>
-        <div
-          :class="[
-            teamOne === winner ? 'green-flag-banner' : 'red-flag-banner',
-            'flags-under-maps',
-          ]"
-          v-if="this.winner !== ''"
-        >
-          <div class="flag-text">
-            {{ this.toCommaSeparatedString(this.teamOneCiv) }}
-          </div>
-          <div
-            :class="teamOne === winner ? 'winner-icon' : 'defeated-icon'"
-          ></div>
-        </div>
-        <div
-          :class="[
-            teamTwo === winner ? 'green-flag-banner' : 'red-flag-banner',
-            'flags-under-maps',
-          ]"
-          v-if="this.winner !== ''"
-        >
-          <div class="flag-text">
-            {{ this.toCommaSeparatedString(this.teamTwoCiv) }}
-          </div>
-          <div
-            :class="teamTwo === winner ? 'winner-icon' : 'defeated-icon'"
-          ></div>
-        </div>
-      </div>
+    <div :class="pointer">
+      {{ this.$store.getters.getFormattedMapName(name) }}
     </div>
+    <div
+      v-if="this.state === 'banned'"
+      class="client-map-frame"
+      :style="getMapFrame"
+    ></div>
+    <md-icon v-if="this.homeMapPlayer !== ''" :class="getHomeIconPosition()"
+      >home</md-icon
+    >
+    <!-- <div class="client-image-container"> -->
+    <!-- <div class="client-map-image" :style="getMapImage"></div> -->
+    <div v-if="this.winner !== ''" class="civ-picks">
+      {{ this.toCommaSeparatedString(this.teamOneCiv) }}
+    </div>
+    <div
+      v-if="this.winner !== ''"
+      :class="
+        teamOne === winner ? getWinnerIconPosition() : getDefeatedIconPosition()
+      "
+    ></div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -68,6 +43,7 @@
       teamTwoCiv: Array,
       teamOne: String,
       teamTwo: String,
+      pointer: String,
     },
     computed: {
       getMapImage() {
@@ -85,7 +61,6 @@
         };
       },
       getMapFrame() {
-        console.log("get map frame");
         if (this.state === "banned") {
           return {
             background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/veto.png") no-repeat`,
@@ -98,10 +73,28 @@
     methods: {
       toCommaSeparatedString(arrayText) {
         if (arrayText) {
-          return arrayText.join(", ");
+          if (arrayText.length > 2) {
+            return arrayText
+              .map((civName) => {
+                return this.toShortString(civName);
+              })
+              .join(", ");
+          } else {
+            return arrayText
+              .map((civName) => {
+                return civName.charAt(0).toUpperCase() + civName.slice(1);
+              })
+              .join(", ");
+          }
         } else {
           return "";
         }
+      },
+      toShortString(civName) {
+        if (civName) {
+          return civName.slice(0, 3).toUpperCase();
+        }
+        return "";
       },
       toKabobCase(text) {
         return text.toLowerCase().split(" ").join("-");
@@ -109,91 +102,224 @@
       useWhiteText() {
         return this.state !== "played";
       },
+      getHomeIconPosition() {
+        if (this.pointer === "pointer-left") {
+          return "home-icon left-icon";
+        } else {
+          return "home-icon right-icon";
+        }
+      },
+      getWinnerIconPosition() {
+        if (this.pointer === "pointer-left") {
+          return "winner-icon winner-left";
+        } else if (this.pointer === "pointer-both") {
+          if (this.winner === this.teamOneCiv) {
+            return "winner-icon winner-both-left";
+          } else {
+            return "winner-icon winner-both-right";
+          }
+        } else {
+          return "winner-icon winner-right";
+        }
+      },
+      getDefeatedIconPosition() {
+        if (this.pointer === "pointer-left") {
+          return "defeated-icon defeated-left";
+        } else if (this.pointer === "pointer-both") {
+          if (this.winner === this.teamOneCiv) {
+            return "defeated-icon defeated-both-right";
+          } else {
+            return "defeated-icon defeated-both-left";
+          }
+        } else {
+          return "defeated-icon defeated-right";
+        }
+      },
     },
   };
 </script> 
 
 <style language="scss">
+  .pointer-both {
+    width: 11rem;
+    height: 4rem;
+    position: relative;
+    background: red;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+  }
+  .pointer-both:after {
+    content: "";
+    position: absolute;
+    transform: rotate(180deg);
+    left: -2rem;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid red;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+  }
+  .pointer-both:before {
+    content: "";
+    position: absolute;
+    right: -2rem;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid red;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+  }
+  .pointer-left {
+    width: 13rem;
+    height: 4rem;
+    position: relative;
+    background: red;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    padding-right: 2rem;
+    z-index: 2;
+  }
+  .pointer-left:after {
+    content: "";
+    position: absolute;
+    transform: rotate(180deg);
+    left: -2rem;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid red;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+  }
+  .pointer-left:before {
+    content: "";
+    position: absolute;
+    transform: rotate(180deg);
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid white;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+  }
+  .pointer-right {
+    width: 13rem;
+    height: 4rem;
+    position: relative;
+    background: red;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+    padding-left: 2rem;
+    z-index: 2;
+  }
+  .pointer-right:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid white;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+  }
+  .pointer-right:before {
+    content: "";
+    position: absolute;
+    right: -2rem;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 2rem solid red;
+    border-top: 2rem solid transparent;
+    border-bottom: 2rem solid transparent;
+  }
   .winner-icon {
     background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/winner.png");
     background-repeat: no-repeat;
     background-size: contain;
-    width: 29px;
-    height: 100%;
+    width: 5rem;
+    height: 3rem;
     display: inline-flex;
-    float: left;
-    margin-top: 5px;
+    position: relative;
+    z-index: 2;
   }
+  .winner-icon.winner-left {
+    top: -7.5rem;
+    left: -1rem;
+  }
+  .winner-icon.winner-right {
+    top: -6rem;
+    left: 1rem;
+  }
+  .winner-icon.winner-both-left {
+    top: -6rem;
+    left: 1rem;
+  }
+  .winner-icon.winner-both-right {
+    top: -6rem;
+    left: 1rem;
+  }
+
   .defeated-icon {
     background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/defeated.png");
     background-repeat: no-repeat;
     background-size: contain;
-    width: 29px;
-    height: 95%;
-    display: inline-flex;
-    float: left;
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+    z-index: 2;
+  }
+  .defeated-icon.defeated-right {
+    top: -7.5rem;
+    left: 7rem;
+  }
+  .defeated-icon.defeated-left {
+    top: -6rem;
+    left: 7rem;
+  }
+  .defeated-icon.defeated-both-right {
+    top: -6rem;
+    left: 11rem;
+  }
+  .defeated-icon.defeated-both-left {
+    top: -3.5rem;
+    left: 3rem;
   }
 
-  .flag-text {
-    width: 75%;
-    padding-top: 1.2%;
+  .civ-picks {
     display: inline-flex;
     font-size: large;
     color: black;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-  }
-
-  .flag-text-no-icon {
-    width: 65%;
-    padding-top: 1.2%;
+    z-index: 2;
+    font-size: x-large;
     display: inline-flex;
-    font-size: large;
-    color: black;
-    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    height: fit-content;
+    position: relative;
   }
 
   .home-icon {
-    float: left;
-    color: white !important;
-    width: 29px;
-    height: 29px;
-  }
-  .yellow-flag-banner {
-    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/yellow-banner.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  .green-flag-banner {
-    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/green-banner.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  .red-flag-banner {
-    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/red-banner.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  .purple-flag-banner {
-    background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/purple-banner.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  .player-flag {
-    width: 95%;
-    height: 12.5%;
-    margin-left: 5rem;
-  }
-
-  .flags-under-maps {
-    width: 95%;
-    height: 12.5%;
     position: relative;
-    top: 92%;
-    left: 4%;
+    z-index: 2;
+    transform: scale(2);
+  }
+  .home-icon.left-icon {
+    left: -2rem;
+    top: -0.4rem;
+  }
+  .home-icon.right-icon {
+    left: -12rem;
+    top: -0.4rem;
   }
 
   .column-list {
@@ -215,11 +341,12 @@
   }
 
   .client-map-frame {
-    width: inherit;
-    height: inherit;
-    position: absolute;
-    z-index: 2;
-    transform: scale(0.75);
+    width: 8rem;
+    height: 8rem;
+    position: relative;
+    z-index: 1;
+    top: -6rem;
+    left: 4.5rem;
   }
 
   .client-map-image {
@@ -237,7 +364,6 @@
     font-size: x-large;
     display: inline-flex;
     height: fit-content;
-    transform: rotate(315deg);
     position: relative;
     top: 5%;
     left: -12%;
