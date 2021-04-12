@@ -714,6 +714,7 @@ export default new Vuex.Store({
         setTimeout(function() {
           console.log("resetTransitionCivOverlay");
           store.commit("resetTransitionCivOverlay");
+          store.commit("clearCivs");
         }, payload.delay);
       } else {
         store.commit("resetTransitionCivOverlay");
