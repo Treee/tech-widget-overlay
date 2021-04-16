@@ -16,8 +16,6 @@
     <md-icon v-if="this.homeMapPlayer !== ''" :class="getHomeIconPosition()"
       >home</md-icon
     >
-    <!-- <div class="client-image-container"> -->
-    <!-- <div class="client-map-image" :style="getMapImage"></div> -->
     <div v-if="this.winner !== ''" class="civ-picks">
       {{ this.toCommaSeparatedString(this.teamOneCiv) }}
     </div>
@@ -27,8 +25,11 @@
         teamOne === winner ? getWinnerIconPosition() : getDefeatedIconPosition()
       "
     ></div>
-    <div v-if="this.showMap">Visible</div>
-    <div></div>
+    <div v-if="this.showMap">
+      <div class="client-image-container">
+        <div class="client-map-image" :style="getMapImage"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -125,6 +126,15 @@ export default {
 </script>
 
 <style language="scss">
+.grow {
+  transition: all 0.2s ease-in-out;
+  transform: scale(65) translate(67%);
+}
+.shrink {
+  transition: all 0.2s ease-in-out;
+  transform: scale(10%);
+}
+
 .pointer-both {
   width: 11rem;
   height: 4rem;
@@ -280,8 +290,8 @@ export default {
 }
 
 .client-image-container {
-  width: inherit;
-  height: inherit;
+  width: 1rem;
+  height: 1rem;
   display: inline-flex;
   justify-content: center;
 }
