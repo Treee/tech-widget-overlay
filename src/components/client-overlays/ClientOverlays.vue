@@ -8,7 +8,12 @@
       :civ2-description="this.$store.getters.getCivDescription(civ2)"
       :playSound="sound"
     />
-    <MapOverlay :selected-maps-and-state="selectedMaps" :players="players" />
+    <MapOverlay
+      :selected-maps-and-state="selectedMaps"
+      :players="players"
+      :showMap="isMapVisible"
+      :mapId="mapId"
+    />
     <AnimatedGroupOverlay v-if="false" />
 
     <!-- <object
@@ -25,35 +30,36 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
+import { mapState } from "vuex";
 
-  import CivBonusOverlay from "./tech-upgrade-overlay/CivBonusOverlay.vue";
-  import MapOverlay from "./maps-overlay/MapOverlay.vue";
-  import ScoreboardOverlay from "./scoreboard-overlay/ScoreboardOverlay.vue";
-  import AnimatedGroupOverlay from "./animated-media-overlay/AnimatedGroupOverlay.vue";
+import CivBonusOverlay from "./tech-upgrade-overlay/CivBonusOverlay.vue";
+import MapOverlay from "./maps-overlay/MapOverlay.vue";
+import ScoreboardOverlay from "./scoreboard-overlay/ScoreboardOverlay.vue";
+import AnimatedGroupOverlay from "./animated-media-overlay/AnimatedGroupOverlay.vue";
 
-  export default {
-    name: "ClientOverlay",
-    components: {
-      CivBonusOverlay,
-      MapOverlay,
-      ScoreboardOverlay,
-      AnimatedGroupOverlay,
-    },
-    created: () => {
-      console.log("client overlay created");
-    },
-    computed: {
-      ...mapState({
-        civ1: (state) => state.techUpgradeOverlayControlOptions.civ1,
-        civ2: (state) => state.techUpgradeOverlayControlOptions.civ2,
-        sound: (state) => state.techUpgradeOverlayControlOptions.sound,
-        selectedMaps: (state) => state.clientControlOptions.selectedMapsAndState,
-        players: (state) => state.clientControlOptions.players,
-      }),
-    },
-  };
+export default {
+  name: "ClientOverlay",
+  components: {
+    CivBonusOverlay,
+    MapOverlay,
+    ScoreboardOverlay,
+    AnimatedGroupOverlay,
+  },
+  created: () => {
+    console.log("client overlay created");
+  },
+  computed: {
+    ...mapState({
+      civ1: (state) => state.techUpgradeOverlayControlOptions.civ1,
+      civ2: (state) => state.techUpgradeOverlayControlOptions.civ2,
+      sound: (state) => state.techUpgradeOverlayControlOptions.sound,
+      selectedMaps: (state) => state.clientControlOptions.selectedMapsAndState,
+      players: (state) => state.clientControlOptions.players,
+      isMapVisible: (state) => state.showMap,
+      mapId: (state) => state.mapId,
+    }),
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>

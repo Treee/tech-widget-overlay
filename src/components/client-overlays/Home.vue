@@ -69,6 +69,12 @@ export default {
       if (messageType === SocketEnums.AdminShowDock) {
         this.$store.commit("updateScoreboardMapName", data);
       }
+      if (messageType === SocketEnums.AdminShowMonastary) {
+        this.$store.dispatch("showMap", data);
+      }
+      if (messageType === SocketEnums.AdminHideMonastary) {
+        this.$store.dispatch("hideMap");
+      }
       console.log(`Message Type: ${messageType}`, data);
     },
     shuffleCivilizationDrafts(teamNumber, playerPicks, shuffleDelay) {

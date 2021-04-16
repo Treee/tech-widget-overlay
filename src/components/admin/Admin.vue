@@ -11,6 +11,7 @@
     <div class="card-holder-right card-centered">
       <RoundDisplayCard
         v-on:roundTech="roundTechShow"
+        v-on:roundMap="roundMapShow"
         v-on:updateRoundOverlay="roundOverlayShow"
       />
     </div>
@@ -82,6 +83,13 @@ export default {
         },
       };
       this.adminClient.sendMessage(SocketEnums.AdminShowPlayerPicks, data);
+    },
+    roundMapShow(roundData) {
+      if (roundData.show) {
+        this.adminClient.sendMessage(SocketEnums.AdminShowMonastary, roundData);
+      } else {
+        this.adminClient.sendMessage(SocketEnums.AdminHideMonastary);
+      }
     },
     roundOverlayShow() {
       const data = this.$store.getters.getRoundOverlayData;

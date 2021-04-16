@@ -27,7 +27,8 @@
         teamOne === winner ? getWinnerIconPosition() : getDefeatedIconPosition()
       "
     ></div>
-    <!-- </div> -->
+    <div v-if="this.showMap">Visible</div>
+    <div></div>
   </div>
 </template>
 
@@ -44,6 +45,7 @@ export default {
     teamOne: String,
     teamTwo: String,
     pointer: String,
+    showMap: Boolean,
   },
   computed: {
     getMapImage() {

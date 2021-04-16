@@ -129,6 +129,8 @@ const debounceMapName = (state, potentialDuplicate) => {
 export default new Vuex.Store({
   // strict: true,
   state: {
+    showMap: false,
+    mapId: "",
     roundOverlay: {
       roundMode: 0,
       roundOverlayVisible: false,
@@ -707,6 +709,16 @@ export default new Vuex.Store({
     updateRoundVisibility: (state, payload) => {
       state.roundOverlay.roundOverlayVisible = payload.roundOverlayVisible;
     },
+    showMap: (state, payload) => {
+      console.log("showmap", payload);
+      state.showMap = true;
+      state.mapId = payload.mapId;
+    },
+    hideMap: (state) => {
+      console.log("hideMap");
+      state.showMap = false;
+      state.mapId = "";
+    },
   },
   actions: {
     resetTransitionCivOverlay(store, payload) {
@@ -800,6 +812,12 @@ export default new Vuex.Store({
     },
     updateScoreboardClientControls(store, payload) {
       store.commit("updateScoreboardClientControls", payload);
+    },
+    showMap(store, payload) {
+      store.commit("showMap", payload);
+    },
+    hideMap(store, payload) {
+      store.commit("hideMap", payload);
     },
   },
 });
