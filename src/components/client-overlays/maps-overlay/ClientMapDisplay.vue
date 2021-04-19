@@ -25,10 +25,8 @@
         teamOne === winner ? getWinnerIconPosition() : getDefeatedIconPosition()
       "
     ></div>
-    <div v-if="this.showMap">
-      <div class="client-image-container">
-        <div class="client-map-image" :style="getMapImage"></div>
-      </div>
+    <div class="client-image-container" :style="this.getMapGrowShrink()">
+      <div class="client-map-image" :style="getMapImage"></div>
     </div>
   </div>
 </template>
@@ -47,6 +45,8 @@ export default {
     teamTwo: String,
     pointer: String,
     showMap: Boolean,
+    mapCount: Number,
+    mapIndex: Number,
   },
   computed: {
     getMapImage() {
@@ -121,20 +121,33 @@ export default {
     getDefeatedIconPosition() {
       return "defeated-icon";
     },
+    getMapGrowShrink() {
+      let transformExpression = "scale(1)";
+      let translateX = 0;
+      const numEachSide = Math.floor(this.mapCount / 2);
+      console.log(
+        `num of each side ${numEachSide}. count: ${this.mapCount} index: ${this.mapIndex}`
+      );
+      // this is the center map. 0% translation
+      if (numEachSide === this.mapIndex) {
+        translateX = 0;
+      } // left maps +%
+      else {
+        translateX = this.mapIndex * -33.33 + 100;
+      }
+      if (this.showMap) {
+        transformExpression = `scale(22) translate(${translateX}%, -45%)`;
+      }
+      return {
+        transition: "all 2s ease-in-out",
+        transform: transformExpression,
+      };
+    },
   },
 };
 </script>
 
 <style language="scss">
-.grow {
-  transition: all 0.2s ease-in-out;
-  transform: scale(65) translate(67%);
-}
-.shrink {
-  transition: all 0.2s ease-in-out;
-  transform: scale(10%);
-}
-
 .pointer-both {
   width: 11rem;
   height: 4rem;
@@ -144,6 +157,7 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: x-large;
+  z-index: 1;
 }
 .pointer-both:after {
   content: "";
@@ -178,7 +192,7 @@ export default {
   align-items: center;
   font-size: x-large;
   padding-right: 2rem;
-  z-index: 2;
+  z-index: 1;
 }
 .pointer-left:after {
   content: "";
@@ -214,7 +228,7 @@ export default {
   align-items: center;
   font-size: x-large;
   padding-left: 2rem;
-  z-index: 2;
+  z-index: 1;
 }
 .pointer-right:after {
   content: "";
@@ -290,10 +304,12 @@ export default {
 }
 
 .client-image-container {
-  width: 1rem;
-  height: 1rem;
+  width: 2rem;
+  height: 2rem;
   display: inline-flex;
   justify-content: center;
+  position: relative;
+  left: -50%;
 }
 
 .client-map-frame {
@@ -310,9 +326,6 @@ export default {
   height: inherit;
   background-size: cover !important;
   background-repeat: round !important;
-  position: absolute;
-  transform: scale(0.9) translateY(-3px) translateX(2px);
-  z-index: 1;
 }
 
 .client-map-name {

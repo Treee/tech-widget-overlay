@@ -1,7 +1,6 @@
 <template>
-  <div class="client-maps md-layout">
+  <div class="client-maps">
     <ClientMapDisplay
-      class="md-layout-item"
       v-for="(map, index) in selectedMapsAndState"
       :key="map.id"
       :name="map.selectedMapName"
@@ -14,6 +13,8 @@
       :teamTwo="players[1] || ''"
       :pointer="pickPointerdirection(index)"
       :showMap="isThisMapVisible(map.id)"
+      :mapCount="selectedMapsAndState.length"
+      :mapIndex="index"
     />
   </div>
 </template>
@@ -45,9 +46,9 @@ export default {
       }
     },
     isThisMapVisible(mapId) {
-      console.log(
-        `isThisMapVisible:: ${mapId} ::: this ${this.mapId} :::: show map ${this.showMap}`
-      );
+      // console.log(
+      //   `isThisMapVisible:: ${mapId} ::: this ${this.mapId} :::: show map ${this.showMap}`
+      // );
       return this.mapId === mapId && this.showMap;
     },
   },
@@ -57,8 +58,8 @@ export default {
 <style language="scss">
 .client-maps {
   width: 100%;
-  margin-top: 35rem;
-  position: absolute;
-  top: 0;
+  margin-top: 40rem;
+  display: inline-flex;
+  justify-content: center;
 }
 </style>
