@@ -39,6 +39,14 @@ const defaultMaps = [
   "team-islands",
   "valley",
   "yucatan",
+  "cape-of-storms",
+  "coast-to-mountain",
+  "eruption",
+  "forest-pond",
+  "kawasan",
+  "not-socotra",
+  "rockslide",
+  "team-acropolis",
 ];
 
 const customMaps = [
