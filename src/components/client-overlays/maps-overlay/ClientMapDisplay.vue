@@ -59,16 +59,24 @@ export default {
         // we have a duplicate map, trim the last part
         map = mapParts.slice(0, mapParts.length - 1).join("-");
       }
+      let url = "";
+      if (this.state !== "banned"){
+        url = `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`;
+      }
       return {
-        background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`,
+        background: url,
       };
     },
     getMapFrame() {
       console.log("state: " + this.state);
       if (this.state === "banned") {
         return {
-          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-veto1.png"); no-repeat`,
+          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-veto1.png") no-repeat`,
           "background-size": "contain",
+          "width": "5rem",
+          "height": "5rem",
+          "padding-right": "14rem",
+          "margin-left": "-14rem",
         };
       }
       return "";
@@ -134,9 +142,6 @@ export default {
         const scaleMap = 20;
         transformExpression = `scale(${scaleMap}) translate(${translateX}%, -50%)`;
       }      
-      console.log(
-        `units: ${numUnitsToTranslate} ..num of each side ${numEachSide}. count: ${this.mapCount} index: ${this.mapIndex} transformXP:${transformExpression}`
-      );
       return {
         transition: "all 2s ease-in-out",
         transform: transformExpression,
@@ -210,12 +215,11 @@ export default {
   background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/winner.png");
   background-repeat: no-repeat;
   background-size: contain;
-  width: 5rem;
+  width: 3rem;
   height: 3rem;
-  display: inline-flex;
-  position: relative;
   z-index: 2;
-  top: -8.5rem;
+  position: relative;
+  left: -30%;
 }
 
 .defeated-icon {
@@ -243,7 +247,8 @@ export default {
 .home-icon {
   position: relative;
   z-index: 2;
-  transform: scale(2);
+  left: -37%;
+  top: -30%;
 }
 
 .column-list {
@@ -269,7 +274,6 @@ export default {
 .client-map-frame {
   width: 8rem;
   height: 8rem;
-  position: relative;
   z-index: 1;
   top: -6rem;
   left: 4.5rem;
@@ -299,6 +303,7 @@ export default {
 
 .fade-in-map {
   animation: key-fade-in 2s ease-out forwards;
+  display: inline-flex;
 }
 
 .fade-out-map {
