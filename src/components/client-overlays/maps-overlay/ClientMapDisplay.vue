@@ -151,37 +151,15 @@ export default {
 .pointer-both {
   width: 11rem;
   height: 4rem;
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-middle.png");
   position: relative;
-  background: red;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   font-size: x-large;
   z-index: 1;
 }
-.pointer-both:after {
-  content: "";
-  position: absolute;
-  transform: rotate(180deg);
-  left: -2rem;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 2rem solid red;
-  border-top: 2rem solid transparent;
-  border-bottom: 2rem solid transparent;
-}
-.pointer-both:before {
-  content: "";
-  position: absolute;
-  right: -2rem;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 2rem solid red;
-  border-top: 2rem solid transparent;
-  border-bottom: 2rem solid transparent;
-}
+
 .pointer-left {
   width: 13rem;
   height: 4rem;
@@ -194,30 +172,7 @@ export default {
   padding-right: 2rem;
   z-index: 1;
 }
-.pointer-left:after {
-  content: "";
-  position: absolute;
-  transform: rotate(180deg);
-  left: -2rem;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 2rem solid red;
-  border-top: 2rem solid transparent;
-  border-bottom: 2rem solid transparent;
-}
-.pointer-left:before {
-  content: "";
-  position: absolute;
-  transform: rotate(180deg);
-  right: 0;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 2rem solid white;
-  border-top: 2rem solid transparent;
-  border-bottom: 2rem solid transparent;
-}
+
 .pointer-right {
   width: 13rem;
   height: 4rem;
@@ -230,28 +185,7 @@ export default {
   padding-left: 2rem;
   z-index: 1;
 }
-.pointer-right:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 2rem solid white;
-  border-top: 2rem solid transparent;
-  border-bottom: 2rem solid transparent;
-}
-.pointer-right:before {
-  content: "";
-  position: absolute;
-  right: -2rem;
-  bottom: 0;
-  width: 0;
-  height: 0;
-  border-left: 2rem solid red;
-  border-top: 2rem solid transparent;
-  border-bottom: 2rem solid transparent;
-}
+
 .winner-icon {
   background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/winner.png");
   background-repeat: no-repeat;
