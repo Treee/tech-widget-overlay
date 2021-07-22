@@ -5,7 +5,7 @@
       'fade-out-map': this.$store.state.clearAllMapsClicked,
     }"
   >
-    <div :class="pointer">
+    <div :class="pointer" :style="this.getLabelGrowShrink()">
       {{ this.$store.getters.getFormattedMapName(name) }}
     </div>
     <div
@@ -64,9 +64,10 @@ export default {
       };
     },
     getMapFrame() {
+      console.log("state: " + this.state);
       if (this.state === "banned") {
         return {
-          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/veto.png") no-repeat`,
+          background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-veto1.png"); no-repeat`,
           "background-size": "contain",
         };
       }
@@ -125,64 +126,83 @@ export default {
       let transformExpression = "scale(1)";
       let translateX = 0;
       const numEachSide = Math.floor(this.mapCount / 2);
-      console.log(
-        `num of each side ${numEachSide}. count: ${this.mapCount} index: ${this.mapIndex}`
-      );
-      // this is the center map. 0% translation
-      if (numEachSide === this.mapIndex) {
-        translateX = 0;
-      } // left maps +%
-      else {
-        translateX = this.mapIndex * -33.33 + 100;
-      }
+      
+      let translationUnit = 18.7;
+      let numUnitsToTranslate = numEachSide - this.mapIndex;
+      translateX = numUnitsToTranslate * translationUnit;
       if (this.showMap) {
-        transformExpression = `scale(22) translate(${translateX}%, -45%)`;
-      }
+        const scaleMap = 20;
+        transformExpression = `scale(${scaleMap}) translate(${translateX}%, -50%)`;
+      }      
+      console.log(
+        `units: ${numUnitsToTranslate} ..num of each side ${numEachSide}. count: ${this.mapCount} index: ${this.mapIndex} transformXP:${transformExpression}`
+      );
       return {
         transition: "all 2s ease-in-out",
         transform: transformExpression,
       };
     },
+    getLabelGrowShrink() {
+      let transformExpression = "scale(1)";
+      
+      if (this.showMap) {
+        transformExpression = `translate(0, -150%)`;
+      }      
+      return {
+        transition: "all 2s ease-in-out",
+        transform: transformExpression,
+      };    
+    }
   },
 };
 </script>
 
 <style language="scss">
 .pointer-both {
-  width: 11rem;
-  height: 4rem;
+  width: 13rem;
+  height: 5rem;
   background: url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-middle.png");
+  background-size: cover;
+  background-repeat: round;
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   font-size: x-large;
+  color: orange;
+  text-shadow: -1px 0 purple, 0 1px purple, 1px 0 purple, 0 -1px purple;
   z-index: 1;
 }
 
 .pointer-left {
   width: 13rem;
-  height: 4rem;
+  height: 5rem;
   position: relative;
-  background: red;
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-left.png");
+  background-size: cover;
+  background-repeat: round;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   font-size: x-large;
-  padding-right: 2rem;
+  color: orange;
+  text-shadow: -1px 0 purple, 0 1px purple, 1px 0 purple, 0 -1px purple;
   z-index: 1;
 }
 
 .pointer-right {
   width: 13rem;
-  height: 4rem;
+  height: 5rem;
   position: relative;
-  background: red;
+  background: url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-right.png");
+  background-size: cover;
+  background-repeat: round;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   font-size: x-large;
-  padding-left: 2rem;
+  color: orange;
+  text-shadow: -1px 0 purple, 0 1px purple, 1px 0 purple, 0 -1px purple;
   z-index: 1;
 }
 
