@@ -22,7 +22,6 @@ const defaultMaps = [
   "eruption",
   "fortress",
   "forest-pond",
-  "fortress",
   "front-line",
   "ghost-lake",
   "golden-pit",
