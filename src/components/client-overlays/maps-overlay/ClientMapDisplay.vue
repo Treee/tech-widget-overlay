@@ -60,7 +60,7 @@ export default {
         map = mapParts.slice(0, mapParts.length - 1).join("-");
       }
       let url = "";
-      if (this.state !== "banned"){
+      if (this.state !== "banned") {
         url = `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/${mapFolder}/${map}.png")`;
       }
       return {
@@ -73,8 +73,8 @@ export default {
         return {
           background: `url("https://treee.github.io/tech-widget-overlay/assets/images/maps/frames/frame-veto1.png") no-repeat`,
           "background-size": "contain",
-          "width": "5rem",
-          "height": "5rem",
+          width: "5rem",
+          height: "5rem",
           "padding-right": "14rem",
           "margin-left": "-14rem",
         };
@@ -134,14 +134,14 @@ export default {
       let transformExpression = "scale(1)";
       let translateX = 0;
       const numEachSide = Math.floor(this.mapCount / 2);
-      
+
       let translationUnit = 18.7;
       let numUnitsToTranslate = numEachSide - this.mapIndex;
       translateX = numUnitsToTranslate * translationUnit;
       if (this.showMap) {
         const scaleMap = 20;
         transformExpression = `scale(${scaleMap}) translate(${translateX}%, -50%)`;
-      }      
+      }
       return {
         transition: "all 2s ease-in-out",
         transform: transformExpression,
@@ -149,15 +149,15 @@ export default {
     },
     getLabelGrowShrink() {
       let transformExpression = "scale(1)";
-      
+
       if (this.showMap) {
         transformExpression = `translate(0, -150%)`;
-      }      
+      }
       return {
         transition: "all 2s ease-in-out",
         transform: transformExpression,
-      };    
-    }
+      };
+    },
   },
 };
 </script>
