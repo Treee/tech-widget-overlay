@@ -139,7 +139,7 @@ export default {
       let numUnitsToTranslate = numEachSide - this.mapIndex;
       translateX = numUnitsToTranslate * translationUnit;
       if (this.showMap) {
-        const scaleMap = 20;
+        const scaleMap = 15;
         transformExpression = `scale(${scaleMap}) translate(${translateX}%, -50%)`;
       }
       return {
