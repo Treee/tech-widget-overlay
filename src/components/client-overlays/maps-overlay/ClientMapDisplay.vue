@@ -13,18 +13,12 @@
       class="client-map-frame"
       :style="getMapFrame"
     ></div>
-    <md-icon v-if="this.homeMapPlayer !== ''" :class="getHomeIconPosition()"
-      >home</md-icon
-    >
     <div v-if="this.winner !== ''" class="civ-picks">
       {{ this.toCommaSeparatedString(this.teamOneCiv) }}
     </div>
-    <div
-      v-if="this.winner !== ''"
-      :class="
-        teamOne === winner ? getWinnerIconPosition() : getDefeatedIconPosition()
-      "
-    ></div>
+    <div v-if="this.winner !== ''" :class="getWinnerIconPosition()">
+      {{ this.winner }}
+    </div>
     <div class="client-image-container" :style="this.getMapGrowShrink()">
       <div class="client-map-image" :style="getMapImage"></div>
     </div>
@@ -218,20 +212,11 @@ export default {
   width: 3rem;
   height: 3rem;
   z-index: 2;
-  position: relative;
-  left: -30%;
-}
-
-.defeated-icon {
-  background: url("https://treee.github.io/tech-widget-overlay/assets/images/decals/defeated.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 3rem;
-  height: 3rem;
-  z-index: 2;
-  display: inline-flex;
-  position: relative;
-  top: -8.5rem;
+  position: absolute;
+  padding-left: 2%;
+  font-size: larger;
+  color: orange;
+  text-shadow: -1px 0 purple, 0 1px purple, 1px 0 purple, 0 -1px purple;
 }
 
 .civ-picks {
